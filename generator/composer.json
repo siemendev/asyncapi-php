@@ -1,0 +1,31 @@
+{
+    "name": "siemendev/asyncapi-php-generator",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Siemendev\\AsyncapiPhp\\Generator\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Patrick Siemen",
+            "email": "post@patrick-siemen.de"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "siemendev/asyncapi-php": "*",
+        "nette/php-generator": "^4.1"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../core"
+        },{
+            "type": "path",
+            "url": "../spec"
+        }
+    ]
+}

@@ -1,0 +1,28 @@
+{
+    "name": "siemendev/asyncapi-php-amqp",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Siemendev\\AsyncapiPhp\\Adapter\\Amqp\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Patrick Siemen",
+            "email": "post@patrick-siemen.de"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "siemendev/asyncapi-php": "*",
+        "php-amqplib/php-amqplib": "^3.0"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../core"
+        }
+    ]
+}

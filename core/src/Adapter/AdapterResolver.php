@@ -1,0 +1,41 @@
+<?php
+
+namespace Siemendev\AsyncapiPhp\Adapter;
+
+use Siemendev\AsyncapiPhp\Adapter\Exception\NoMatchingAdapterFoundException;
+use Siemendev\AsyncapiPhp\Configuration\Credentials\CredentialsInterface;
+use Siemendev\AsyncapiPhp\Spec\Model\AsyncApi;
+use Siemendev\AsyncapiPhp\Spec\Model\Server;
+
+class AdapterResolver
+{
+    /**
+     * @var AdapterInterface[]
+     */
+    private array $adapters = [];
+
+    public function addAdapter(AdapterInterface $adapter): self
+    {
+        $this->adapters[] = $adapter;
+
+        return $this;
+    }
+
+    /**
+     * @throws NoMatchingAdapterFoundException
+     */
+    public function resolveAdapter(AsyncApi $rootSpec, Server $serverSpec, CredentialsInterface $credentials): AdapterInterface
+    {
+        foreach ($this->adapters as $adapter) {
+            if ($adapter->supports($serverSpec, $credentials)) {
+                return (clone $adapter)
+                    ->setRootSpec($rootSpec)
+                    ->setServerSpec($serverSpec)
+                    ->setCredentials($credentials)
+                ;
+            }
+        }
+
+        throw new NoMatchingAdapterFoundException($serverSpec);
+    }
+}

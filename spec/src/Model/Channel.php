@@ -1,0 +1,304 @@
+<?php
+
+namespace Siemendev\AsyncapiPhp\Spec\Model;
+
+/**
+ * Describes a named network address where messages can be exchanged.
+ */
+class Channel extends AsyncApiObject
+{
+    /**
+     * A human-friendly title for the channel.
+     *
+     * @var string|null
+     */
+    protected $title;
+
+    /**
+     * A short summary of what the channel is about.
+     *
+     * @var string|null
+     */
+    protected $summary;
+
+    /**
+     * A description of the channel.
+     *
+     * @var string|null
+     */
+    protected $description;
+
+    /**
+     * A map of the operations available on the channel.
+     *
+     * @var array<string, ChannelOperation>
+     */
+    protected $operations = [];
+
+    /**
+     * A map of the parameters included in the channel address.
+     *
+     * @var array<string, Parameter>
+     */
+    protected $parameters = [];
+
+    /**
+     * A list of tags for API documentation control.
+     *
+     * @var array<Tag>
+     */
+    protected $tags = [];
+
+    /**
+     * Additional external documentation for this channel.
+     *
+     * @var ExternalDocumentation|null
+     */
+    protected $externalDocs;
+
+    /**
+     * A map of the bindings for this channel.
+     *
+     * @var array<string, mixed>
+     */
+    protected $bindings = [];
+
+    /**
+     * A map of the messages that will be published or received on this channel.
+     *
+     * @var array<string, Message|Reference>
+     */
+    protected $messages = [];
+
+    /**
+     * An array of $ref pointers to the definition of the servers in which this channel is available.
+     * If servers is absent or empty, this channel MUST be available on all the servers defined in the Servers Object.
+     *
+     * @var array<Reference>
+     */
+    protected $servers = [];
+
+    /**
+     * Get the title.
+     *
+     * @return string|null
+     */
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set the title.
+     *
+     * @param string $title The title
+     * @return $this
+     */
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * Get the summary.
+     *
+     * @return string|null
+     */
+    public function getSummary(): ?string
+    {
+        return $this->summary;
+    }
+
+    /**
+     * Set the summary.
+     *
+     * @param string $summary The summary
+     * @return $this
+     */
+    public function setSummary(string $summary): self
+    {
+        $this->summary = $summary;
+        return $this;
+    }
+
+    /**
+     * Get the description.
+     *
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set the description.
+     *
+     * @param string $description The description
+     * @return $this
+     */
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * Get the operations.
+     *
+     * @return array<string, ChannelOperation>
+     */
+    public function getOperations(): array
+    {
+        return $this->operations;
+    }
+
+    /**
+     * Add an operation.
+     *
+     * @param string $operationId The operation ID
+     * @param ChannelOperation $operation The operation
+     * @return $this
+     */
+    public function addOperation(string $operationId, ChannelOperation $operation): self
+    {
+        $this->operations[$operationId] = $operation;
+        return $this;
+    }
+
+    /**
+     * Get the parameters.
+     *
+     * @return array<string, Parameter>
+     */
+    public function getParameters(): array
+    {
+        return $this->parameters;
+    }
+
+    /**
+     * Add a parameter.
+     *
+     * @param string $name The parameter name
+     * @param Parameter $parameter The parameter
+     * @return $this
+     */
+    public function addParameter(string $name, Parameter $parameter): self
+    {
+        $this->parameters[$name] = $parameter;
+        return $this;
+    }
+
+    /**
+     * Get the tags.
+     *
+     * @return array<Tag>
+     */
+    public function getTags(): array
+    {
+        return $this->tags;
+    }
+
+    /**
+     * Add a tag.
+     *
+     * @param Tag $tag The tag
+     * @return $this
+     */
+    public function addTag(Tag $tag): self
+    {
+        $this->tags[] = $tag;
+        return $this;
+    }
+
+    /**
+     * Get the external documentation.
+     *
+     * @return ExternalDocumentation|null
+     */
+    public function getExternalDocs(): ?ExternalDocumentation
+    {
+        return $this->externalDocs;
+    }
+
+    /**
+     * Set the external documentation.
+     *
+     * @param ExternalDocumentation $externalDocs The external documentation
+     * @return $this
+     */
+    public function setExternalDocs(ExternalDocumentation $externalDocs): self
+    {
+        $this->externalDocs = $externalDocs;
+        return $this;
+    }
+
+    /**
+     * Get the bindings.
+     *
+     * @return array<string, mixed>
+     */
+    public function getBindings(): array
+    {
+        return $this->bindings;
+    }
+
+    /**
+     * Add a binding.
+     *
+     * @param string $name The binding name
+     * @param mixed $binding The binding
+     * @return $this
+     */
+    public function addBinding(string $name, $binding): self
+    {
+        $this->bindings[$name] = $binding;
+        return $this;
+    }
+
+    /**
+     * Get the messages.
+     *
+     * @return array<string, Message|Reference>
+     */
+    public function getMessages(): array
+    {
+        return $this->messages;
+    }
+
+    /**
+     * Add a message.
+     *
+     * @param string $name The message name
+     * @param Message|Reference $message The message
+     * @return $this
+     */
+    public function addMessage(string $name, Message|Reference $message): self
+    {
+        $this->messages[$name] = $message;
+        return $this;
+    }
+
+    /**
+     * Get the servers.
+     *
+     * @return array<Reference>
+     */
+    public function getServers(): array
+    {
+        return $this->servers;
+    }
+
+    /**
+     * Add a server.
+     *
+     * @param Reference $server The server reference
+     * @return $this
+     */
+    public function addServer(Reference $server): self
+    {
+        $this->servers[] = $server;
+        return $this;
+    }
+}

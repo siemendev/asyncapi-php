@@ -1,0 +1,47 @@
+{
+    "name": "siemendev/asyncapi-php-demo",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Siemendev\\AsyncapiPhp\\Demo\\": "src/",
+            "Siemendev\\AsyncapiPhp\\Demo\\Stub\\": "stub/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Patrick Siemen",
+            "email": "post@patrick-siemen.de"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "siemendev/asyncapi-php": "*",
+        "siemendev/asyncapi-php-generator": "*",
+        "siemendev/asyncapi-php-amqp": "*",
+        "siemendev/asyncapi-php-serializer-symfony": "*"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../core"
+        },
+        {
+            "type": "path",
+            "url": "../generator"
+        },
+        {
+            "type": "path",
+            "url": "../spec"
+        },
+        {
+            "type": "path",
+            "url": "../adapters/amqp"
+        },
+        {
+            "type": "path",
+            "url": "../serializers/symfony-serializer"
+        }
+    ]
+}

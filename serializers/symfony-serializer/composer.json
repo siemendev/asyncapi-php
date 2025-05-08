@@ -1,0 +1,29 @@
+{
+    "name": "siemendev/asyncapi-php-serializer-symfony",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Siemendev\\AsyncapiPhp\\Serializer\\Symfony\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Patrick Siemen",
+            "email": "post@patrick-siemen.de"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "siemendev/asyncapi-php": "*",
+        "symfony/serializer": "^7.3",
+        "symfony/property-access": "7.3.x-dev"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../core"
+        }
+    ]
+}

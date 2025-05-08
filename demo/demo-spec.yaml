@@ -1,0 +1,51 @@
+asyncapi: 3.0.0
+info:
+  title: Example RabbitMQ AsyncAPI
+  version: 1.0.0
+  description: An example AsyncAPI 3.0.0 document for RabbitMQ with channel-bound operations
+
+servers:
+  production:
+    host: rabbitmq.example.com
+    protocol: amqp
+    protocolVersion: 0.9.1
+    description: RabbitMQ broker
+    variables:
+      port:
+        default: '5672'
+    bindings:
+      amqp:
+        virtualHost: "/"
+        heartbeat: 60
+        locale: en_US
+
+defaultContentType: application/json
+
+channels:
+  user.created:
+    address: user.created
+    messages:
+      userCreatedMessage:
+        name: 'User Created'
+        contentType: application/json
+        payload:
+          type: object
+          properties:
+            userId:
+              type: string
+              description: Unique identifier for the user
+            username:
+              type: string
+              description: Username of the created user
+            email:
+              type: string
+              format: email
+              description: Email address of the created user
+    bindings:
+      amqp:
+        is: routingKey
+        exchange:
+          name: user-events
+          type: topic
+          durable: true
+          autoDelete: false
