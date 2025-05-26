@@ -9,52 +9,38 @@ class Server extends AsyncApiObject
 {
     /**
      * A host (name or IP) of the server.
-     *
-     * @var string
      */
-    protected $host;
+    protected string $host;
 
     /**
      * The protocol this server supports for connection.
-     *
-     * @var string
      */
-    protected $protocol;
+    protected string $protocol;
 
     /**
      * The version of the protocol used for connection.
-     *
-     * @var string|null
      */
-    protected $protocolVersion;
+    protected ?string $protocolVersion = null;
 
     /**
      * The path to a resource in the host.
-     *
-     * @var string|null
      */
-    protected $pathname;
+    protected ?string $pathname = null;
 
     /**
      * A short description of the server.
-     *
-     * @var string|null
      */
-    protected $description;
+    protected ?string $description = null;
 
     /**
      * A human-friendly title for the server.
-     *
-     * @var string|null
      */
-    protected $title;
+    protected ?string $title = null;
 
     /**
      * A short summary of the server.
-     *
-     * @var string|null
      */
-    protected $summary;
+    protected ?string $summary = null;
 
     /**
      * A map between a variable name and its value.
@@ -62,35 +48,33 @@ class Server extends AsyncApiObject
      *
      * @var array<string, ServerVariable>
      */
-    protected $variables = [];
+    protected array $variables = [];
 
     /**
      * A declaration of which security mechanisms can be used with this server.
      *
      * @var array<SecurityScheme>
      */
-    protected $security = [];
+    protected array $security = [];
 
     /**
      * A list of tags for logical grouping and categorization of servers.
      *
      * @var array<Tag>
      */
-    protected $tags = [];
+    protected array $tags = [];
 
     /**
      * Additional external documentation for this server.
-     *
-     * @var ExternalDocumentation|null
      */
-    protected $externalDocs;
+    protected ?ExternalDocumentation $externalDocs = null;
 
     /**
      * A map of the bindings for this server.
      *
      * @var array<string, mixed>
      */
-    protected $bindings = [];
+    protected array $bindings = [];
 
     /**
      * Constructor.
@@ -106,8 +90,6 @@ class Server extends AsyncApiObject
 
     /**
      * Get the host.
-     *
-     * @return string
      */
     public function getHost(): string
     {
@@ -116,8 +98,6 @@ class Server extends AsyncApiObject
 
     /**
      * Get the protocol.
-     *
-     * @return string
      */
     public function getProtocol(): string
     {
@@ -126,8 +106,6 @@ class Server extends AsyncApiObject
 
     /**
      * Get the protocol version.
-     *
-     * @return string|null
      */
     public function getProtocolVersion(): ?string
     {
@@ -136,9 +114,6 @@ class Server extends AsyncApiObject
 
     /**
      * Set the protocol version.
-     *
-     * @param string $protocolVersion The protocol version
-     * @return $this
      */
     public function setProtocolVersion(string $protocolVersion): self
     {
@@ -148,8 +123,6 @@ class Server extends AsyncApiObject
 
     /**
      * Get the description.
-     *
-     * @return string|null
      */
     public function getDescription(): ?string
     {
@@ -158,9 +131,6 @@ class Server extends AsyncApiObject
 
     /**
      * Set the description.
-     *
-     * @param string $description The description
-     * @return $this
      */
     public function setDescription(string $description): self
     {
@@ -180,10 +150,6 @@ class Server extends AsyncApiObject
 
     /**
      * Add a variable.
-     *
-     * @param string $name The variable name
-     * @param ServerVariable $variable The variable
-     * @return $this
      */
     public function addVariable(string $name, ServerVariable $variable): self
     {
@@ -203,9 +169,6 @@ class Server extends AsyncApiObject
 
     /**
      * Add a security scheme.
-     *
-     * @param SecurityScheme $security The security scheme
-     * @return $this
      */
     public function addSecurity(SecurityScheme $security): self
     {
@@ -225,9 +188,6 @@ class Server extends AsyncApiObject
 
     /**
      * Add a tag.
-     *
-     * @param Tag $tag The tag
-     * @return $this
      */
     public function addTag(Tag $tag): self
     {
@@ -237,8 +197,6 @@ class Server extends AsyncApiObject
 
     /**
      * Get the external documentation.
-     *
-     * @return ExternalDocumentation|null
      */
     public function getExternalDocs(): ?ExternalDocumentation
     {
@@ -247,9 +205,6 @@ class Server extends AsyncApiObject
 
     /**
      * Set the external documentation.
-     *
-     * @param ExternalDocumentation $externalDocs The external documentation
-     * @return $this
      */
     public function setExternalDocs(ExternalDocumentation $externalDocs): self
     {
@@ -259,8 +214,6 @@ class Server extends AsyncApiObject
 
     /**
      * Get the pathname.
-     *
-     * @return string|null
      */
     public function getPathname(): ?string
     {
@@ -269,9 +222,6 @@ class Server extends AsyncApiObject
 
     /**
      * Set the pathname.
-     *
-     * @param string $pathname The pathname
-     * @return $this
      */
     public function setPathname(string $pathname): self
     {
@@ -281,8 +231,6 @@ class Server extends AsyncApiObject
 
     /**
      * Get the title.
-     *
-     * @return string|null
      */
     public function getTitle(): ?string
     {
@@ -291,9 +239,6 @@ class Server extends AsyncApiObject
 
     /**
      * Set the title.
-     *
-     * @param string $title The title
-     * @return $this
      */
     public function setTitle(string $title): self
     {
@@ -303,8 +248,6 @@ class Server extends AsyncApiObject
 
     /**
      * Get the summary.
-     *
-     * @return string|null
      */
     public function getSummary(): ?string
     {
@@ -313,9 +256,6 @@ class Server extends AsyncApiObject
 
     /**
      * Set the summary.
-     *
-     * @param string $summary The summary
-     * @return $this
      */
     public function setSummary(string $summary): self
     {
@@ -335,12 +275,8 @@ class Server extends AsyncApiObject
 
     /**
      * Add a binding.
-     *
-     * @param string $name The binding name
-     * @param mixed $binding The binding
-     * @return $this
      */
-    public function addBinding(string $name, $binding): self
+    public function addBinding(string $name, mixed $binding): self
     {
         $this->bindings[$name] = $binding;
         return $this;

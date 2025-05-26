@@ -12,29 +12,25 @@ class ServerVariable extends AsyncApiObject
      *
      * @var array<string>|null
      */
-    protected $enum;
-    
+    protected ?array $enum = null;
+
     /**
      * The default value to use for substitution, which SHALL be sent if an alternate value is not supplied.
-     *
-     * @var string
      */
-    protected $default;
-    
+    protected string $default;
+
     /**
      * A description for the server variable.
-     *
-     * @var string|null
      */
-    protected $description;
-    
+    protected ?string $description = null;
+
     /**
      * An array of examples of the server variable.
      *
      * @var array<string>|null
      */
-    protected $examples;
-    
+    protected ?array $examples = null;
+
     /**
      * Constructor.
      *
@@ -44,7 +40,7 @@ class ServerVariable extends AsyncApiObject
     {
         $this->default = $default;
     }
-    
+
     /**
      * Get the enum values.
      *
@@ -54,51 +50,43 @@ class ServerVariable extends AsyncApiObject
     {
         return $this->enum;
     }
-    
+
     /**
      * Set the enum values.
      *
      * @param array<string> $enum The enum values
-     * @return $this
      */
     public function setEnum(array $enum): self
     {
         $this->enum = $enum;
         return $this;
     }
-    
+
     /**
      * Get the default value.
-     *
-     * @return string
      */
     public function getDefault(): string
     {
         return $this->default;
     }
-    
+
     /**
      * Get the description.
-     *
-     * @return string|null
      */
     public function getDescription(): ?string
     {
         return $this->description;
     }
-    
+
     /**
      * Set the description.
-     *
-     * @param string $description The description
-     * @return $this
      */
     public function setDescription(string $description): self
     {
         $this->description = $description;
         return $this;
     }
-    
+
     /**
      * Get the examples.
      *
@@ -108,12 +96,11 @@ class ServerVariable extends AsyncApiObject
     {
         return $this->examples;
     }
-    
+
     /**
      * Set the examples.
      *
      * @param array<string> $examples The examples
-     * @return $this
      */
     public function setExamples(array $examples): self
     {

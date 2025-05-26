@@ -12,133 +12,133 @@ class Components extends AsyncApiObject
      *
      * @var array<string, Schema|Reference>
      */
-    protected $schemas = [];
+    protected array $schemas = [];
 
     /**
      * An object to hold reusable Tag Objects.
      *
      * @var array<string, Tag|Reference>
      */
-    protected $tags = [];
+    protected array $tags = [];
 
     /**
      * An object to hold reusable External Documentation Objects.
      *
      * @var array<string, ExternalDocumentation|Reference>
      */
-    protected $externalDocs = [];
+    protected array $externalDocs = [];
 
     /**
      * An object to hold reusable Server Objects.
      *
      * @var array<string, Server|Reference>
      */
-    protected $servers = [];
+    protected array $servers = [];
 
     /**
      * An object to hold reusable Channel Item Objects.
      *
      * @var array<string, Channel|Reference>
      */
-    protected $channels = [];
+    protected array $channels = [];
 
     /**
      * An object to hold reusable Operation Objects.
      *
      * @var array<string, Operation|Reference>
      */
-    protected $operations = [];
+    protected array $operations = [];
 
     /**
      * An object to hold reusable Message Objects.
      *
      * @var array<string, Message|Reference>
      */
-    protected $messages = [];
+    protected array $messages = [];
 
     /**
      * An object to hold reusable Security Scheme Objects.
      *
      * @var array<string, SecurityScheme|Reference>
      */
-    protected $securitySchemes = [];
+    protected array $securitySchemes = [];
 
     /**
      * An object to hold reusable Parameter Objects.
      *
      * @var array<string, Parameter|Reference>
      */
-    protected $parameters = [];
+    protected array $parameters = [];
 
     /**
      * An object to hold reusable Correlation ID Objects.
      *
      * @var array<string, CorrelationId|Reference>
      */
-    protected $correlationIds = [];
+    protected array $correlationIds = [];
 
     /**
      * An object to hold reusable Operation Trait Objects.
      *
      * @var array<string, OperationTrait|Reference>
      */
-    protected $operationTraits = [];
+    protected array $operationTraits = [];
 
     /**
      * An object to hold reusable Message Trait Objects.
      *
      * @var array<string, MessageTrait|Reference>
      */
-    protected $messageTraits = [];
+    protected array $messageTraits = [];
 
     /**
      * An object to hold reusable Server Variable Objects.
      *
      * @var array<string, ServerVariable|Reference>
      */
-    protected $serverVariables = [];
+    protected array $serverVariables = [];
 
     /**
      * An object to hold reusable Server Bindings Objects.
      *
      * @var array<string, mixed|Reference>
      */
-    protected $serverBindings = [];
+    protected array $serverBindings = [];
 
     /**
      * An object to hold reusable Channel Bindings Objects.
      *
      * @var array<string, mixed|Reference>
      */
-    protected $channelBindings = [];
+    protected array $channelBindings = [];
 
     /**
      * An object to hold reusable Operation Bindings Objects.
      *
      * @var array<string, mixed|Reference>
      */
-    protected $operationBindings = [];
+    protected array $operationBindings = [];
 
     /**
      * An object to hold reusable Message Bindings Objects.
      *
      * @var array<string, mixed|Reference>
      */
-    protected $messageBindings = [];
+    protected array $messageBindings = [];
 
     /**
      * An object to hold reusable Operation Reply Objects.
      *
      * @var array<string, mixed|Reference>
      */
-    protected $replies = [];
+    protected array $replies = [];
 
     /**
      * An object to hold reusable Operation Reply Address Objects.
      *
      * @var array<string, mixed|Reference>
      */
-    protected $replyAddresses = [];
+    protected array $replyAddresses = [];
 
     /**
      * Get the schemas.
@@ -152,12 +152,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add a schema.
-     *
-     * @param string $name The schema name
-     * @param Schema|Reference $schema The schema
-     * @return $this
      */
-    public function addSchema(string $name, $schema): self
+    public function addSchema(string $name, Schema|Reference $schema): self
     {
         $this->schemas[$name] = $schema;
         return $this;
@@ -175,12 +171,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add a server.
-     *
-     * @param string $name The server name
-     * @param Server|Reference $server The server
-     * @return $this
      */
-    public function addServer(string $name, $server): self
+    public function addServer(string $name, Server|Reference $server): self
     {
         $this->servers[$name] = $server;
         return $this;
@@ -198,12 +190,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add a channel.
-     *
-     * @param string $name The channel name
-     * @param Channel|Reference $channel The channel
-     * @return $this
      */
-    public function addChannel(string $name, $channel): self
+    public function addChannel(string $name, Channel|Reference $channel): self
     {
         $this->channels[$name] = $channel;
         return $this;
@@ -221,12 +209,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add an operation.
-     *
-     * @param string $name The operation name
-     * @param Operation|Reference $operation The operation
-     * @return $this
      */
-    public function addOperation(string $name, $operation): self
+    public function addOperation(string $name, Operation|Reference $operation): self
     {
         $this->operations[$name] = $operation;
         return $this;
@@ -244,12 +228,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add a message.
-     *
-     * @param string $name The message name
-     * @param Message|Reference $message The message
-     * @return $this
      */
-    public function addMessage(string $name, $message): self
+    public function addMessage(string $name, Message|Reference $message): self
     {
         $this->messages[$name] = $message;
         return $this;
@@ -267,12 +247,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add a security scheme.
-     *
-     * @param string $name The security scheme name
-     * @param SecurityScheme|Reference $securityScheme The security scheme
-     * @return $this
      */
-    public function addSecurityScheme(string $name, $securityScheme): self
+    public function addSecurityScheme(string $name, SecurityScheme|Reference $securityScheme): self
     {
         $this->securitySchemes[$name] = $securityScheme;
         return $this;
@@ -290,12 +266,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add a parameter.
-     *
-     * @param string $name The parameter name
-     * @param Parameter|Reference $parameter The parameter
-     * @return $this
      */
-    public function addParameter(string $name, $parameter): self
+    public function addParameter(string $name, Parameter|Reference $parameter): self
     {
         $this->parameters[$name] = $parameter;
         return $this;
@@ -313,12 +285,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add a correlation ID.
-     *
-     * @param string $name The correlation ID name
-     * @param CorrelationId|Reference $correlationId The correlation ID
-     * @return $this
      */
-    public function addCorrelationId(string $name, $correlationId): self
+    public function addCorrelationId(string $name, CorrelationId|Reference $correlationId): self
     {
         $this->correlationIds[$name] = $correlationId;
         return $this;
@@ -336,12 +304,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add an operation trait.
-     *
-     * @param string $name The operation trait name
-     * @param OperationTrait|Reference $operationTrait The operation trait
-     * @return $this
      */
-    public function addOperationTrait(string $name, $operationTrait): self
+    public function addOperationTrait(string $name, OperationTrait|Reference $operationTrait): self
     {
         $this->operationTraits[$name] = $operationTrait;
         return $this;
@@ -359,12 +323,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add a message trait.
-     *
-     * @param string $name The message trait name
-     * @param MessageTrait|Reference $messageTrait The message trait
-     * @return $this
      */
-    public function addMessageTrait(string $name, $messageTrait): self
+    public function addMessageTrait(string $name, MessageTrait|Reference $messageTrait): self
     {
         $this->messageTraits[$name] = $messageTrait;
         return $this;
@@ -382,12 +342,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add a server variable.
-     *
-     * @param string $name The server variable name
-     * @param ServerVariable|Reference $serverVariable The server variable
-     * @return $this
      */
-    public function addServerVariable(string $name, $serverVariable): self
+    public function addServerVariable(string $name, ServerVariable|Reference $serverVariable): self
     {
         $this->serverVariables[$name] = $serverVariable;
         return $this;
@@ -405,12 +361,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add a tag.
-     *
-     * @param string $name The tag name
-     * @param Tag|Reference $tag The tag
-     * @return $this
      */
-    public function addTag(string $name, $tag): self
+    public function addTag(string $name, Tag|Reference $tag): self
     {
         $this->tags[$name] = $tag;
         return $this;
@@ -428,12 +380,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add external documentation.
-     *
-     * @param string $name The external documentation name
-     * @param ExternalDocumentation|Reference $externalDoc The external documentation
-     * @return $this
      */
-    public function addExternalDoc(string $name, $externalDoc): self
+    public function addExternalDoc(string $name, ExternalDocumentation|Reference $externalDoc): self
     {
         $this->externalDocs[$name] = $externalDoc;
         return $this;
@@ -451,12 +399,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add a server binding.
-     *
-     * @param string $name The server binding name
-     * @param mixed|Reference $binding The server binding
-     * @return $this
      */
-    public function addServerBinding(string $name, $binding): self
+    public function addServerBinding(string $name, mixed $binding): self
     {
         $this->serverBindings[$name] = $binding;
         return $this;
@@ -474,12 +418,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add a channel binding.
-     *
-     * @param string $name The channel binding name
-     * @param mixed|Reference $binding The channel binding
-     * @return $this
      */
-    public function addChannelBinding(string $name, $binding): self
+    public function addChannelBinding(string $name, mixed $binding): self
     {
         $this->channelBindings[$name] = $binding;
         return $this;
@@ -497,12 +437,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add an operation binding.
-     *
-     * @param string $name The operation binding name
-     * @param mixed|Reference $binding The operation binding
-     * @return $this
      */
-    public function addOperationBinding(string $name, $binding): self
+    public function addOperationBinding(string $name, mixed $binding): self
     {
         $this->operationBindings[$name] = $binding;
         return $this;
@@ -520,12 +456,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add a message binding.
-     *
-     * @param string $name The message binding name
-     * @param mixed|Reference $binding The message binding
-     * @return $this
      */
-    public function addMessageBinding(string $name, $binding): self
+    public function addMessageBinding(string $name, mixed $binding): self
     {
         $this->messageBindings[$name] = $binding;
         return $this;
@@ -543,12 +475,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add a reply.
-     *
-     * @param string $name The reply name
-     * @param mixed|Reference $reply The reply
-     * @return $this
      */
-    public function addReply(string $name, $reply): self
+    public function addReply(string $name, mixed $reply): self
     {
         $this->replies[$name] = $reply;
         return $this;
@@ -566,12 +494,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add a reply address.
-     *
-     * @param string $name The reply address name
-     * @param mixed|Reference $replyAddress The reply address
-     * @return $this
      */
-    public function addReplyAddress(string $name, $replyAddress): self
+    public function addReplyAddress(string $name, mixed $replyAddress): self
     {
         $this->replyAddresses[$name] = $replyAddress;
         return $this;

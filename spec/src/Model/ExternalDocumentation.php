@@ -9,18 +9,14 @@ class ExternalDocumentation extends AsyncApiObject
 {
     /**
      * The URL for the target documentation.
-     *
-     * @var string
      */
-    protected $url;
-    
+    protected string $url;
+
     /**
      * A short description of the target documentation.
-     *
-     * @var string|null
      */
-    protected $description;
-    
+    protected ?string $description = null;
+
     /**
      * Constructor.
      *
@@ -30,7 +26,7 @@ class ExternalDocumentation extends AsyncApiObject
     {
         $this->url = $url;
     }
-    
+
     /**
      * Get the URL.
      *
@@ -40,22 +36,17 @@ class ExternalDocumentation extends AsyncApiObject
     {
         return $this->url;
     }
-    
+
     /**
      * Get the description.
-     *
-     * @return string|null
      */
     public function getDescription(): ?string
     {
         return $this->description;
     }
-    
+
     /**
      * Set the description.
-     *
-     * @param string $description The description
-     * @return $this
      */
     public function setDescription(string $description): self
     {

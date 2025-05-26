@@ -10,107 +10,77 @@ class Operation extends AsyncApiObject
     /**
      * Required. Use send when it's expected that the application will send a message to the given channel,
      * and receive when the application should expect receiving messages from the given channel.
-     *
-     * @var string
      */
-    protected $action;
+    protected string $action;
 
     /**
      * Required. A $ref pointer to the definition of the channel in which this operation is performed.
-     *
-     * @var Reference
      */
-    protected $channel;
+    protected Reference $channel;
 
     /**
      * A human-friendly title for the operation.
-     *
-     * @var string|null
      */
-    protected $title;
+    protected ?string $title = null;
 
     /**
      * A short summary of what the operation is about.
-     *
-     * @var string|null
      */
-    protected $summary;
+    protected ?string $summary = null;
 
     /**
      * A verbose explanation of the operation.
-     *
-     * @var string|null
      */
-    protected $description;
+    protected ?string $description = null;
 
     /**
      * A declaration of which security schemes are associated with this operation.
      * Only one of the security scheme objects MUST be satisfied to authorize an operation.
-     *
-     * @var array<SecurityScheme|Reference>
      */
-    protected $security = [];
+    protected array $security = [];
 
     /**
      * A list of tags for logical grouping and categorization of operations.
-     *
-     * @var array<Tag>
      */
-    protected $tags = [];
+    protected array $tags = [];
 
     /**
      * Additional external documentation for this operation.
-     *
-     * @var ExternalDocumentation|Reference|null
      */
-    protected $externalDocs;
+    protected ExternalDocumentation|Reference|null $externalDocs = null;
 
     /**
      * A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the operation.
-     *
-     * @var array<string, mixed>|Reference
      */
-    protected $bindings = [];
+    protected array|Reference $bindings = [];
 
     /**
      * A list of traits to apply to the operation object.
-     *
-     * @var array<OperationTrait|Reference>
      */
-    protected $traits = [];
+    protected array $traits = [];
 
     /**
      * The definition of the message that will be published or received by this operation.
-     *
-     * @var Message|Reference|null
      */
-    protected $message;
+    protected Message|Reference|null $message = null;
 
     /**
      * A list of $ref pointers pointing to the supported Message Objects that can be processed by this operation.
-     *
-     * @var array<Reference>|null
      */
-    protected $messages;
+    protected ?array $messages = null;
 
     /**
      * The definition of the reply in a request-reply operation.
-     *
-     * @var mixed|Reference|null
      */
-    protected $reply;
+    protected mixed $reply = null;
 
     /**
      * A map of possible out-of-band callbacks related to the parent operation.
-     *
-     * @var array<string, Channel|Reference>
      */
-    protected $callbacks = [];
+    protected array $callbacks = [];
 
     /**
      * Get the title.
-     *
-     * @return string|null
      */
     public function getTitle(): ?string
     {
@@ -119,9 +89,6 @@ class Operation extends AsyncApiObject
 
     /**
      * Set the title.
-     *
-     * @param string $title The title
-     * @return $this
      */
     public function setTitle(string $title): self
     {
@@ -131,8 +98,6 @@ class Operation extends AsyncApiObject
 
     /**
      * Get the summary.
-     *
-     * @return string|null
      */
     public function getSummary(): ?string
     {
@@ -141,9 +106,6 @@ class Operation extends AsyncApiObject
 
     /**
      * Set the summary.
-     *
-     * @param string $summary The summary
-     * @return $this
      */
     public function setSummary(string $summary): self
     {
@@ -153,8 +115,6 @@ class Operation extends AsyncApiObject
 
     /**
      * Get the description.
-     *
-     * @return string|null
      */
     public function getDescription(): ?string
     {
@@ -163,9 +123,6 @@ class Operation extends AsyncApiObject
 
     /**
      * Set the description.
-     *
-     * @param string $description The description
-     * @return $this
      */
     public function setDescription(string $description): self
     {
@@ -175,8 +132,6 @@ class Operation extends AsyncApiObject
 
     /**
      * Get the action.
-     *
-     * @return string|null
      */
     public function getAction(): ?string
     {
@@ -187,7 +142,6 @@ class Operation extends AsyncApiObject
      * Set the action.
      *
      * @param string $action The action ("send" or "receive")
-     * @return $this
      */
     public function setAction(string $action): self
     {
@@ -197,8 +151,6 @@ class Operation extends AsyncApiObject
 
     /**
      * Get the channel.
-     *
-     * @return Reference|null
      */
     public function getChannel(): ?Reference
     {
@@ -207,9 +159,6 @@ class Operation extends AsyncApiObject
 
     /**
      * Set the channel.
-     *
-     * @param Reference $channel The channel reference
-     * @return $this
      */
     public function setChannel(Reference $channel): self
     {
@@ -219,8 +168,6 @@ class Operation extends AsyncApiObject
 
     /**
      * Get the security requirements.
-     *
-     * @return array<SecurityScheme|Reference>
      */
     public function getSecurity(): array
     {
@@ -229,11 +176,8 @@ class Operation extends AsyncApiObject
 
     /**
      * Add a security requirement.
-     *
-     * @param SecurityScheme|Reference $security The security scheme or reference
-     * @return $this
      */
-    public function addSecurity($security): self
+    public function addSecurity(SecurityScheme|Reference $security): self
     {
         $this->security[] = $security;
         return $this;
@@ -241,8 +185,6 @@ class Operation extends AsyncApiObject
 
     /**
      * Get the tags.
-     *
-     * @return array<Tag>
      */
     public function getTags(): array
     {
@@ -251,9 +193,6 @@ class Operation extends AsyncApiObject
 
     /**
      * Add a tag.
-     *
-     * @param Tag $tag The tag
-     * @return $this
      */
     public function addTag(Tag $tag): self
     {
@@ -263,21 +202,16 @@ class Operation extends AsyncApiObject
 
     /**
      * Get the external documentation.
-     *
-     * @return ExternalDocumentation|Reference|null
      */
-    public function getExternalDocs()
+    public function getExternalDocs(): ExternalDocumentation|Reference|null
     {
         return $this->externalDocs;
     }
 
     /**
      * Set the external documentation.
-     *
-     * @param ExternalDocumentation|Reference $externalDocs The external documentation or reference
-     * @return $this
      */
-    public function setExternalDocs($externalDocs): self
+    public function setExternalDocs(ExternalDocumentation|Reference $externalDocs): self
     {
         $this->externalDocs = $externalDocs;
         return $this;
@@ -285,21 +219,16 @@ class Operation extends AsyncApiObject
 
     /**
      * Get the bindings.
-     *
-     * @return array<string, mixed>|Reference
      */
-    public function getBindings()
+    public function getBindings(): array|Reference
     {
         return $this->bindings;
     }
 
     /**
      * Set the bindings.
-     *
-     * @param array<string, mixed>|Reference $bindings The bindings or reference
-     * @return $this
      */
-    public function setBindings($bindings): self
+    public function setBindings(array|Reference $bindings): self
     {
         $this->bindings = $bindings;
         return $this;
@@ -307,12 +236,8 @@ class Operation extends AsyncApiObject
 
     /**
      * Add a binding.
-     *
-     * @param string $name The binding name
-     * @param mixed $binding The binding
-     * @return $this
      */
-    public function addBinding(string $name, $binding): self
+    public function addBinding(string $name, mixed $binding): self
     {
         if (!is_array($this->bindings)) {
             $this->bindings = [];
@@ -323,8 +248,6 @@ class Operation extends AsyncApiObject
 
     /**
      * Get the traits.
-     *
-     * @return array<OperationTrait|Reference>
      */
     public function getTraits(): array
     {
@@ -333,11 +256,8 @@ class Operation extends AsyncApiObject
 
     /**
      * Add a trait.
-     *
-     * @param OperationTrait|Reference $trait The trait
-     * @return $this
      */
-    public function addTrait($trait): self
+    public function addTrait(OperationTrait|Reference $trait): self
     {
         $this->traits[] = $trait;
         return $this;
@@ -345,21 +265,16 @@ class Operation extends AsyncApiObject
 
     /**
      * Get the message.
-     *
-     * @return Message|Reference|null
      */
-    public function getMessage()
+    public function getMessage(): Message|Reference|null
     {
         return $this->message;
     }
 
     /**
      * Set the message.
-     *
-     * @param Message|Reference $message The message
-     * @return $this
      */
-    public function setMessage($message): self
+    public function setMessage(Message|Reference $message): self
     {
         $this->message = $message;
         return $this;
@@ -367,8 +282,6 @@ class Operation extends AsyncApiObject
 
     /**
      * Get the messages.
-     *
-     * @return array<Reference>|null
      */
     public function getMessages(): ?array
     {
@@ -377,9 +290,6 @@ class Operation extends AsyncApiObject
 
     /**
      * Set the messages.
-     *
-     * @param array<Reference> $messages The messages references
-     * @return $this
      */
     public function setMessages(array $messages): self
     {
@@ -389,9 +299,6 @@ class Operation extends AsyncApiObject
 
     /**
      * Add a message reference.
-     *
-     * @param Reference $message The message reference
-     * @return $this
      */
     public function addMessage(Reference $message): self
     {
@@ -404,10 +311,8 @@ class Operation extends AsyncApiObject
 
     /**
      * Get the reply.
-     *
-     * @return mixed|Reference|null
      */
-    public function getReply()
+    public function getReply(): mixed
     {
         return $this->reply;
     }
@@ -418,7 +323,7 @@ class Operation extends AsyncApiObject
      * @param mixed|Reference $reply The reply or reference
      * @return $this
      */
-    public function setReply($reply): self
+    public function setReply(mixed $reply): self
     {
         $this->reply = $reply;
         return $this;
@@ -426,8 +331,6 @@ class Operation extends AsyncApiObject
 
     /**
      * Get the callbacks.
-     *
-     * @return array<string, Channel|Reference>
      */
     public function getCallbacks(): array
     {
@@ -436,12 +339,8 @@ class Operation extends AsyncApiObject
 
     /**
      * Add a callback.
-     *
-     * @param string $name The callback name
-     * @param Channel|Reference $callback The callback
-     * @return $this
      */
-    public function addCallback(string $name, $callback): self
+    public function addCallback(string $name, Channel|Reference $callback): self
     {
         $this->callbacks[$name] = $callback;
         return $this;

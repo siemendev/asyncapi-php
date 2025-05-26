@@ -9,18 +9,14 @@ class License extends AsyncApiObject
 {
     /**
      * The license name used for the API.
-     *
-     * @var string
      */
-    protected $name;
-    
+    protected string $name;
+
     /**
      * A URL to the license used for the API.
-     *
-     * @var string|null
      */
-    protected $url;
-    
+    protected ?string $url = null;
+
     /**
      * Constructor.
      *
@@ -30,32 +26,25 @@ class License extends AsyncApiObject
     {
         $this->name = $name;
     }
-    
+
     /**
      * Get the license name.
-     *
-     * @return string
      */
     public function getName(): string
     {
         return $this->name;
     }
-    
+
     /**
      * Get the license URL.
-     *
-     * @return string|null
      */
     public function getUrl(): ?string
     {
         return $this->url;
     }
-    
+
     /**
      * Set the license URL.
-     *
-     * @param string $url The license URL
-     * @return $this
      */
     public function setUrl(string $url): self
     {

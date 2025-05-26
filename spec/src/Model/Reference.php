@@ -9,25 +9,19 @@ class Reference extends AsyncApiObject
 {
     /**
      * The reference string.
-     *
-     * @var string
      */
-    protected $ref;
-    
+    protected string $ref;
+
     /**
      * A short summary which by default SHOULD override that of the referenced component.
-     *
-     * @var string|null
      */
-    protected $summary;
-    
+    protected ?string $summary = null;
+
     /**
      * A description which by default SHOULD override that of the referenced component.
-     *
-     * @var string|null
      */
-    protected $description;
-    
+    protected ?string $description = null;
+
     /**
      * Constructor.
      *
@@ -37,83 +31,71 @@ class Reference extends AsyncApiObject
     {
         $this->ref = $ref;
     }
-    
+
     /**
      * Get the reference string.
-     *
-     * @return string
      */
     public function getRef(): string
     {
         return $this->ref;
     }
-    
+
     /**
      * Get the summary.
-     *
-     * @return string|null
      */
     public function getSummary(): ?string
     {
         return $this->summary;
     }
-    
+
     /**
      * Set the summary.
-     *
-     * @param string $summary The summary
-     * @return $this
      */
     public function setSummary(string $summary): self
     {
         $this->summary = $summary;
         return $this;
     }
-    
+
     /**
      * Get the description.
-     *
-     * @return string|null
      */
     public function getDescription(): ?string
     {
         return $this->description;
     }
-    
+
     /**
      * Set the description.
-     *
-     * @param string $description The description
-     * @return $this
      */
     public function setDescription(string $description): self
     {
         $this->description = $description;
         return $this;
     }
-    
+
     /**
      * Convert the object to an array representation.
      *
-     * @return array
+     * @return array<string, string|null>
      */
     public function toArray(): array
     {
         $array = [
             '$ref' => $this->ref,
         ];
-        
+
         if ($this->summary !== null) {
             $array['summary'] = $this->summary;
         }
-        
+
         if ($this->description !== null) {
             $array['description'] = $this->description;
         }
-        
+
         return $array;
     }
-    
+
     /**
      * Get the serialized name of a property.
      *
@@ -125,7 +107,7 @@ class Reference extends AsyncApiObject
         if ($property === 'ref') {
             return '$ref';
         }
-        
+
         return parent::getSerializedPropertyName($property);
     }
 }

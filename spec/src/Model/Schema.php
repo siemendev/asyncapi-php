@@ -12,324 +12,251 @@ class Schema extends AsyncApiObject
 {
     /**
      * The type of the schema.
-     *
-     * @var string|null
      */
-    protected $type;
-    
+    protected ?string $type = null;
+
     /**
      * The title of the schema.
-     *
-     * @var string|null
      */
-    protected $title;
-    
+    protected ?string $title = null;
+
     /**
      * A short description of the schema.
-     *
-     * @var string|null
      */
-    protected $description;
-    
+    protected ?string $description = null;
+
     /**
      * The default value of the schema.
-     *
-     * @var mixed
      */
-    protected $default;
-    
+    protected mixed $default = null;
+
     /**
      * The format of the schema.
-     *
-     * @var string|null
      */
-    protected $format;
-    
+    protected ?string $format = null;
+
     /**
      * The minimum value of the schema.
-     *
-     * @var int|float|null
      */
-    protected $minimum;
-    
+    protected int|float|null $minimum = null;
+
     /**
      * The maximum value of the schema.
-     *
-     * @var int|float|null
      */
-    protected $maximum;
-    
+    protected int|float|null $maximum = null;
+
     /**
      * Whether the minimum value is exclusive.
-     *
-     * @var bool|null
      */
-    protected $exclusiveMinimum;
-    
+    protected ?bool $exclusiveMinimum = null;
+
     /**
      * Whether the maximum value is exclusive.
-     *
-     * @var bool|null
      */
-    protected $exclusiveMaximum;
-    
+    protected ?bool $exclusiveMaximum = null;
+
     /**
      * The minimum length of the schema.
-     *
-     * @var int|null
      */
-    protected $minLength;
-    
+    protected ?int $minLength = null;
+
     /**
      * The maximum length of the schema.
-     *
-     * @var int|null
      */
-    protected $maxLength;
-    
+    protected ?int $maxLength = null;
+
     /**
      * The pattern of the schema.
-     *
-     * @var string|null
      */
-    protected $pattern;
-    
+    protected ?string $pattern = null;
+
     /**
      * The minimum number of items in the schema.
-     *
-     * @var int|null
      */
-    protected $minItems;
-    
+    protected ?int $minItems = null;
+
     /**
      * The maximum number of items in the schema.
-     *
-     * @var int|null
      */
-    protected $maxItems;
-    
+    protected ?int $maxItems = null;
+
     /**
      * Whether the items in the schema must be unique.
-     *
-     * @var bool|null
      */
-    protected $uniqueItems;
-    
+    protected ?bool $uniqueItems = null;
+
     /**
      * The minimum number of properties in the schema.
-     *
-     * @var int|null
      */
-    protected $minProperties;
-    
+    protected ?int $minProperties = null;
+
     /**
      * The maximum number of properties in the schema.
-     *
-     * @var int|null
      */
-    protected $maxProperties;
-    
+    protected ?int $maxProperties = null;
+
     /**
      * The required properties of the schema.
-     *
+     * 
      * @var array<string>|null
      */
-    protected $required;
-    
+    protected ?array $required = null;
+
     /**
      * The enum values of the schema.
      *
-     * @var array|null
+     * @var array<string>|null
      */
-    protected $enum;
-    
+    protected ?array $enum = null;
+
     /**
      * The type of the items in the schema.
-     *
-     * @var Schema|Reference|null
      */
-    protected $items;
-    
+    protected Schema|Reference|null $items = null;
+
     /**
      * The all-of schemas.
-     *
+     * 
      * @var array<Schema|Reference>|null
      */
-    protected $allOf;
-    
+    protected ?array $allOf = null;
+
     /**
      * The one-of schemas.
-     *
+     * 
      * @var array<Schema|Reference>|null
      */
-    protected $oneOf;
-    
+    protected ?array $oneOf = null;
+
     /**
      * The any-of schemas.
-     *
+     * 
      * @var array<Schema|Reference>|null
      */
-    protected $anyOf;
-    
+    protected ?array $anyOf = null;
+
     /**
      * The not schema.
-     *
-     * @var Schema|Reference|null
      */
-    protected $not;
-    
+    protected Schema|Reference|null $not = null;
+
     /**
      * The properties of the schema.
-     *
+     * 
      * @var array<string, Schema|Reference>|null
      */
-    protected $properties;
-    
+    protected ?array $properties = null;
+
     /**
      * The additional properties of the schema.
-     *
-     * @var bool|Schema|Reference|null
      */
-    protected $additionalProperties;
-    
+    protected bool|Schema|Reference|null $additionalProperties = null;
+
     /**
      * The discriminator of the schema.
-     *
-     * @var Discriminator|null
      */
-    protected $discriminator;
-    
+    protected ?Discriminator $discriminator = null;
+
     /**
      * Whether the schema is read only.
-     *
-     * @var bool|null
      */
-    protected $readOnly;
-    
+    protected ?bool $readOnly = null;
+
     /**
      * Whether the schema is write only.
-     *
-     * @var bool|null
      */
-    protected $writeOnly;
-    
+    protected ?bool $writeOnly = null;
+
     /**
      * The examples of the schema.
-     *
-     * @var array|null
      */
-    protected $examples;
-    
+    protected ?array $examples = null;
+
     /**
      * Get the type.
-     *
-     * @return string|null
      */
     public function getType(): ?string
     {
         return $this->type;
     }
-    
+
     /**
      * Set the type.
-     *
-     * @param string $type The type
-     * @return $this
      */
     public function setType(string $type): self
     {
         $this->type = $type;
         return $this;
     }
-    
+
     /**
      * Get the title.
-     *
-     * @return string|null
      */
     public function getTitle(): ?string
     {
         return $this->title;
     }
-    
+
     /**
      * Set the title.
-     *
-     * @param string $title The title
-     * @return $this
      */
     public function setTitle(string $title): self
     {
         $this->title = $title;
         return $this;
     }
-    
+
     /**
      * Get the description.
-     *
-     * @return string|null
      */
     public function getDescription(): ?string
     {
         return $this->description;
     }
-    
+
     /**
      * Set the description.
-     *
-     * @param string $description The description
-     * @return $this
      */
     public function setDescription(string $description): self
     {
         $this->description = $description;
         return $this;
     }
-    
+
     /**
      * Get the default value.
-     *
-     * @return mixed
      */
-    public function getDefault()
+    public function getDefault(): mixed
     {
         return $this->default;
     }
-    
+
     /**
      * Set the default value.
-     *
-     * @param mixed $default The default value
-     * @return $this
      */
-    public function setDefault($default): self
+    public function setDefault(mixed $default): self
     {
         $this->default = $default;
         return $this;
     }
-    
+
     /**
      * Get the format.
-     *
-     * @return string|null
      */
     public function getFormat(): ?string
     {
         return $this->format;
     }
-    
+
     /**
      * Set the format.
-     *
-     * @param string $format The format
-     * @return $this
      */
     public function setFormat(string $format): self
     {
         $this->format = $format;
         return $this;
     }
-    
+
     /**
      * Get the properties.
      *
@@ -339,36 +266,31 @@ class Schema extends AsyncApiObject
     {
         return $this->properties;
     }
-    
+
     /**
      * Set the properties.
      *
      * @param array<string, Schema|Reference> $properties The properties
-     * @return $this
      */
     public function setProperties(array $properties): self
     {
         $this->properties = $properties;
         return $this;
     }
-    
+
     /**
      * Add a property.
-     *
-     * @param string $name The property name
-     * @param Schema|Reference $property The property
-     * @return $this
      */
-    public function addProperty(string $name, $property): self
+    public function addProperty(string $name, Schema|Reference $property): self
     {
         if ($this->properties === null) {
             $this->properties = [];
         }
-        
+
         $this->properties[$name] = $property;
         return $this;
     }
-    
+
     /**
      * Get the required properties.
      *
@@ -378,72 +300,62 @@ class Schema extends AsyncApiObject
     {
         return $this->required;
     }
-    
+
     /**
      * Set the required properties.
      *
      * @param array<string> $required The required properties
-     * @return $this
      */
     public function setRequired(array $required): self
     {
         $this->required = $required;
         return $this;
     }
-    
+
     /**
      * Add a required property.
-     *
-     * @param string $property The required property
-     * @return $this
      */
     public function addRequired(string $property): self
     {
         if ($this->required === null) {
             $this->required = [];
         }
-        
+
         $this->required[] = $property;
         return $this;
     }
-    
+
     /**
      * Get the items.
-     *
-     * @return Schema|Reference|null
      */
-    public function getItems()
+    public function getItems(): Schema|Reference|null
     {
         return $this->items;
     }
-    
+
     /**
      * Set the items.
-     *
-     * @param Schema|Reference $items The items
-     * @return $this
      */
-    public function setItems($items): self
+    public function setItems(Schema|Reference $items): self
     {
         $this->items = $items;
         return $this;
     }
-    
+
     /**
      * Get the enum values.
      *
-     * @return array|null
+     * @return array<string>|null
      */
     public function getEnum(): ?array
     {
         return $this->enum;
     }
-    
+
     /**
      * Set the enum values.
      *
-     * @param array $enum The enum values
-     * @return $this
+     * @param array<string> $enum The enum values
      */
     public function setEnum(array $enum): self
     {

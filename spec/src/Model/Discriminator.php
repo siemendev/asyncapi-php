@@ -10,18 +10,16 @@ class Discriminator extends AsyncApiObject
 {
     /**
      * The name of the property in the payload that will hold the discriminator value.
-     *
-     * @var string
      */
-    protected $propertyName;
-    
+    protected string $propertyName;
+
     /**
      * An object to hold mappings between payload values and schema names or references.
      *
      * @var array<string, string>
      */
-    protected $mapping = [];
-    
+    protected array $mapping = [];
+
     /**
      * Constructor.
      *
@@ -31,17 +29,15 @@ class Discriminator extends AsyncApiObject
     {
         $this->propertyName = $propertyName;
     }
-    
+
     /**
      * Get the property name.
-     *
-     * @return string
      */
     public function getPropertyName(): string
     {
         return $this->propertyName;
     }
-    
+
     /**
      * Get the mapping.
      *
@@ -51,7 +47,7 @@ class Discriminator extends AsyncApiObject
     {
         return $this->mapping;
     }
-    
+
     /**
      * Set the mapping.
      *
@@ -63,13 +59,9 @@ class Discriminator extends AsyncApiObject
         $this->mapping = $mapping;
         return $this;
     }
-    
+
     /**
      * Add a mapping.
-     *
-     * @param string $value The payload value
-     * @param string $schema The schema name or reference
-     * @return $this
      */
     public function addMapping(string $value, string $schema): self
     {

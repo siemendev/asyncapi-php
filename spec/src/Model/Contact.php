@@ -9,25 +9,19 @@ class Contact extends AsyncApiObject
 {
     /**
      * The identifying name of the contact person/organization.
-     *
-     * @var string|null
      */
-    protected $name;
-    
+    protected ?string $name = null;
+
     /**
      * The URL pointing to the contact information.
-     *
-     * @var string|null
      */
-    protected $url;
-    
+    protected ?string $url = null;
+
     /**
      * The email address of the contact person/organization.
-     *
-     * @var string|null
      */
-    protected $email;
-    
+    protected ?string $email = null;
+
     /**
      * Get the name of the contact person/organization.
      *
@@ -37,56 +31,43 @@ class Contact extends AsyncApiObject
     {
         return $this->name;
     }
-    
+
     /**
      * Set the name of the contact person/organization.
-     *
-     * @param string $name The name
-     * @return $this
      */
     public function setName(string $name): self
     {
         $this->name = $name;
         return $this;
     }
-    
+
     /**
      * Get the URL pointing to the contact information.
-     *
-     * @return string|null
      */
     public function getUrl(): ?string
     {
         return $this->url;
     }
-    
+
     /**
      * Set the URL pointing to the contact information.
-     *
-     * @param string $url The URL
-     * @return $this
      */
     public function setUrl(string $url): self
     {
         $this->url = $url;
         return $this;
     }
-    
+
     /**
      * Get the email address of the contact person/organization.
-     *
-     * @return string|null
      */
     public function getEmail(): ?string
     {
         return $this->email;
     }
-    
+
     /**
      * Set the email address of the contact person/organization.
-     *
-     * @param string $email The email address
-     * @return $this
      */
     public function setEmail(string $email): self
     {

@@ -9,18 +9,14 @@ class CorrelationId extends AsyncApiObject
 {
     /**
      * A runtime expression that specifies the location of the correlation ID.
-     *
-     * @var string
      */
-    protected $location;
-    
+    protected string $location;
+
     /**
      * A short description of the correlation ID.
-     *
-     * @var string|null
      */
-    protected $description;
-    
+    protected ?string $description = null;
+
     /**
      * Constructor.
      *
@@ -30,32 +26,25 @@ class CorrelationId extends AsyncApiObject
     {
         $this->location = $location;
     }
-    
+
     /**
      * Get the location.
-     *
-     * @return string
      */
     public function getLocation(): string
     {
         return $this->location;
     }
-    
+
     /**
      * Get the description.
-     *
-     * @return string|null
      */
     public function getDescription(): ?string
     {
         return $this->description;
     }
-    
+
     /**
      * Set the description.
-     *
-     * @param string $description The description
-     * @return $this
      */
     public function setDescription(string $description): self
     {

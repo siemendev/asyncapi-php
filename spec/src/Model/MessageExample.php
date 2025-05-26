@@ -9,39 +9,29 @@ class MessageExample extends AsyncApiObject
 {
     /**
      * A machine-friendly name for the example.
-     *
-     * @var string|null
      */
-    protected $name;
-    
+    protected ?string $name = null;
+
     /**
      * A short summary of what the example is about.
-     *
-     * @var string|null
      */
-    protected $summary;
-    
+    protected ?string $summary = null;
+
     /**
      * A verbose explanation of the example.
-     *
-     * @var string|null
      */
-    protected $description;
-    
+    protected ?string $description = null;
+
     /**
      * The value of the example.
-     *
-     * @var mixed
      */
-    protected $value;
-    
+    protected mixed $value = null;
+
     /**
      * The value of the message headers.
-     *
-     * @var mixed
      */
-    protected $headers;
-    
+    protected mixed $headers = null;
+
     /**
      * Get the name.
      *
@@ -51,102 +41,79 @@ class MessageExample extends AsyncApiObject
     {
         return $this->name;
     }
-    
+
     /**
      * Set the name.
-     *
-     * @param string $name The name
-     * @return $this
      */
     public function setName(string $name): self
     {
         $this->name = $name;
         return $this;
     }
-    
+
     /**
      * Get the summary.
-     *
-     * @return string|null
      */
     public function getSummary(): ?string
     {
         return $this->summary;
     }
-    
+
     /**
      * Set the summary.
-     *
-     * @param string $summary The summary
-     * @return $this
      */
     public function setSummary(string $summary): self
     {
         $this->summary = $summary;
         return $this;
     }
-    
+
     /**
      * Get the description.
-     *
-     * @return string|null
      */
     public function getDescription(): ?string
     {
         return $this->description;
     }
-    
+
     /**
      * Set the description.
-     *
-     * @param string $description The description
-     * @return $this
      */
     public function setDescription(string $description): self
     {
         $this->description = $description;
         return $this;
     }
-    
+
     /**
      * Get the value.
-     *
-     * @return mixed
      */
-    public function getValue()
+    public function getValue(): mixed
     {
         return $this->value;
     }
-    
+
     /**
      * Set the value.
-     *
-     * @param mixed $value The value
-     * @return $this
      */
-    public function setValue($value): self
+    public function setValue(mixed $value): self
     {
         $this->value = $value;
         return $this;
     }
-    
+
     /**
      * Get the headers.
-     *
-     * @return mixed
      */
-    public function getHeaders()
+    public function getHeaders(): mixed
     {
         return $this->headers;
     }
-    
+
     /**
      * Set the headers.
-     *
-     * @param mixed $headers The headers
-     * @return $this
      */
-    public function setHeaders($headers): self
+    public function setHeaders(mixed $headers): self
     {
         $this->headers = $headers;
         return $this;

@@ -15,21 +15,19 @@ class SecurityRequirement extends AsyncApiObject
      *
      * @var array<string, array<string>>
      */
-    protected $requirements = [];
-    
+    protected array $requirements = [];
+
     /**
      * Add a security requirement.
      *
-     * @param string $name The name of the security scheme
      * @param array<string> $scopes The required scopes (empty array if no scopes are required)
-     * @return $this
      */
     public function addRequirement(string $name, array $scopes = []): self
     {
         $this->requirements[$name] = $scopes;
         return $this;
     }
-    
+
     /**
      * Get the security requirements.
      *
@@ -39,11 +37,11 @@ class SecurityRequirement extends AsyncApiObject
     {
         return $this->requirements;
     }
-    
+
     /**
      * Convert the object to an array representation.
      *
-     * @return array
+     * @return array<string, array<string>>
      */
     public function toArray(): array
     {

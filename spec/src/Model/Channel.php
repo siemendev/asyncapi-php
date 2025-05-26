@@ -11,73 +11,63 @@ class Channel extends AsyncApiObject
      * An optional string representation of this channel's address.
      * The address is typically the "topic name", "routing key", "event type", or "path".
      * When null or absent, it MUST be interpreted as unknown.
-     *
-     * @var string|null
      */
-    protected $address;
+    protected ?string $address = null;
 
     /**
      * A human-friendly title for the channel.
-     *
-     * @var string|null
      */
-    protected $title;
+    protected ?string $title = null;
 
     /**
      * A short summary of what the channel is about.
-     *
-     * @var string|null
      */
-    protected $summary;
+    protected ?string $summary = null;
 
     /**
      * A description of the channel.
-     *
-     * @var string|null
      */
-    protected $description;
+    protected ?string $description = null;
 
     /**
      * A map of the operations available on the channel.
      *
      * @var array<string, ChannelOperation>
      */
-    protected $operations = [];
+    protected array $operations = [];
 
     /**
      * A map of the parameters included in the channel address.
      *
      * @var array<string, Parameter>
      */
-    protected $parameters = [];
+    protected array $parameters = [];
 
     /**
      * A list of tags for API documentation control.
      *
      * @var array<Tag>
      */
-    protected $tags = [];
+    protected array $tags = [];
 
     /**
      * Additional external documentation for this channel.
-     *
-     * @var ExternalDocumentation|null
      */
-    protected $externalDocs;
+    protected ?ExternalDocumentation $externalDocs = null;
 
     /**
      * A map of the bindings for this channel.
      *
      * @var array<string, mixed>
      */
-    protected $bindings = [];
+    protected array $bindings = [];
 
     /**
      * A map of the messages that will be published or received on this channel.
      *
      * @var array<string, Message|Reference>
      */
-    protected $messages = [];
+    protected array $messages = [];
 
     /**
      * An array of $ref pointers to the definition of the servers in which this channel is available.
@@ -85,12 +75,10 @@ class Channel extends AsyncApiObject
      *
      * @var array<Reference>
      */
-    protected $servers = [];
+    protected array $servers = [];
 
     /**
      * Get the address.
-     *
-     * @return string|null
      */
     public function getAddress(): ?string
     {
@@ -99,9 +87,6 @@ class Channel extends AsyncApiObject
 
     /**
      * Set the address.
-     *
-     * @param string $address The address
-     * @return $this
      */
     public function setAddress(string $address): self
     {
@@ -111,8 +96,6 @@ class Channel extends AsyncApiObject
 
     /**
      * Get the title.
-     *
-     * @return string|null
      */
     public function getTitle(): ?string
     {
@@ -121,9 +104,6 @@ class Channel extends AsyncApiObject
 
     /**
      * Set the title.
-     *
-     * @param string $title The title
-     * @return $this
      */
     public function setTitle(string $title): self
     {
@@ -133,8 +113,6 @@ class Channel extends AsyncApiObject
 
     /**
      * Get the summary.
-     *
-     * @return string|null
      */
     public function getSummary(): ?string
     {
@@ -143,9 +121,6 @@ class Channel extends AsyncApiObject
 
     /**
      * Set the summary.
-     *
-     * @param string $summary The summary
-     * @return $this
      */
     public function setSummary(string $summary): self
     {
@@ -155,8 +130,6 @@ class Channel extends AsyncApiObject
 
     /**
      * Get the description.
-     *
-     * @return string|null
      */
     public function getDescription(): ?string
     {
@@ -165,9 +138,6 @@ class Channel extends AsyncApiObject
 
     /**
      * Set the description.
-     *
-     * @param string $description The description
-     * @return $this
      */
     public function setDescription(string $description): self
     {
@@ -187,10 +157,6 @@ class Channel extends AsyncApiObject
 
     /**
      * Add an operation.
-     *
-     * @param string $operationId The operation ID
-     * @param ChannelOperation $operation The operation
-     * @return $this
      */
     public function addOperation(string $operationId, ChannelOperation $operation): self
     {
@@ -210,10 +176,6 @@ class Channel extends AsyncApiObject
 
     /**
      * Add a parameter.
-     *
-     * @param string $name The parameter name
-     * @param Parameter $parameter The parameter
-     * @return $this
      */
     public function addParameter(string $name, Parameter $parameter): self
     {
@@ -233,9 +195,6 @@ class Channel extends AsyncApiObject
 
     /**
      * Add a tag.
-     *
-     * @param Tag $tag The tag
-     * @return $this
      */
     public function addTag(Tag $tag): self
     {
@@ -245,8 +204,6 @@ class Channel extends AsyncApiObject
 
     /**
      * Get the external documentation.
-     *
-     * @return ExternalDocumentation|null
      */
     public function getExternalDocs(): ?ExternalDocumentation
     {
@@ -255,9 +212,6 @@ class Channel extends AsyncApiObject
 
     /**
      * Set the external documentation.
-     *
-     * @param ExternalDocumentation $externalDocs The external documentation
-     * @return $this
      */
     public function setExternalDocs(ExternalDocumentation $externalDocs): self
     {
@@ -277,12 +231,8 @@ class Channel extends AsyncApiObject
 
     /**
      * Add a binding.
-     *
-     * @param string $name The binding name
-     * @param mixed $binding The binding
-     * @return $this
      */
-    public function addBinding(string $name, $binding): self
+    public function addBinding(string $name, mixed $binding): self
     {
         $this->bindings[$name] = $binding;
         return $this;
@@ -300,10 +250,6 @@ class Channel extends AsyncApiObject
 
     /**
      * Add a message.
-     *
-     * @param string $name The message name
-     * @param Message|Reference $message The message
-     * @return $this
      */
     public function addMessage(string $name, Message|Reference $message): self
     {
@@ -323,9 +269,6 @@ class Channel extends AsyncApiObject
 
     /**
      * Add a server.
-     *
-     * @param Reference $server The server reference
-     * @return $this
      */
     public function addServer(Reference $server): self
     {
