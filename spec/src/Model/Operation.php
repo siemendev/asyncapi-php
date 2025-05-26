@@ -221,6 +221,8 @@ class Operation extends AsyncApiObject
 
     /**
      * Get the bindings.
+     *
+     * @return array<string, AsyncApiObject>|Reference
      */
     public function getBindings(): array|Reference
     {
@@ -229,6 +231,8 @@ class Operation extends AsyncApiObject
 
     /**
      * Set the bindings.
+     *
+     * @param array<string, AsyncApiObject>|Reference $bindings
      */
     public function setBindings(array|Reference $bindings): self
     {
@@ -239,7 +243,7 @@ class Operation extends AsyncApiObject
     /**
      * Add a binding.
      */
-    public function addBinding(string $name, mixed $binding): self
+    public function addBinding(string $name, AsyncApiObject $binding): self
     {
         if (!is_array($this->bindings)) {
             $this->bindings = [];

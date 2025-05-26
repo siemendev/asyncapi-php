@@ -103,28 +103,28 @@ class Components extends AsyncApiObject
     /**
      * An object to hold reusable Server Bindings Objects.
      *
-     * @var array<string, mixed|Reference>
+     * @var array<string, AsyncApiObject|Reference>
      */
     protected array $serverBindings = [];
 
     /**
      * An object to hold reusable Channel Bindings Objects.
      *
-     * @var array<string, mixed|Reference>
+     * @var array<string, AsyncApiObject|Reference>
      */
     protected array $channelBindings = [];
 
     /**
      * An object to hold reusable Operation Bindings Objects.
      *
-     * @var array<string, mixed|Reference>
+     * @var array<string, AsyncApiObject|Reference>
      */
     protected array $operationBindings = [];
 
     /**
      * An object to hold reusable Message Bindings Objects.
      *
-     * @var array<string, mixed|Reference>
+     * @var array<string, AsyncApiObject|Reference>
      */
     protected array $messageBindings = [];
 
@@ -392,7 +392,7 @@ class Components extends AsyncApiObject
     /**
      * Get the server bindings.
      *
-     * @return array<string, mixed|Reference>
+     * @return array<string, AsyncApiObject|Reference>
      */
     public function getServerBindings(): array
     {
@@ -402,7 +402,7 @@ class Components extends AsyncApiObject
     /**
      * Add a server binding.
      */
-    public function addServerBinding(string $name, mixed $binding): self
+    public function addServerBinding(string $name, AsyncApiObject $binding): self
     {
         $this->serverBindings[$name] = $binding;
         return $this;
@@ -411,7 +411,7 @@ class Components extends AsyncApiObject
     /**
      * Get the channel bindings.
      *
-     * @return array<string, mixed|Reference>
+     * @return array<string, AsyncApiObject|Reference>
      */
     public function getChannelBindings(): array
     {
@@ -421,7 +421,7 @@ class Components extends AsyncApiObject
     /**
      * Add a channel binding.
      */
-    public function addChannelBinding(string $name, mixed $binding): self
+    public function addChannelBinding(string $name, AsyncApiObject $binding): self
     {
         $this->channelBindings[$name] = $binding;
         return $this;
@@ -430,7 +430,7 @@ class Components extends AsyncApiObject
     /**
      * Get the operation bindings.
      *
-     * @return array<string, mixed|Reference>
+     * @return array<string, AsyncApiObject|Reference>
      */
     public function getOperationBindings(): array
     {
@@ -440,7 +440,7 @@ class Components extends AsyncApiObject
     /**
      * Add an operation binding.
      */
-    public function addOperationBinding(string $name, mixed $binding): self
+    public function addOperationBinding(string $name, AsyncApiObject $binding): self
     {
         $this->operationBindings[$name] = $binding;
         return $this;
@@ -449,7 +449,7 @@ class Components extends AsyncApiObject
     /**
      * Get the message bindings.
      *
-     * @return array<string, mixed|Reference>
+     * @return array<string, AsyncApiObject|Reference>
      */
     public function getMessageBindings(): array
     {
@@ -459,7 +459,7 @@ class Components extends AsyncApiObject
     /**
      * Add a message binding.
      */
-    public function addMessageBinding(string $name, mixed $binding): self
+    public function addMessageBinding(string $name, AsyncApiObject $binding): self
     {
         $this->messageBindings[$name] = $binding;
         return $this;
@@ -740,7 +740,7 @@ class Components extends AsyncApiObject
     /**
      * Resolves the references to the server bindings.
      *
-     * @return array<string, mixed>
+     * @return array<string, AsyncApiObject>
      */
     public function resolveServerBindings(AsyncApi $spec): array
     {
@@ -758,7 +758,7 @@ class Components extends AsyncApiObject
     /**
      * Resolves the references to the channel bindings.
      *
-     * @return array<string, mixed>
+     * @return array<string, AsyncApiObject>
      */
     public function resolveChannelBindings(AsyncApi $spec): array
     {
@@ -776,7 +776,7 @@ class Components extends AsyncApiObject
     /**
      * Resolves the references to the operation bindings.
      *
-     * @return array<string, mixed>
+     * @return array<string, AsyncApiObject>
      */
     public function resolveOperationBindings(AsyncApi $spec): array
     {
@@ -794,7 +794,7 @@ class Components extends AsyncApiObject
     /**
      * Resolves the references to the message bindings.
      *
-     * @return array<string, mixed>
+     * @return array<string, AsyncApiObject>
      */
     public function resolveMessageBindings(AsyncApi $spec): array
     {

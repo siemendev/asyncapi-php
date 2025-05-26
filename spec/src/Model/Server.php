@@ -72,7 +72,7 @@ class Server extends AsyncApiObject
     /**
      * A map of the bindings for this server.
      *
-     * @var array<string, mixed>
+     * @var array<string, AsyncApiObject>
      */
     protected array $bindings = [];
 
@@ -266,7 +266,7 @@ class Server extends AsyncApiObject
     /**
      * Get the bindings.
      *
-     * @return array<string, mixed>
+     * @return array<string, AsyncApiObject>
      */
     public function getBindings(): array
     {
@@ -276,7 +276,7 @@ class Server extends AsyncApiObject
     /**
      * Add a binding.
      */
-    public function addBinding(string $name, mixed $binding): self
+    public function addBinding(string $name, AsyncApiObject $binding): self
     {
         $this->bindings[$name] = $binding;
         return $this;

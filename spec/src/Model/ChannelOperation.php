@@ -42,7 +42,7 @@ class ChannelOperation extends AsyncApiObject
     /**
      * A map of the bindings for this operation.
      *
-     * @var array<string, mixed>
+     * @var array<string, AsyncApiObject>
      */
     protected array $bindings = [];
 
@@ -157,7 +157,7 @@ class ChannelOperation extends AsyncApiObject
     /**
      * Get the bindings.
      *
-     * @return array<string, mixed>
+     * @return array<string, AsyncApiObject>
      */
     public function getBindings(): array
     {
@@ -167,7 +167,7 @@ class ChannelOperation extends AsyncApiObject
     /**
      * Add a binding.
      */
-    public function addBinding(string $name, mixed $binding): self
+    public function addBinding(string $name, AsyncApiObject $binding): self
     {
         $this->bindings[$name] = $binding;
         return $this;
