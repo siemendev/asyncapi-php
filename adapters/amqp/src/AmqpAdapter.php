@@ -28,9 +28,10 @@ class AmqpAdapter extends AbstractAdapter
 
     public function publishMessage(Operation $operation, Message $message, string $content, string $contentType, array $headers = []): void
     {
+        $channel = ReferenceResolver::dereference($this->getRootSpec(), $operation->getChannel(), Channel::class);
         $this->publisher->publishMessage(
-            $this->getConnection(),
-            ReferenceResolver::dereference($this->getRootSpec(), $operation->getChannel(), Channel::class),
+            $this->getConnection($channel),
+            $channel,
             $operation,
             $message,
             $content,
@@ -47,8 +48,12 @@ class AmqpAdapter extends AbstractAdapter
         // TODO: Implement consume() method.
     }
 
-    private function getConnection(): AMQPStreamConnection
+    private function getConnection(Channel $channel): AMQPStreamConnection
     {
-        return $this->connectionFactory->getConnection($this->getCredentials(), $this->getServerSpec());
+        return $this->connectionFactory->getConnection(
+            $this->getCredentials(),
+            $this->getServerSpec(),
+            $channel
+        );
     }
 }
