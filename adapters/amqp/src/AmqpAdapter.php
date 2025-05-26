@@ -5,11 +5,11 @@ namespace Siemendev\AsyncapiPhp\Adapter\Amqp;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use Siemendev\AsyncapiPhp\Adapter\AbstractAdapter;
 use Siemendev\AsyncapiPhp\Configuration\Credentials\CredentialsInterface;
+use Siemendev\AsyncapiPhp\Spec\Helper\ReferenceResolver;
 use Siemendev\AsyncapiPhp\Spec\Model\Channel;
 use Siemendev\AsyncapiPhp\Spec\Model\Message;
 use Siemendev\AsyncapiPhp\Spec\Model\Operation;
 use Siemendev\AsyncapiPhp\Spec\Model\Server;
-use Siemendev\AsyncapiPhp\Spec\ReferenceResolver;
 
 class AmqpAdapter extends AbstractAdapter
 {
@@ -28,7 +28,7 @@ class AmqpAdapter extends AbstractAdapter
 
     public function publishMessage(Operation $operation, Message $message, string $content, string $contentType, array $headers = []): void
     {
-        $channel = ReferenceResolver::dereference($this->getRootSpec(), $operation->getChannel(), Channel::class);
+        $channel = $operation->resolveChannel($this->getRootSpec());
         $this->publisher->publishMessage(
             $this->getConnection($channel),
             $channel,

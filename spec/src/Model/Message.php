@@ -2,6 +2,8 @@
 
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
+use Siemendev\AsyncapiPhp\Spec\Helper\ReferenceResolver;
+
 /**
  * Describes a message that can be published or received on a channel.
  */
@@ -355,5 +357,63 @@ class Message extends AsyncApiObject
     {
         $this->correlationIds[$name] = $correlationId;
         return $this;
+    }
+
+    /**
+     * Resolves the reference to the headers and returns a Schema object.
+     */
+    public function resolveHeaders(AsyncApi $spec): ?Schema
+    {
+        if ($this->headers instanceof Reference) {
+            return ReferenceResolver::dereference($spec, $this->headers, Schema::class);
+        }
+        return $this->headers;
+    }
+
+    /**
+     * Resolves the reference to the payload and returns a Schema object.
+     */
+    public function resolvePayload(AsyncApi $spec): ?Schema
+    {
+        if ($this->payload instanceof Reference) {
+            return ReferenceResolver::dereference($spec, $this->payload, Schema::class);
+        }
+        return $this->payload;
+    }
+
+    /**
+     * Resolves the references to the traits and returns an array of MessageTrait objects.
+     *
+     * @return array<MessageTrait>
+     */
+    public function resolveTraits(AsyncApi $spec): array
+    {
+        $traits = [];
+        foreach ($this->traits as $trait) {
+            if ($trait instanceof Reference) {
+                $traits[] = ReferenceResolver::dereference($spec, $trait, MessageTrait::class);
+            } else {
+                $traits[] = $trait;
+            }
+        }
+        return $traits;
+    }
+
+    /**
+     * Resolves the references to the correlation IDs and returns an array of CorrelationId objects.
+     *
+     * @return array<string, CorrelationId>
+     */
+    public function resolveCorrelationIds(AsyncApi $spec): array
+    {
+        $correlationIds = [];
+        foreach ($this->correlationIds as $name => $correlationId) {
+            if ($correlationId instanceof Reference) {
+                $correlationIds[$name] = ReferenceResolver::dereference($spec, $correlationId, CorrelationId::class);
+            } else {
+                $correlationIds[$name] = $correlationId;
+            }
+        }
+        return $correlationIds;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
+use Siemendev\AsyncapiPhp\Spec\Helper\ReferenceResolver;
+
 /**
  * A simple object to allow referencing other components in the specification.
  */
@@ -94,6 +96,16 @@ class Reference extends AsyncApiObject
         }
 
         return $array;
+    }
+
+    /**
+     * @template T of AsyncApiObject
+     * @param class-string<T> $model The model name to resolve
+     * @return T
+     */
+    public function resolve(AsyncApi $spec, string $model): AsyncApiObject
+    {
+        return ReferenceResolver::dereference($spec, $this, $model);
     }
 
     /**

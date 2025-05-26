@@ -3,6 +3,7 @@
 namespace Siemendev\AsyncapiPhp\Spec;
 
 use LogicException;
+use Siemendev\AsyncapiPhp\Spec\Helper\ReferenceResolver;
 use Siemendev\AsyncapiPhp\Spec\Model\AsyncApi;
 use Siemendev\AsyncapiPhp\Spec\Model\Channel;
 use Siemendev\AsyncapiPhp\Spec\Model\Reference;
@@ -26,7 +27,7 @@ class SpecRepository
         $serverSpecs = [];
         foreach ($channel->getServers() as $serverRef) {
             $parts = explode('/', $serverRef->getRef());
-            $serverSpecs[end($parts)] = ReferenceResolver::dereference($spec, $serverRef, Server::class);
+            $serverSpecs[end($parts)] = $serverRef->resolve($spec, Server::class);
         }
         if (empty($serverSpecs)) {
             $serverSpecs = $spec->getServers();
@@ -37,7 +38,7 @@ class SpecRepository
             return $serverSpec;
         }
         if ($serverSpec instanceof Reference) {
-            $serverSpec = ReferenceResolver::dereference($spec, $serverSpec, Server::class);
+            $serverSpec = $serverSpec->resolve($spec, Server::class);
         }
         if ($serverSpec instanceof Server) {
             return $serverSpec;

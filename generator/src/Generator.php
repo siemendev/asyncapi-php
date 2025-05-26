@@ -7,11 +7,11 @@ use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\Printer;
 use Siemendev\AsyncapiPhp\Configuration\StubConfiguration;
 use Siemendev\AsyncapiPhp\Message\AbstractMessage;
+use Siemendev\AsyncapiPhp\Spec\Helper\ReferenceResolver;
 use Siemendev\AsyncapiPhp\Spec\Model\AsyncApi;
 use Siemendev\AsyncapiPhp\Spec\Model\Message;
 use Siemendev\AsyncapiPhp\Spec\Model\Reference;
 use Siemendev\AsyncapiPhp\Spec\Model\Schema;
-use Siemendev\AsyncapiPhp\Spec\ReferenceResolver;
 
 class Generator
 {
@@ -94,11 +94,7 @@ class Generator
 
         $requiredProperties = [];
         $optionalProperties = [];
-        foreach ($message->getPayload()?->getProperties() as $name => $property) {
-            if ($property instanceof Reference) {
-                $property = ReferenceResolver::dereference($spec, $property, Schema::class);
-            }
-
+        foreach ($message->getPayload()?->resolveProperties($spec) ?? [] as $name => $property) {
             $classProperty = $class->addProperty($name)
                 ->setNullable(false)
                 ->setPrivate()
@@ -168,13 +164,8 @@ class Generator
         $messages = [];
 
         foreach ($spec->getChannels() as $channel) {
-            foreach ($channel->getMessages() as $message) {
-                if ($message instanceof Message) {
-                    $messages[] = $message;
-                }
-                if ($message instanceof Reference) {
-                    $messages[] = ReferenceResolver::dereference($spec, $message, Message::class);
-                }
+            foreach ($channel->resolveMessages($spec) as $message) {
+                $messages[] = $message;
             }
         }
 

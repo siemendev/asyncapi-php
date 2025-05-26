@@ -18,10 +18,10 @@ use Siemendev\AsyncapiPhp\Serializer\Exception\SerializationException;
 use Siemendev\AsyncapiPhp\Serializer\SerializationHandler;
 use Siemendev\AsyncapiPhp\Serializer\SerializerInterface;
 use Siemendev\AsyncapiPhp\Spec\Exception\InvalidSpecificationException;
+use Siemendev\AsyncapiPhp\Spec\Helper\ReferenceResolver;
 use Siemendev\AsyncapiPhp\Spec\Model\Channel;
 use Siemendev\AsyncapiPhp\Spec\Model\Message;
 use Siemendev\AsyncapiPhp\Spec\Model\Operation;
-use Siemendev\AsyncapiPhp\Spec\ReferenceResolver;
 use Siemendev\AsyncapiPhp\Spec\SpecRepository;
 
 class AsyncApiManager
@@ -129,15 +129,10 @@ class AsyncApiManager
         if (!$operation->getChannel()) {
             throw new LogicException('Operation does not have a channel defined'); # todo change this to be more helpful
         }
-        $channel = ReferenceResolver::dereference($this->configuration->getSpec(), $operation->getChannel(), Channel::class);
+        $channel = $operation->resolveChannel($this->configuration->getSpec());
         $serverName ??= $this->specRepo->getDefaultServerNameForChannel($this->configuration->getSpec(), $channel);
 
-        foreach ($operation->getMessages() as $operationMessageReference) {
-            $operationMessage = ReferenceResolver::dereference(
-                $this->configuration->getSpec(),
-                $operationMessageReference,
-                Message::class,
-            );
+        foreach ($operation->resolveMessages($this->configuration->getSpec()) as $operationMessage) {
             if ($operationMessage->getName() === $message::getMessageName()) {
                 $messageSpec = $operationMessage;
                 break;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Siemendev\AsyncapiPhp\Spec;
+namespace Siemendev\AsyncapiPhp\Spec\Helper;
 
 use Siemendev\AsyncapiPhp\Spec\Model\AsyncApi;
 use Siemendev\AsyncapiPhp\Spec\Model\AsyncApiObject;

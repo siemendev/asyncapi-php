@@ -2,6 +2,8 @@
 
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
+use Siemendev\AsyncapiPhp\Spec\Helper\ReferenceResolver;
+
 /**
  * The Schema Object allows the definition of input and output data types.
  * 
@@ -361,5 +363,128 @@ class Schema extends AsyncApiObject
     {
         $this->enum = $enum;
         return $this;
+    }
+
+    /**
+     * Resolves the reference to the items and returns a Schema object.
+     */
+    public function resolveItems(AsyncApi $spec): ?Schema
+    {
+        if ($this->items instanceof Reference) {
+            return ReferenceResolver::dereference($spec, $this->items, Schema::class);
+        }
+        return $this->items;
+    }
+
+    /**
+     * Resolves the references to the allOf schemas and returns an array of Schema objects.
+     *
+     * @return array<Schema>|null
+     */
+    public function resolveAllOf(AsyncApi $spec): ?array
+    {
+        if ($this->allOf === null) {
+            return null;
+        }
+
+        $schemas = [];
+        foreach ($this->allOf as $schema) {
+            if ($schema instanceof Reference) {
+                $schemas[] = ReferenceResolver::dereference($spec, $schema, Schema::class);
+            } else {
+                $schemas[] = $schema;
+            }
+        }
+        return $schemas;
+    }
+
+    /**
+     * Resolves the references to the oneOf schemas and returns an array of Schema objects.
+     *
+     * @return array<Schema>|null
+     */
+    public function resolveOneOf(AsyncApi $spec): ?array
+    {
+        if ($this->oneOf === null) {
+            return null;
+        }
+
+        $schemas = [];
+        foreach ($this->oneOf as $schema) {
+            if ($schema instanceof Reference) {
+                $schemas[] = ReferenceResolver::dereference($spec, $schema, Schema::class);
+            } else {
+                $schemas[] = $schema;
+            }
+        }
+        return $schemas;
+    }
+
+    /**
+     * Resolves the references to the anyOf schemas and returns an array of Schema objects.
+     *
+     * @return array<Schema>|null
+     */
+    public function resolveAnyOf(AsyncApi $spec): ?array
+    {
+        if ($this->anyOf === null) {
+            return null;
+        }
+
+        $schemas = [];
+        foreach ($this->anyOf as $schema) {
+            if ($schema instanceof Reference) {
+                $schemas[] = ReferenceResolver::dereference($spec, $schema, Schema::class);
+            } else {
+                $schemas[] = $schema;
+            }
+        }
+        return $schemas;
+    }
+
+    /**
+     * Resolves the reference to the not schema and returns a Schema object.
+     */
+    public function resolveNot(AsyncApi $spec): ?Schema
+    {
+        if ($this->not instanceof Reference) {
+            return ReferenceResolver::dereference($spec, $this->not, Schema::class);
+        }
+        return $this->not;
+    }
+
+    /**
+     * Resolves the references to the properties and returns an array of Schema objects.
+     *
+     * @return array<string, Schema>|null
+     */
+    public function resolveProperties(AsyncApi $spec): ?array
+    {
+        if ($this->properties === null) {
+            return null;
+        }
+
+        $properties = [];
+        foreach ($this->properties as $name => $property) {
+            if ($property instanceof Reference) {
+                $properties[$name] = ReferenceResolver::dereference($spec, $property, Schema::class);
+            } else {
+                $properties[$name] = $property;
+            }
+        }
+        return $properties;
+    }
+
+    /**
+     * Resolves the reference to the additionalProperties and returns a Schema object or a boolean.
+     *
+     * @return bool|Schema|null
+     */
+    public function resolveAdditionalProperties(AsyncApi $spec): bool|Schema|null
+    {
+        if ($this->additionalProperties instanceof Reference) {
+            return ReferenceResolver::dereference($spec, $this->additionalProperties, Schema::class);
+        }
+        return $this->additionalProperties;
     }
 }

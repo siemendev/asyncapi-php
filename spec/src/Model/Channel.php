@@ -2,6 +2,8 @@
 
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
+use Siemendev\AsyncapiPhp\Spec\Helper\ReferenceResolver;
+
 /**
  * Describes a named network address where messages can be exchanged.
  */
@@ -249,6 +251,24 @@ class Channel extends AsyncApiObject
     }
 
     /**
+     * Resolves the references to the messages and returns an array of Message objects.
+     *
+     * @return array<string, Message>
+     */
+    public function resolveMessages(AsyncApi $spec): array
+    {
+        $resolvedMessages = [];
+        foreach ($this->messages as $name => $messageRef) {
+            if ($messageRef instanceof Message) {
+                $resolvedMessages[$name] = $messageRef;
+                continue;
+            }
+            $resolvedMessages[$name] = ReferenceResolver::dereference($spec, $messageRef, Message::class);
+        }
+        return $resolvedMessages;
+    }
+
+    /**
      * Add a message.
      */
     public function addMessage(string $name, Message|Reference $message): self
@@ -265,6 +285,20 @@ class Channel extends AsyncApiObject
     public function getServers(): array
     {
         return $this->servers;
+    }
+
+    /**
+     * Resolves the references to the servers and returns an array of Server objects.
+     *
+     * @return array<Server>
+     */
+    public function resolveServers(AsyncApi $spec): array
+    {
+        $servers = [];
+        foreach ($this->servers as $serverRef) {
+            $servers[] = ReferenceResolver::dereference($spec, $serverRef, Server::class);
+        }
+        return $servers;
     }
 
     /**

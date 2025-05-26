@@ -2,6 +2,8 @@
 
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
+use Siemendev\AsyncapiPhp\Spec\Helper\ReferenceResolver;
+
 /**
  * Describes an operation that can be performed on a channel.
  */
@@ -344,5 +346,133 @@ class Operation extends AsyncApiObject
     {
         $this->callbacks[$name] = $callback;
         return $this;
+    }
+
+    /**
+     * Resolves the reference to the channel and returns a Channel object.
+     */
+    public function resolveChannel(AsyncApi $spec): Channel
+    {
+        return ReferenceResolver::dereference($spec, $this->channel, Channel::class);
+    }
+
+    /**
+     * Resolves the reference to the external documentation and returns an ExternalDocumentation object.
+     */
+    public function resolveExternalDocs(AsyncApi $spec): ?ExternalDocumentation
+    {
+        if ($this->externalDocs instanceof Reference) {
+            return ReferenceResolver::dereference($spec, $this->externalDocs, ExternalDocumentation::class);
+        }
+        return $this->externalDocs;
+    }
+
+    /**
+     * Resolves the reference to the bindings and returns an array.
+     *
+     * @return array
+     */
+    public function resolveBindings(AsyncApi $spec): array
+    {
+        if ($this->bindings instanceof Reference) {
+            return ReferenceResolver::dereference($spec, $this->bindings);
+        }
+        return $this->bindings;
+    }
+
+    /**
+     * Resolves the reference to the message and returns a Message object.
+     */
+    public function resolveMessage(AsyncApi $spec): ?Message
+    {
+        if ($this->message instanceof Reference) {
+            return ReferenceResolver::dereference($spec, $this->message, Message::class);
+        }
+        return $this->message;
+    }
+
+    /**
+     * Resolves the references to the messages and returns an array of Message objects.
+     *
+     * @return array<Message>|null
+     */
+    public function resolveMessages(AsyncApi $spec): ?array
+    {
+        if ($this->messages === null) {
+            return null;
+        }
+
+        $messages = [];
+        foreach ($this->messages as $messageRef) {
+            $messages[] = ReferenceResolver::dereference($spec, $messageRef, Message::class);
+        }
+        return $messages;
+    }
+
+    /**
+     * Resolves the reference to the reply and returns the resolved object.
+     *
+     * @return mixed
+     */
+    public function resolveReply(AsyncApi $spec): mixed
+    {
+        if ($this->reply instanceof Reference) {
+            return ReferenceResolver::dereference($spec, $this->reply);
+        }
+        return $this->reply;
+    }
+
+    /**
+     * Resolves the references to the callbacks and returns an array of Channel objects.
+     *
+     * @return array<string, Channel>
+     */
+    public function resolveCallbacks(AsyncApi $spec): array
+    {
+        $callbacks = [];
+        foreach ($this->callbacks as $name => $callback) {
+            if ($callback instanceof Reference) {
+                $callbacks[$name] = ReferenceResolver::dereference($spec, $callback, Channel::class);
+            } else {
+                $callbacks[$name] = $callback;
+            }
+        }
+        return $callbacks;
+    }
+
+    /**
+     * Resolves the references to the traits and returns an array of OperationTrait objects.
+     *
+     * @return array<OperationTrait>
+     */
+    public function resolveTraits(AsyncApi $spec): array
+    {
+        $traits = [];
+        foreach ($this->traits as $trait) {
+            if ($trait instanceof Reference) {
+                $traits[] = ReferenceResolver::dereference($spec, $trait, OperationTrait::class);
+            } else {
+                $traits[] = $trait;
+            }
+        }
+        return $traits;
+    }
+
+    /**
+     * Resolves the references to the security schemes and returns an array of SecurityScheme objects.
+     *
+     * @return array<SecurityScheme>
+     */
+    public function resolveSecurity(AsyncApi $spec): array
+    {
+        $security = [];
+        foreach ($this->security as $securityScheme) {
+            if ($securityScheme instanceof Reference) {
+                $security[] = ReferenceResolver::dereference($spec, $securityScheme, SecurityScheme::class);
+            } else {
+                $security[] = $securityScheme;
+            }
+        }
+        return $security;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
+use Siemendev\AsyncapiPhp\Spec\Helper\ReferenceResolver;
+
 /**
  * Holds a set of reusable objects for different aspects of the AsyncAPI specification.
  */
@@ -499,5 +501,347 @@ class Components extends AsyncApiObject
     {
         $this->replyAddresses[$name] = $replyAddress;
         return $this;
+    }
+
+    /**
+     * Resolves the references to the schemas and returns an array of Schema objects.
+     *
+     * @return array<string, Schema>
+     */
+    public function resolveSchemas(AsyncApi $spec): array
+    {
+        $schemas = [];
+        foreach ($this->schemas as $name => $schemaRef) {
+            if ($schemaRef instanceof Reference) {
+                $schemas[$name] = ReferenceResolver::dereference($spec, $schemaRef, Schema::class);
+            } else {
+                $schemas[$name] = $schemaRef;
+            }
+        }
+        return $schemas;
+    }
+
+    /**
+     * Resolves the references to the tags and returns an array of Tag objects.
+     *
+     * @return array<string, Tag>
+     */
+    public function resolveTags(AsyncApi $spec): array
+    {
+        $tags = [];
+        foreach ($this->tags as $name => $tagRef) {
+            if ($tagRef instanceof Reference) {
+                $tags[$name] = ReferenceResolver::dereference($spec, $tagRef, Tag::class);
+            } else {
+                $tags[$name] = $tagRef;
+            }
+        }
+        return $tags;
+    }
+
+    /**
+     * Resolves the references to the external docs and returns an array of ExternalDocumentation objects.
+     *
+     * @return array<string, ExternalDocumentation>
+     */
+    public function resolveExternalDocs(AsyncApi $spec): array
+    {
+        $externalDocs = [];
+        foreach ($this->externalDocs as $name => $externalDocRef) {
+            if ($externalDocRef instanceof Reference) {
+                $externalDocs[$name] = ReferenceResolver::dereference($spec, $externalDocRef, ExternalDocumentation::class);
+            } else {
+                $externalDocs[$name] = $externalDocRef;
+            }
+        }
+        return $externalDocs;
+    }
+
+    /**
+     * Resolves the references to the servers and returns an array of Server objects.
+     *
+     * @return array<string, Server>
+     */
+    public function resolveServers(AsyncApi $spec): array
+    {
+        $servers = [];
+        foreach ($this->servers as $name => $serverRef) {
+            if ($serverRef instanceof Reference) {
+                $servers[$name] = ReferenceResolver::dereference($spec, $serverRef, Server::class);
+            } else {
+                $servers[$name] = $serverRef;
+            }
+        }
+        return $servers;
+    }
+
+    /**
+     * Resolves the references to the channels and returns an array of Channel objects.
+     *
+     * @return array<string, Channel>
+     */
+    public function resolveChannels(AsyncApi $spec): array
+    {
+        $channels = [];
+        foreach ($this->channels as $name => $channelRef) {
+            if ($channelRef instanceof Reference) {
+                $channels[$name] = ReferenceResolver::dereference($spec, $channelRef, Channel::class);
+            } else {
+                $channels[$name] = $channelRef;
+            }
+        }
+        return $channels;
+    }
+
+    /**
+     * Resolves the references to the operations and returns an array of Operation objects.
+     *
+     * @return array<string, Operation>
+     */
+    public function resolveOperations(AsyncApi $spec): array
+    {
+        $operations = [];
+        foreach ($this->operations as $name => $operationRef) {
+            if ($operationRef instanceof Reference) {
+                $operations[$name] = ReferenceResolver::dereference($spec, $operationRef, Operation::class);
+            } else {
+                $operations[$name] = $operationRef;
+            }
+        }
+        return $operations;
+    }
+
+    /**
+     * Resolves the references to the messages and returns an array of Message objects.
+     *
+     * @return array<string, Message>
+     */
+    public function resolveMessages(AsyncApi $spec): array
+    {
+        $messages = [];
+        foreach ($this->messages as $name => $messageRef) {
+            if ($messageRef instanceof Reference) {
+                $messages[$name] = ReferenceResolver::dereference($spec, $messageRef, Message::class);
+            } else {
+                $messages[$name] = $messageRef;
+            }
+        }
+        return $messages;
+    }
+
+    /**
+     * Resolves the references to the security schemes and returns an array of SecurityScheme objects.
+     *
+     * @return array<string, SecurityScheme>
+     */
+    public function resolveSecuritySchemes(AsyncApi $spec): array
+    {
+        $securitySchemes = [];
+        foreach ($this->securitySchemes as $name => $securitySchemeRef) {
+            if ($securitySchemeRef instanceof Reference) {
+                $securitySchemes[$name] = ReferenceResolver::dereference($spec, $securitySchemeRef, SecurityScheme::class);
+            } else {
+                $securitySchemes[$name] = $securitySchemeRef;
+            }
+        }
+        return $securitySchemes;
+    }
+
+    /**
+     * Resolves the references to the parameters and returns an array of Parameter objects.
+     *
+     * @return array<string, Parameter>
+     */
+    public function resolveParameters(AsyncApi $spec): array
+    {
+        $parameters = [];
+        foreach ($this->parameters as $name => $parameterRef) {
+            if ($parameterRef instanceof Reference) {
+                $parameters[$name] = ReferenceResolver::dereference($spec, $parameterRef, Parameter::class);
+            } else {
+                $parameters[$name] = $parameterRef;
+            }
+        }
+        return $parameters;
+    }
+
+    /**
+     * Resolves the references to the correlation IDs and returns an array of CorrelationId objects.
+     *
+     * @return array<string, CorrelationId>
+     */
+    public function resolveCorrelationIds(AsyncApi $spec): array
+    {
+        $correlationIds = [];
+        foreach ($this->correlationIds as $name => $correlationIdRef) {
+            if ($correlationIdRef instanceof Reference) {
+                $correlationIds[$name] = ReferenceResolver::dereference($spec, $correlationIdRef, CorrelationId::class);
+            } else {
+                $correlationIds[$name] = $correlationIdRef;
+            }
+        }
+        return $correlationIds;
+    }
+
+    /**
+     * Resolves the references to the operation traits and returns an array of OperationTrait objects.
+     *
+     * @return array<string, OperationTrait>
+     */
+    public function resolveOperationTraits(AsyncApi $spec): array
+    {
+        $operationTraits = [];
+        foreach ($this->operationTraits as $name => $operationTraitRef) {
+            if ($operationTraitRef instanceof Reference) {
+                $operationTraits[$name] = ReferenceResolver::dereference($spec, $operationTraitRef, OperationTrait::class);
+            } else {
+                $operationTraits[$name] = $operationTraitRef;
+            }
+        }
+        return $operationTraits;
+    }
+
+    /**
+     * Resolves the references to the message traits and returns an array of MessageTrait objects.
+     *
+     * @return array<string, MessageTrait>
+     */
+    public function resolveMessageTraits(AsyncApi $spec): array
+    {
+        $messageTraits = [];
+        foreach ($this->messageTraits as $name => $messageTraitRef) {
+            if ($messageTraitRef instanceof Reference) {
+                $messageTraits[$name] = ReferenceResolver::dereference($spec, $messageTraitRef, MessageTrait::class);
+            } else {
+                $messageTraits[$name] = $messageTraitRef;
+            }
+        }
+        return $messageTraits;
+    }
+
+    /**
+     * Resolves the references to the server variables and returns an array of ServerVariable objects.
+     *
+     * @return array<string, ServerVariable>
+     */
+    public function resolveServerVariables(AsyncApi $spec): array
+    {
+        $serverVariables = [];
+        foreach ($this->serverVariables as $name => $serverVariableRef) {
+            if ($serverVariableRef instanceof Reference) {
+                $serverVariables[$name] = ReferenceResolver::dereference($spec, $serverVariableRef, ServerVariable::class);
+            } else {
+                $serverVariables[$name] = $serverVariableRef;
+            }
+        }
+        return $serverVariables;
+    }
+
+    /**
+     * Resolves the references to the server bindings.
+     *
+     * @return array<string, mixed>
+     */
+    public function resolveServerBindings(AsyncApi $spec): array
+    {
+        $serverBindings = [];
+        foreach ($this->serverBindings as $name => $bindingRef) {
+            if ($bindingRef instanceof Reference) {
+                $serverBindings[$name] = ReferenceResolver::dereference($spec, $bindingRef);
+            } else {
+                $serverBindings[$name] = $bindingRef;
+            }
+        }
+        return $serverBindings;
+    }
+
+    /**
+     * Resolves the references to the channel bindings.
+     *
+     * @return array<string, mixed>
+     */
+    public function resolveChannelBindings(AsyncApi $spec): array
+    {
+        $channelBindings = [];
+        foreach ($this->channelBindings as $name => $bindingRef) {
+            if ($bindingRef instanceof Reference) {
+                $channelBindings[$name] = ReferenceResolver::dereference($spec, $bindingRef);
+            } else {
+                $channelBindings[$name] = $bindingRef;
+            }
+        }
+        return $channelBindings;
+    }
+
+    /**
+     * Resolves the references to the operation bindings.
+     *
+     * @return array<string, mixed>
+     */
+    public function resolveOperationBindings(AsyncApi $spec): array
+    {
+        $operationBindings = [];
+        foreach ($this->operationBindings as $name => $bindingRef) {
+            if ($bindingRef instanceof Reference) {
+                $operationBindings[$name] = ReferenceResolver::dereference($spec, $bindingRef);
+            } else {
+                $operationBindings[$name] = $bindingRef;
+            }
+        }
+        return $operationBindings;
+    }
+
+    /**
+     * Resolves the references to the message bindings.
+     *
+     * @return array<string, mixed>
+     */
+    public function resolveMessageBindings(AsyncApi $spec): array
+    {
+        $messageBindings = [];
+        foreach ($this->messageBindings as $name => $bindingRef) {
+            if ($bindingRef instanceof Reference) {
+                $messageBindings[$name] = ReferenceResolver::dereference($spec, $bindingRef);
+            } else {
+                $messageBindings[$name] = $bindingRef;
+            }
+        }
+        return $messageBindings;
+    }
+
+    /**
+     * Resolves the references to the replies.
+     *
+     * @return array<string, mixed>
+     */
+    public function resolveReplies(AsyncApi $spec): array
+    {
+        $replies = [];
+        foreach ($this->replies as $name => $replyRef) {
+            if ($replyRef instanceof Reference) {
+                $replies[$name] = ReferenceResolver::dereference($spec, $replyRef);
+            } else {
+                $replies[$name] = $replyRef;
+            }
+        }
+        return $replies;
+    }
+
+    /**
+     * Resolves the references to the reply addresses.
+     *
+     * @return array<string, mixed>
+     */
+    public function resolveReplyAddresses(AsyncApi $spec): array
+    {
+        $replyAddresses = [];
+        foreach ($this->replyAddresses as $name => $replyAddressRef) {
+            if ($replyAddressRef instanceof Reference) {
+                $replyAddresses[$name] = ReferenceResolver::dereference($spec, $replyAddressRef);
+            } else {
+                $replyAddresses[$name] = $replyAddressRef;
+            }
+        }
+        return $replyAddresses;
     }
 }
