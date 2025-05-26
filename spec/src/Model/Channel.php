@@ -8,6 +8,15 @@ namespace Siemendev\AsyncapiPhp\Spec\Model;
 class Channel extends AsyncApiObject
 {
     /**
+     * An optional string representation of this channel's address.
+     * The address is typically the "topic name", "routing key", "event type", or "path".
+     * When null or absent, it MUST be interpreted as unknown.
+     *
+     * @var string|null
+     */
+    protected $address;
+
+    /**
      * A human-friendly title for the channel.
      *
      * @var string|null
@@ -77,6 +86,28 @@ class Channel extends AsyncApiObject
      * @var array<Reference>
      */
     protected $servers = [];
+
+    /**
+     * Get the address.
+     *
+     * @return string|null
+     */
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set the address.
+     *
+     * @param string $address The address
+     * @return $this
+     */
+    public function setAddress(string $address): self
+    {
+        $this->address = $address;
+        return $this;
+    }
 
     /**
      * Get the title.
