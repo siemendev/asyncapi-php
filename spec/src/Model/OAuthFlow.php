@@ -91,7 +91,7 @@ class OAuthFlow extends AsyncApiObject
     /**
      * Set the scopes.
      *
-     * @param array<string, string $scopes
+     * @param array<string, string> $scopes
      */
     public function setScopes(array $scopes): self
     {
