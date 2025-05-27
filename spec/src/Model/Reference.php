@@ -51,6 +51,8 @@ class Reference extends AsyncApiObject
 
     /**
      * Set the summary.
+     *
+     * @return $this
      */
     public function setSummary(string $summary): self
     {
@@ -68,6 +70,8 @@ class Reference extends AsyncApiObject
 
     /**
      * Set the description.
+     *
+     * @return $this
      */
     public function setDescription(string $description): self
     {
@@ -100,7 +104,7 @@ class Reference extends AsyncApiObject
     /**
      * @return T
      */
-    public function resolve(?string $model = null): AsyncApiObject
+    public function resolve(): AsyncApiObject
     {
         $ref = trim($this->getRef(), '#/');
         $parts = explode('/', $ref);
@@ -109,7 +113,7 @@ class Reference extends AsyncApiObject
         foreach ($parts as $part) {
             if (is_object($value)) {
                 if ($value instanceof Reference) {
-                    $value = $value->resolve($model);
+                    $value = $value->resolve();
                 }
                 if ($value instanceof \ArrayAccess) {
                     if (!$value->offsetExists($part)) {
@@ -139,12 +143,10 @@ class Reference extends AsyncApiObject
         }
 
         if ($value instanceof Reference) {
-            $value = $value->resolve($model);
+            $value = $value->resolve();
         }
 
-        if ($model && !($value instanceof $model)) {
-            throw new \LogicException(sprintf('Reference "%s" is not of type %s', $this->getRef(), $model));
-        }
+        /** @var T $value */
 
         return $value;
     }

@@ -176,6 +176,8 @@ class Schema extends AsyncApiObject
 
     /**
      * The examples of the schema.
+     *
+     * @var array<string, mixed>|null
      */
     protected ?array $examples = null;
 

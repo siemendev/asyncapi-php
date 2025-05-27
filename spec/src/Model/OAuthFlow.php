@@ -24,6 +24,8 @@ class OAuthFlow extends AsyncApiObject
 
     /**
      * The available scopes for the OAuth2 security scheme.
+     *
+     * @var array<string, string>
      */
     protected array $scopes = [];
 

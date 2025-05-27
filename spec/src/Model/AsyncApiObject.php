@@ -11,13 +11,18 @@ namespace Siemendev\AsyncapiPhp\Spec\Model;
 abstract class AsyncApiObject implements \JsonSerializable
 {
     private ?AsyncApiObject $parentElement = null;
+
     /**
      * Specification extensions.
+     *
+     * @var array<string, null|scalar|AsyncApiObject>
      */
     protected array $extensions = [];
 
     /**
      * Convert the object to an array representation.
+     *
+     * @return array<string, mixed>
      */
     public function toArray(): array
     {
@@ -52,6 +57,9 @@ abstract class AsyncApiObject implements \JsonSerializable
 
     /**
      * Process array values for serialization.
+     *
+     * @param array<array-key, mixed> $array
+     * @return array<array-key, mixed>
      */
     protected function processArrayValue(array $array): array
     {
@@ -81,6 +89,8 @@ abstract class AsyncApiObject implements \JsonSerializable
     /**
      * Add a specification extension.
      *
+     * @param null|scalar|AsyncApiObject $value
+     *
      * @throws \InvalidArgumentException If the extension name doesn't start with 'x-'
      */
     public function addExtension(string $name, mixed $value): self
@@ -95,6 +105,8 @@ abstract class AsyncApiObject implements \JsonSerializable
 
     /**
      * Set all extensions.
+     *
+     * @param array<string, null|scalar|AsyncApiObject> $extensions
      */
     public function setExtensions(array $extensions): self
     {
@@ -104,6 +116,8 @@ abstract class AsyncApiObject implements \JsonSerializable
 
     /**
      * Get all extensions.
+     *
+     * @return array<string, null|scalar|AsyncApiObject>
      */
     public function getExtensions(): array
     {
@@ -112,6 +126,8 @@ abstract class AsyncApiObject implements \JsonSerializable
 
     /**
      * Specify data which should be serialized to JSON.
+     *
+     * @return array<string, mixed>
      */
     public function jsonSerialize(): array
     {
@@ -137,6 +153,11 @@ abstract class AsyncApiObject implements \JsonSerializable
         return $this;
     }
 
+    /**
+     * Get a string representation of the object.
+     *
+     * @return array<string, mixed>
+     */
     public function __debugInfo(): array
     {
         $vars = get_object_vars($this);

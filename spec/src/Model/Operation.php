@@ -38,11 +38,15 @@ class Operation extends AsyncApiObject
     /**
      * A declaration of which security schemes are associated with this operation.
      * Only one of the security scheme objects MUST be satisfied to authorize an operation.
+     *
+     * @var array<SecurityScheme|Reference<SecurityScheme>>
      */
     protected array $security = [];
 
     /**
      * A list of tags for logical grouping and categorization of operations.
+     *
+     * @var array<Tag>
      */
     protected array $tags = [];
 
@@ -78,11 +82,6 @@ class Operation extends AsyncApiObject
      * The definition of the reply in a request-reply operation.
      */
     protected mixed $reply = null;
-
-    /**
-     * A map of possible out-of-band callbacks related to the parent operation.
-     */
-    protected array $callbacks = [];
 
     /**
      * Get the title.
@@ -156,14 +155,18 @@ class Operation extends AsyncApiObject
 
     /**
      * Get the channel.
+     *
+     * @return Reference<Channel>
      */
-    public function getChannel(): ?Reference
+    public function getChannel(): Reference
     {
         return $this->channel;
     }
 
     /**
      * Set the channel.
+     *
+     * @param Reference<Channel> $channel
      */
     public function setChannel(Reference $channel): self
     {
@@ -173,6 +176,8 @@ class Operation extends AsyncApiObject
 
     /**
      * Get the security requirements.
+     *
+     * @return array<SecurityScheme|Reference<SecurityScheme>>
      */
     public function getSecurity(): array
     {
@@ -181,6 +186,8 @@ class Operation extends AsyncApiObject
 
     /**
      * Add a security requirement.
+     *
+     * @param SecurityScheme|Reference<SecurityScheme> $security
      */
     public function addSecurity(SecurityScheme|Reference $security): self
     {
@@ -190,6 +197,8 @@ class Operation extends AsyncApiObject
 
     /**
      * Get the tags.
+     *
+     * @return array<Tag>
      */
     public function getTags(): array
     {
@@ -207,6 +216,8 @@ class Operation extends AsyncApiObject
 
     /**
      * Get the external documentation.
+     *
+     * @return ExternalDocumentation|Reference<ExternalDocumentation>|null
      */
     public function getExternalDocs(): ExternalDocumentation|Reference|null
     {
@@ -215,6 +226,8 @@ class Operation extends AsyncApiObject
 
     /**
      * Set the external documentation.
+     *
+     * @param ExternalDocumentation|Reference<ExternalDocumentation> $externalDocs
      */
     public function setExternalDocs(ExternalDocumentation|Reference $externalDocs): self
     {
@@ -243,9 +256,7 @@ class Operation extends AsyncApiObject
             $this->bindings = $bindings->setParentElement($this);
         } else {
             foreach ($bindings as $key => $binding) {
-                if ($binding instanceof AsyncApiObject) {
-                    $bindings[$key] = $binding->setParentElement($this);
-                }
+                $bindings[$key] = $binding->setParentElement($this);
             }
             $this->bindings = $bindings;
         }
@@ -266,6 +277,8 @@ class Operation extends AsyncApiObject
 
     /**
      * Get the traits.
+     *
+     * @return array<OperationTrait|Reference<OperationTrait>>
      */
     public function getTraits(): array
     {
@@ -274,6 +287,8 @@ class Operation extends AsyncApiObject
 
     /**
      * Add a trait.
+     *
+     * @param OperationTrait|Reference<OperationTrait> $trait
      */
     public function addTrait(OperationTrait|Reference $trait): self
     {
@@ -337,23 +352,6 @@ class Operation extends AsyncApiObject
         } else {
             $this->reply = $reply;
         }
-        return $this;
-    }
-
-    /**
-     * Get the callbacks.
-     */
-    public function getCallbacks(): array
-    {
-        return $this->callbacks;
-    }
-
-    /**
-     * Add a callback.
-     */
-    public function addCallback(string $name, Channel|Reference $callback): self
-    {
-        $this->callbacks[$name] = $callback->setParentElement($this);
         return $this;
     }
 
@@ -423,24 +421,6 @@ class Operation extends AsyncApiObject
             return $this->reply->resolve();
         }
         return $this->reply;
-    }
-
-    /**
-     * Resolves the references to the callbacks and returns an array of Channel objects.
-     *
-     * @return array<string, Channel>
-     */
-    public function resolveCallbacks(): array
-    {
-        $callbacks = [];
-        foreach ($this->callbacks as $name => $callback) {
-            if ($callback instanceof Reference) {
-                $callbacks[$name] = $callback->resolve();
-            } else {
-                $callbacks[$name] = $callback;
-            }
-        }
-        return $callbacks;
     }
 
     /**

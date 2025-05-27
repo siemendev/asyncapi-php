@@ -143,7 +143,7 @@ class Components extends AsyncApiObject
     /**
      * Get the schemas.
      *
-     * @return array<string, Schema|Reference>
+     * @return array<string, Schema|Reference<Schema>>
      */
     public function getSchemas(): array
     {

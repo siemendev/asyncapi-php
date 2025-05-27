@@ -9,11 +9,15 @@ class MessageTrait extends AsyncApiObject
 {
     /**
      * Schema definition of the application headers.
+     *
+     * @var Schema|Reference<Schema>|null
      */
     protected Schema|Reference|null $headers = null;
 
     /**
      * Definition of the message payload.
+     *
+     * @var Schema|Reference<Schema>|null
      */
     protected Schema|Reference|null $payload = null;
 
@@ -81,12 +85,14 @@ class MessageTrait extends AsyncApiObject
     /**
      * A map of the correlation ID objects.
      *
-     * @var array<string, CorrelationId|Reference>
+     * @var array<string, CorrelationId|Reference<CorrelationId>>
      */
     protected array $correlationIds = [];
 
     /**
      * Get the headers.
+     *
+     * @return Schema|Reference<Schema>|null
      */
     public function getHeaders(): Schema|Reference|null
     {
@@ -95,6 +101,8 @@ class MessageTrait extends AsyncApiObject
 
     /**
      * Set the headers.
+     *
+     * @param Schema|Reference<Schema> $headers
      */
     public function setHeaders(Schema|Reference $headers): self
     {
@@ -104,6 +112,8 @@ class MessageTrait extends AsyncApiObject
 
     /**
      * Get the payload.
+     *
+     * @return Schema|Reference<Schema>|null
      */
     public function getPayload(): Schema|Reference|null
     {
@@ -112,6 +122,8 @@ class MessageTrait extends AsyncApiObject
 
     /**
      * Set the payload.
+     *
+     * @param Schema|Reference<Schema> $payload
      */
     public function setPayload(Schema|Reference $payload): self
     {
@@ -315,7 +327,7 @@ class MessageTrait extends AsyncApiObject
     /**
      * Get the correlation IDs.
      *
-     * @return array<string, CorrelationId|Reference>
+     * @return array<string, CorrelationId|Reference<CorrelationId>>
      */
     public function getCorrelationIds(): array
     {
@@ -324,6 +336,8 @@ class MessageTrait extends AsyncApiObject
 
     /**
      * Add a correlation ID.
+     *
+     * @param CorrelationId|Reference<CorrelationId> $correlationId}
      */
     public function addCorrelationId(string $name, CorrelationId|Reference $correlationId): self
     {

@@ -24,11 +24,15 @@ class OperationTrait extends AsyncApiObject
 
     /**
      * A declaration of which security mechanisms can be used for this operation.
+     *
+     * @var array<SecurityRequirement|Reference<SecurityRequirement>>
      */
     protected array $security = [];
 
     /**
      * A list of tags for API documentation control.
+     *
+     * @var array<Tag>
      */
     protected array $tags = [];
 
@@ -39,6 +43,8 @@ class OperationTrait extends AsyncApiObject
 
     /**
      * A map of the bindings for this operation.
+     *
+     * @var array<string, AsyncApiObject|Reference<AsyncApiObject>>
      */
     protected array $bindings = [];
 
@@ -96,7 +102,7 @@ class OperationTrait extends AsyncApiObject
     /**
      * Get the security requirements.
      *
-     * @return array<SecurityRequirement>
+     * @return array<SecurityRequirement|Reference<SecurityRequirement>>
      */
     public function getSecurity(): array
     {
@@ -151,7 +157,7 @@ class OperationTrait extends AsyncApiObject
     /**
      * Get the bindings.
      *
-     * @return array<string, mixed>
+     * @return array<string, AsyncApiObject|Reference<AsyncApiObject>>
      */
     public function getBindings(): array
     {
@@ -161,13 +167,9 @@ class OperationTrait extends AsyncApiObject
     /**
      * Add a binding.
      */
-    public function addBinding(string $name, $binding): self
+    public function addBinding(string $name, AsyncApiObject $binding): self
     {
-        if ($binding instanceof AsyncApiObject) {
-            $this->bindings[$name] = $binding->setParentElement($this);
-        } else {
-            $this->bindings[$name] = $binding;
-        }
+        $this->bindings[$name] = $binding->setParentElement($this);
         return $this;
     }
 }
