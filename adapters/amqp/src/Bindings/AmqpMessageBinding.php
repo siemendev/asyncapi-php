@@ -2,7 +2,7 @@
 
 namespace Siemendev\AsyncapiPhp\Adapter\Amqp\Bindings;
 
-use Siemendev\AsyncapiPhp\Spec\Model\AsyncApiObject;
+use Siemendev\AsyncapiPhp\Spec\Model\Bindings\MessageBinding;
 
 /**
  * AMQP Message Binding Object
@@ -11,7 +11,7 @@ use Siemendev\AsyncapiPhp\Spec\Model\AsyncApiObject;
  * 
  * @see https://github.com/asyncapi/bindings/blob/master/amqp/README.md#message-binding-object
  */
-class AmqpMessageBinding extends AsyncApiObject
+class AmqpMessageBinding extends MessageBinding
 {
     /**
      * A MIME encoding for the message content.
@@ -22,11 +22,6 @@ class AmqpMessageBinding extends AsyncApiObject
      * Application-specific message type.
      */
     protected ?string $messageType = null;
-
-    /**
-     * The version of this binding. If omitted, "latest" MUST be assumed.
-     */
-    protected ?string $bindingVersion = null;
 
     /**
      * Get the content encoding.
@@ -59,23 +54,6 @@ class AmqpMessageBinding extends AsyncApiObject
     public function setMessageType(?string $messageType): self
     {
         $this->messageType = $messageType;
-        return $this;
-    }
-
-    /**
-     * Get the binding version.
-     */
-    public function getBindingVersion(): ?string
-    {
-        return $this->bindingVersion;
-    }
-
-    /**
-     * Set the binding version.
-     */
-    public function setBindingVersion(?string $bindingVersion): self
-    {
-        $this->bindingVersion = $bindingVersion;
         return $this;
     }
 }

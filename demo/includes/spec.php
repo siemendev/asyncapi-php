@@ -7,6 +7,8 @@ use Siemendev\AsyncapiPhp\Adapter\Amqp\Bindings\AmqpChannelBindingExchange;
 use Siemendev\AsyncapiPhp\Adapter\Amqp\Bindings\AmqpChannelBindingQueue;
 use Siemendev\AsyncapiPhp\Adapter\Amqp\Bindings\AmqpOperationBinding;
 use Siemendev\AsyncapiPhp\Spec\Model\AsyncApi;
+use Siemendev\AsyncapiPhp\Spec\Model\Bindings\ChannelBindings;
+use Siemendev\AsyncapiPhp\Spec\Model\Bindings\OperationBindings;
 use Siemendev\AsyncapiPhp\Spec\Model\Channel;
 use Siemendev\AsyncapiPhp\Spec\Model\Components;
 use Siemendev\AsyncapiPhp\Spec\Model\Info;
@@ -38,14 +40,16 @@ return (new AsyncApi(
                 'test',
                 new ComponentMessageReference('test')
             )
-            ->addBinding(
-                'amqp',
-                (new AmqpChannelBinding())
-                    ->setIs(AmqpChannelBinding::TYPE_ROUTING_KEY)
-                    ->setExchange(
-                        (new AmqpChannelBindingExchange())
-                            ->setName('test_exchange')
-                            ->setType('classic')
+            ->setBindings(
+                (new ChannelBindings())
+                    ->setAmqp(
+                        (new AmqpChannelBinding())
+                            ->setIs(AmqpChannelBinding::TYPE_ROUTING_KEY)
+                            ->setExchange(
+                                (new AmqpChannelBindingExchange())
+                                    ->setName('test_exchange')
+                                    ->setType('classic')
+                            )
                     )
             )
     )
@@ -58,14 +62,16 @@ return (new AsyncApi(
                 'test',
                 new ComponentMessageReference('test')
             )
-            ->addBinding(
-                'amqp',
-                (new AmqpChannelBinding())
-                    ->setIs(AmqpChannelBinding::TYPE_QUEUE)
-                    ->setQueue(
-                        (new AmqpChannelBindingQueue())
-                            ->setName('test_queue')
-                            ->setDurable(true)
+            ->setBindings(
+                (new ChannelBindings())
+                    ->setAmqp(
+                        (new AmqpChannelBinding())
+                            ->setIs(AmqpChannelBinding::TYPE_QUEUE)
+                            ->setQueue(
+                                (new AmqpChannelBindingQueue())
+                                    ->setName('test_queue')
+                                    ->setDurable(true)
+                            )
                     )
             )
     )
@@ -76,9 +82,11 @@ return (new AsyncApi(
             ->setDescription('This operation publishes a test message to a test channel')
             ->setChannel(new ChannelReference('test_publish'))
             ->addMessage(new ChannelMessageReference('test_publish', 'test'))
-            ->addBinding(
-                'amqp',
-                (new AmqpOperationBinding())->setCc(['test'])
+            ->setBindings(
+                (new OperationBindings())
+                    ->setAmqp(
+                        (new AmqpOperationBinding())->setCc(['test'])
+                    )
             )
     )
     ->addOperation(
@@ -88,9 +96,11 @@ return (new AsyncApi(
             ->setDescription('This operation receives messages from a test channel')
             ->setChannel(new ChannelReference('test_receive'))
             ->addMessage(new ChannelMessageReference('test_receive', 'test'))
-            ->addBinding(
-                'amqp',
-                (new AmqpOperationBinding())->setAck(true)
+            ->setBindings(
+                (new OperationBindings())
+                    ->setAmqp(
+                        (new AmqpOperationBinding())->setAck(true)
+                    )
             )
     )
     ->setComponents(

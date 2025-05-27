@@ -2,6 +2,8 @@
 
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
+use Siemendev\AsyncapiPhp\Spec\Model\Bindings\MessageBindings;
+
 /**
  * Describes a message that can be published or received on a channel.
  */
@@ -56,9 +58,9 @@ class Message extends AsyncApiObject
     /**
      * A map of the bindings for this message.
      * 
-     * @var array<string, AsyncApiObject>
+     * @var MessageBindings|Reference<MessageBindings>
      */
-    protected array $bindings = [];
+    protected MessageBindings|Reference $bindings;
 
     /**
      * List of examples.
@@ -245,20 +247,33 @@ class Message extends AsyncApiObject
     /**
      * Get the bindings.
      *
-     * @return array<string, AsyncApiObject>
+     * @return MessageBindings|Reference<MessageBindings>
      */
-    public function getBindings(): array
+    public function getBindings(): MessageBindings|Reference
     {
         return $this->bindings;
     }
 
     /**
-     * Add a binding.
+     * Set the bindings.
+     *
+     * @param MessageBindings|Reference<MessageBindings> $bindings
      */
-    public function addBinding(string $name, AsyncApiObject $binding): self
+    public function setBindings(MessageBindings|Reference $bindings): self
     {
-        $this->bindings[$name] = $binding->setParentElement($this);
+        $this->bindings = $bindings->setParentElement($this);
         return $this;
+    }
+
+    /**
+     * Resolves the reference to the bindings and returns a MessageBindings object.
+     */
+    public function resolveBindings(): MessageBindings
+    {
+        if ($this->bindings instanceof Reference) {
+            return $this->bindings->resolve();
+        }
+        return $this->bindings;
     }
 
     /**

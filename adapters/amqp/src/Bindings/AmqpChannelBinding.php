@@ -2,7 +2,7 @@
 
 namespace Siemendev\AsyncapiPhp\Adapter\Amqp\Bindings;
 
-use Siemendev\AsyncapiPhp\Spec\Model\AsyncApiObject;
+use Siemendev\AsyncapiPhp\Spec\Model\Bindings\ChannelBinding;
 
 /**
  * AMQP Channel Binding Object
@@ -11,7 +11,7 @@ use Siemendev\AsyncapiPhp\Spec\Model\AsyncApiObject;
  * 
  * @see https://github.com/asyncapi/bindings/blob/master/amqp/README.md#channel-binding-object
  */
-class AmqpChannelBinding extends AsyncApiObject
+class AmqpChannelBinding extends ChannelBinding
 {
     public const TYPE_QUEUE = 'queue';
     public const TYPE_ROUTING_KEY = 'routingKey';
@@ -30,11 +30,6 @@ class AmqpChannelBinding extends AsyncApiObject
      * When `is`=`queue`, this object defines the queue properties.
      */
     protected ?AmqpChannelBindingQueue $queue = null;
-
-    /**
-     * The version of this binding. If omitted, "latest" MUST be assumed.
-     */
-    protected ?string $bindingVersion = null;
 
     /**
      * Get the channel type.
@@ -88,23 +83,6 @@ class AmqpChannelBinding extends AsyncApiObject
     public function setQueue(?AmqpChannelBindingQueue $queue): self
     {
         $this->queue = $queue;
-        return $this;
-    }
-
-    /**
-     * Get the binding version.
-     */
-    public function getBindingVersion(): ?string
-    {
-        return $this->bindingVersion;
-    }
-
-    /**
-     * Set the binding version.
-     */
-    public function setBindingVersion(?string $bindingVersion): self
-    {
-        $this->bindingVersion = $bindingVersion;
         return $this;
     }
 }

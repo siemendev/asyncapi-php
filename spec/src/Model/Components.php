@@ -2,6 +2,11 @@
 
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
+use Siemendev\AsyncapiPhp\Spec\Model\Bindings\ChannelBindings;
+use Siemendev\AsyncapiPhp\Spec\Model\Bindings\MessageBindings;
+use Siemendev\AsyncapiPhp\Spec\Model\Bindings\OperationBindings;
+use Siemendev\AsyncapiPhp\Spec\Model\Bindings\ServerBindings;
+
 /**
  * Holds a set of reusable objects for different aspects of the AsyncAPI specification.
  */
@@ -101,30 +106,30 @@ class Components extends AsyncApiObject
     /**
      * An object to hold reusable Server Bindings Objects.
      *
-     * @var array<string, AsyncApiObject|Reference<AsyncApiObject>>
+     * @var ServerBindings|Reference<ServerBindings>|null
      */
-    protected array $serverBindings = [];
+    protected ServerBindings|Reference|null $serverBindings = null;
 
     /**
      * An object to hold reusable Channel Bindings Objects.
      *
-     * @var array<string, AsyncApiObject|Reference<AsyncApiObject>>
+     * @var ChannelBindings|Reference<ChannelBindings>|null
      */
-    protected array $channelBindings = [];
+    protected ChannelBindings|Reference|null $channelBindings = null;
 
     /**
      * An object to hold reusable Operation Bindings Objects.
      *
-     * @var array<string, AsyncApiObject|Reference<AsyncApiObject>>
+     * @var OperationBindings|Reference<OperationBindings>|null
      */
-    protected array $operationBindings = [];
+    protected OperationBindings|Reference|null $operationBindings = null;
 
     /**
      * An object to hold reusable Message Bindings Objects.
      *
-     * @var array<string, AsyncApiObject|Reference<AsyncApiObject>>
+     * @var MessageBindings|Reference<MessageBindings>|null
      */
-    protected array $messageBindings = [];
+    protected MessageBindings|Reference|null $messageBindings = null;
 
     /**
      * An object to hold reusable Operation Reply Objects.
@@ -416,84 +421,76 @@ class Components extends AsyncApiObject
     /**
      * Get the server bindings.
      *
-     * @return array<string, AsyncApiObject|Reference<AsyncApiObject>>
+     * @return ServerBindings|Reference<ServerBindings>|null
      */
-    public function getServerBindings(): array
+    public function getServerBindings(): ServerBindings|Reference|null
     {
         return $this->serverBindings;
     }
 
     /**
-     * Add a server binding.
-     *
-     * @param AsyncApiObject|Reference<AsyncApiObject> $binding
+     * @param ServerBindings|Reference<ServerBindings>|null $bindings
      */
-    public function addServerBinding(string $name, AsyncApiObject|Reference $binding): self
+    public function setServerBindings(ServerBindings|Reference|null $bindings): self
     {
-        $this->serverBindings[$name] = $binding->setParentElement($this);
+        $this->serverBindings = $bindings?->setParentElement($this);
         return $this;
     }
 
     /**
      * Get the channel bindings.
      *
-     * @return array<string, AsyncApiObject|Reference<AsyncApiObject>>
+     * @return ChannelBindings|Reference<ChannelBindings>|null
      */
-    public function getChannelBindings(): array
+    public function getChannelBindings(): ChannelBindings|Reference|null
     {
         return $this->channelBindings;
     }
 
     /**
-     * Add a channel binding.
-     *
-     * @param AsyncApiObject|Reference<AsyncApiObject> $binding
+     * @param ChannelBindings|Reference<ChannelBindings>|null $bindings
      */
-    public function addChannelBinding(string $name, AsyncApiObject|Reference $binding): self
+    public function setChannelBindings(ChannelBindings|Reference|null $bindings): self
     {
-        $this->channelBindings[$name] = $binding->setParentElement($this);
+        $this->channelBindings = $bindings?->setParentElement($this);
         return $this;
     }
 
     /**
      * Get the operation bindings.
      *
-     * @return array<string, AsyncApiObject|Reference<AsyncApiObject>>
+     * @return OperationBindings|Reference<OperationBindings>|null
      */
-    public function getOperationBindings(): array
+    public function getOperationBindings(): OperationBindings|Reference|null
     {
         return $this->operationBindings;
     }
 
     /**
-     * Add an operation binding.
-     *
-     * @param AsyncApiObject|Reference<AsyncApiObject> $binding
+     * @param OperationBindings|Reference<OperationBindings>|null $bindings
      */
-    public function addOperationBinding(string $name, AsyncApiObject|Reference $binding): self
+    public function setOperationBindings(OperationBindings|Reference|null $bindings): self
     {
-        $this->operationBindings[$name] = $binding->setParentElement($this);
+        $this->operationBindings = $bindings?->setParentElement($this);
         return $this;
     }
 
     /**
      * Get the message bindings.
      *
-     * @return array<string, AsyncApiObject|Reference<AsyncApiObject>>
+     * @return MessageBindings|Reference<MessageBindings>|null
      */
-    public function getMessageBindings(): array
+    public function getMessageBindings(): MessageBindings|Reference|null
     {
         return $this->messageBindings;
     }
 
     /**
-     * Add a message binding.
-     *
-     * @param AsyncApiObject|Reference<AsyncApiObject> $binding
+     * @param MessageBindings|Reference<MessageBindings>|null $bindings
      */
-    public function addMessageBinding(string $name, AsyncApiObject|Reference $binding): self
+    public function setMessageBindings(MessageBindings|Reference|null $bindings): self
     {
-        $this->messageBindings[$name] = $binding->setParentElement($this);
+        $this->messageBindings = $bindings?->setParentElement($this);
         return $this;
     }
 
@@ -580,7 +577,7 @@ class Components extends AsyncApiObject
      *
      * @return array<string, ExternalDocumentation>
      */
-    public function resolveExternalDocs(AsyncApi $spec): array
+    public function resolveExternalDocs(): array
     {
         $externalDocs = [];
         foreach ($this->externalDocs as $name => $externalDocRef) {
@@ -598,7 +595,7 @@ class Components extends AsyncApiObject
      *
      * @return array<string, Server>
      */
-    public function resolveServers(AsyncApi $spec): array
+    public function resolveServers(): array
     {
         $servers = [];
         foreach ($this->servers as $name => $serverRef) {
@@ -616,7 +613,7 @@ class Components extends AsyncApiObject
      *
      * @return array<string, Channel>
      */
-    public function resolveChannels(AsyncApi $spec): array
+    public function resolveChannels(): array
     {
         $channels = [];
         foreach ($this->channels as $name => $channelRef) {
@@ -634,7 +631,7 @@ class Components extends AsyncApiObject
      *
      * @return array<string, Operation>
      */
-    public function resolveOperations(AsyncApi $spec): array
+    public function resolveOperations(): array
     {
         $operations = [];
         foreach ($this->operations as $name => $operationRef) {
@@ -652,7 +649,7 @@ class Components extends AsyncApiObject
      *
      * @return array<string, Message>
      */
-    public function resolveMessages(AsyncApi $spec): array
+    public function resolveMessages(): array
     {
         $messages = [];
         foreach ($this->messages as $name => $messageRef) {
@@ -670,7 +667,7 @@ class Components extends AsyncApiObject
      *
      * @return array<string, SecurityScheme>
      */
-    public function resolveSecuritySchemes(AsyncApi $spec): array
+    public function resolveSecuritySchemes(): array
     {
         $securitySchemes = [];
         foreach ($this->securitySchemes as $name => $securitySchemeRef) {
@@ -688,7 +685,7 @@ class Components extends AsyncApiObject
      *
      * @return array<string, Parameter>
      */
-    public function resolveParameters(AsyncApi $spec): array
+    public function resolveParameters(): array
     {
         $parameters = [];
         foreach ($this->parameters as $name => $parameterRef) {
@@ -706,7 +703,7 @@ class Components extends AsyncApiObject
      *
      * @return array<string, CorrelationId>
      */
-    public function resolveCorrelationIds(AsyncApi $spec): array
+    public function resolveCorrelationIds(): array
     {
         $correlationIds = [];
         foreach ($this->correlationIds as $name => $correlationIdRef) {
@@ -724,7 +721,7 @@ class Components extends AsyncApiObject
      *
      * @return array<string, OperationTrait>
      */
-    public function resolveOperationTraits(AsyncApi $spec): array
+    public function resolveOperationTraits(): array
     {
         $operationTraits = [];
         foreach ($this->operationTraits as $name => $operationTraitRef) {
@@ -742,7 +739,7 @@ class Components extends AsyncApiObject
      *
      * @return array<string, MessageTrait>
      */
-    public function resolveMessageTraits(AsyncApi $spec): array
+    public function resolveMessageTraits(): array
     {
         $messageTraits = [];
         foreach ($this->messageTraits as $name => $messageTraitRef) {
@@ -760,7 +757,7 @@ class Components extends AsyncApiObject
      *
      * @return array<string, ServerVariable>
      */
-    public function resolveServerVariables(AsyncApi $spec): array
+    public function resolveServerVariables(): array
     {
         $serverVariables = [];
         foreach ($this->serverVariables as $name => $serverVariableRef) {
@@ -776,73 +773,53 @@ class Components extends AsyncApiObject
     /**
      * Resolves the references to the server bindings.
      *
-     * @return array<string, AsyncApiObject>
+     * @return ServerBindings|null
      */
-    public function resolveServerBindings(AsyncApi $spec): array
+    public function resolveServerBindings(): ?ServerBindings
     {
-        $serverBindings = [];
-        foreach ($this->serverBindings as $name => $bindingRef) {
-            if ($bindingRef instanceof Reference) {
-                $serverBindings[$name] = $bindingRef->resolve();
-            } else {
-                $serverBindings[$name] = $bindingRef;
-            }
+        if ($this->serverBindings instanceof Reference) {
+            return $this->serverBindings->resolve();
         }
-        return $serverBindings;
+        return $this->serverBindings;
     }
 
     /**
      * Resolves the references to the channel bindings.
      *
-     * @return array<string, AsyncApiObject>
+     * @return ChannelBindings|null
      */
-    public function resolveChannelBindings(AsyncApi $spec): array
+    public function resolveChannelBindings(): ?ChannelBindings
     {
-        $channelBindings = [];
-        foreach ($this->channelBindings as $name => $bindingRef) {
-            if ($bindingRef instanceof Reference) {
-                $channelBindings[$name] = $bindingRef->resolve();
-            } else {
-                $channelBindings[$name] = $bindingRef;
-            }
+        if ($this->channelBindings instanceof Reference) {
+            return $this->channelBindings->resolve();
         }
-        return $channelBindings;
+        return $this->channelBindings;
     }
 
     /**
      * Resolves the references to the operation bindings.
      *
-     * @return array<string, AsyncApiObject>
+     * @return OperationBindings|null
      */
-    public function resolveOperationBindings(AsyncApi $spec): array
+    public function resolveOperationBindings(): ?OperationBindings
     {
-        $operationBindings = [];
-        foreach ($this->operationBindings as $name => $bindingRef) {
-            if ($bindingRef instanceof Reference) {
-                $operationBindings[$name] = $bindingRef->resolve();
-            } else {
-                $operationBindings[$name] = $bindingRef;
-            }
+        if ($this->operationBindings instanceof Reference) {
+            return $this->operationBindings->resolve();
         }
-        return $operationBindings;
+        return $this->operationBindings;
     }
 
     /**
      * Resolves the references to the message bindings.
      *
-     * @return array<string, AsyncApiObject>
+     * @return MessageBindings|null
      */
-    public function resolveMessageBindings(AsyncApi $spec): array
+    public function resolveMessageBindings(): ?MessageBindings
     {
-        $messageBindings = [];
-        foreach ($this->messageBindings as $name => $bindingRef) {
-            if ($bindingRef instanceof Reference) {
-                $messageBindings[$name] = $bindingRef->resolve();
-            } else {
-                $messageBindings[$name] = $bindingRef;
-            }
+        if ($this->messageBindings instanceof Reference) {
+            return $this->messageBindings->resolve();
         }
-        return $messageBindings;
+        return $this->messageBindings;
     }
 
     /**
@@ -850,7 +827,7 @@ class Components extends AsyncApiObject
      *
      * @return array<string, OperationReply>
      */
-    public function resolveReplies(AsyncApi $spec): array
+    public function resolveReplies(): array
     {
         $replies = [];
         foreach ($this->replies as $name => $replyRef) {
@@ -868,7 +845,7 @@ class Components extends AsyncApiObject
      *
      * @return array<string, OperationReplyAddress>
      */
-    public function resolveReplyAddresses(AsyncApi $spec): array
+    public function resolveReplyAddresses(): array
     {
         $replyAddresses = [];
         foreach ($this->replyAddresses as $name => $replyAddressRef) {

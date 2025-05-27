@@ -2,6 +2,8 @@
 
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
+use Siemendev\AsyncapiPhp\Spec\Model\Bindings\OperationBindings;
+
 /**
  * Describes an operation that can be performed on a channel.
  */
@@ -60,9 +62,9 @@ class Operation extends AsyncApiObject
     /**
      * A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the operation.
      *
-     * @var array<string, AsyncApiObject>|Reference<AsyncApiObject>
+     * @var OperationBindings|Reference<OperationBindings>
      */
-    protected array|Reference $bindings = [];
+    protected OperationBindings|Reference $bindings;
 
     /**
      * A list of traits to apply to the operation object.
@@ -240,9 +242,9 @@ class Operation extends AsyncApiObject
     /**
      * Get the bindings.
      *
-     * @return array<string, AsyncApiObject>|Reference<AsyncApiObject>
+     * @return OperationBindings|Reference<OperationBindings>
      */
-    public function getBindings(): array|Reference
+    public function getBindings(): OperationBindings|Reference
     {
         return $this->bindings;
     }
@@ -250,30 +252,11 @@ class Operation extends AsyncApiObject
     /**
      * Set the bindings.
      *
-     * @param array<string, AsyncApiObject>|Reference<AsyncApiObject> $bindings
+     * @param OperationBindings|Reference<OperationBindings> $bindings
      */
-    public function setBindings(array|Reference $bindings): self
+    public function setBindings(OperationBindings|Reference $bindings): self
     {
-        if ($bindings instanceof Reference) {
-            $this->bindings = $bindings->setParentElement($this);
-        } else {
-            foreach ($bindings as $key => $binding) {
-                $bindings[$key] = $binding->setParentElement($this);
-            }
-            $this->bindings = $bindings;
-        }
-        return $this;
-    }
-
-    /**
-     * Add a binding.
-     */
-    public function addBinding(string $name, AsyncApiObject $binding): self
-    {
-        if (!is_array($this->bindings)) {
-            $this->bindings = [];
-        }
-        $this->bindings[$name] = $binding->setParentElement($this);
+        $this->bindings = $bindings->setParentElement($this);
         return $this;
     }
 
@@ -377,25 +360,14 @@ class Operation extends AsyncApiObject
     }
 
     /**
-     * Resolves the reference to the bindings and returns an array.
-     *
-     * @return array<string, AsyncApiObject>
+     * Resolves the reference to the bindings and returns an OperationBindings object.
      */
-    public function resolveBindings(): array
+    public function resolveBindings(): OperationBindings
     {
         if ($this->bindings instanceof Reference) {
             return $this->bindings->resolve();
         }
-
-        $resolvedBindings = [];
-        foreach ($this->bindings as $name => $binding) {
-            if ($binding instanceof Reference) {
-                $resolvedBindings[$name] = $binding->resolve();
-            } else {
-                $resolvedBindings[$name] = $binding;
-            }
-        }
-        return $resolvedBindings;
+        return $this->bindings;
     }
 
     /**

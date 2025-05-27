@@ -30,12 +30,12 @@ class AmqpPublisher
         string $contentType,
         array $headers = [],
     ): void {
-        $operationBinding = $operation->getBindings()['amqp'] ?? null;
+        $operationBinding = $operation->resolveBindings()->getAmqp();
         if (!$operationBinding instanceof AmqpOperationBinding) {
             throw new InvalidSpecificationException('Operation binding is not of type AmqpOperationBinding'); # todo change this to be more helpful
         }
 
-        $channelBinding = $channel->getBindings()['amqp'] ?? null;
+        $channelBinding = $channel->resolveBindings()->getAmqp();
         if (!$channelBinding instanceof AmqpChannelBinding) {
             throw new InvalidSpecificationException('Channel binding is not of type AmqpChannelBinding'); # todo change this to be more helpful
         }

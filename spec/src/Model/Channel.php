@@ -2,6 +2,8 @@
 
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
+use Siemendev\AsyncapiPhp\Spec\Model\Bindings\ChannelBindings;
+
 /**
  * Describes a named network address where messages can be exchanged.
  */
@@ -58,9 +60,9 @@ class Channel extends AsyncApiObject
     /**
      * A map of the bindings for this channel.
      *
-     * @var array<string, AsyncApiObject>
+     * @var ChannelBindings|Reference<ChannelBindings>
      */
-    protected array $bindings = [];
+    protected ChannelBindings|Reference $bindings;
 
     /**
      * A map of the messages that will be published or received on this channel.
@@ -222,20 +224,30 @@ class Channel extends AsyncApiObject
     /**
      * Get the bindings.
      *
-     * @return array<string, AsyncApiObject>
+     * @return ChannelBindings|Reference<ChannelBindings>
      */
-    public function getBindings(): array
+    public function getBindings(): ChannelBindings|Reference
     {
         return $this->bindings;
     }
 
     /**
-     * Add a binding.
+     * Set the bindings.
+     *
+     * @param ChannelBindings|Reference<ChannelBindings> $bindings
      */
-    public function addBinding(string $name, AsyncApiObject $binding): self
+    public function setBindings(ChannelBindings|Reference $bindings): self
     {
-        $this->bindings[$name] = $binding->setParentElement($this);
+        $this->bindings = $bindings->setParentElement($this);
         return $this;
+    }
+
+    public function resolveBindings(): ChannelBindings
+    {
+        if ($this->bindings instanceof Reference) {
+            return $this->bindings->resolve();
+        }
+        return $this->bindings;
     }
 
     /**

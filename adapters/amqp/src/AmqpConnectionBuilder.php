@@ -41,7 +41,7 @@ class AmqpConnectionBuilder
         }
 
         $vhost = null;
-        $channelBinding = $channel->getBindings()['amqp'] ?? null;
+        $channelBinding = $channel->resolveBindings()->getAmqp();
         if ($channelBinding instanceof AmqpChannelBinding) {
             if ($channelBinding->getIs() === AmqpChannelBinding::TYPE_ROUTING_KEY) {
                 $vhost = $channelBinding->getExchange()?->getVhost();

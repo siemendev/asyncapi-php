@@ -2,6 +2,8 @@
 
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
+use Siemendev\AsyncapiPhp\Spec\Model\Bindings\ServerBindings;
+
 /**
  * An object representing a server.
  */
@@ -72,9 +74,9 @@ class Server extends AsyncApiObject
     /**
      * A map of the bindings for this server.
      *
-     * @var array<string, AsyncApiObject>
+     * @var ServerBindings|Reference<ServerBindings>
      */
-    protected array $bindings = [];
+    protected ServerBindings|Reference $bindings;
 
     /**
      * Constructor.
@@ -266,19 +268,32 @@ class Server extends AsyncApiObject
     /**
      * Get the bindings.
      *
-     * @return array<string, AsyncApiObject>
+     * @return ServerBindings|Reference<ServerBindings>
      */
-    public function getBindings(): array
+    public function getBindings(): ServerBindings|Reference
     {
         return $this->bindings;
     }
 
     /**
-     * Add a binding.
+     * Set the bindings.
+     *
+     * @param ServerBindings|Reference<ServerBindings> $bindings
      */
-    public function addBinding(string $name, AsyncApiObject $binding): self
+    public function setBindings(ServerBindings|Reference $bindings): self
     {
-        $this->bindings[$name] = $binding->setParentElement($this);
+        $this->bindings = $bindings->setParentElement($this);
         return $this;
+    }
+
+    /**
+     * Resolves the reference to the bindings and returns a ServerBindings object.
+     */
+    public function resolveBindings(): ServerBindings
+    {
+        if ($this->bindings instanceof Reference) {
+            return $this->bindings->resolve();
+        }
+        return $this->bindings;
     }
 }
