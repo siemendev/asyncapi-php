@@ -1,0 +1,32 @@
+name: Serializers Symfony
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  phpstan:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        coverage: none
+        tools: composer:v2
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress --working-dir=serializers/symfony-serializer
+
+    - name: Run PHPStan
+      run: |
+        cd serializers/symfony-serializer
+        if [ ! -f vendor/bin/phpstan ]; then
+          composer require --dev phpstan/phpstan
+        fi
+        vendor/bin/phpstan analyse
