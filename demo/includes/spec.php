@@ -12,7 +12,10 @@ use Siemendev\AsyncapiPhp\Spec\Model\Components;
 use Siemendev\AsyncapiPhp\Spec\Model\Info;
 use Siemendev\AsyncapiPhp\Spec\Model\Message;
 use Siemendev\AsyncapiPhp\Spec\Model\Operation;
-use Siemendev\AsyncapiPhp\Spec\Model\Reference;
+use Siemendev\AsyncapiPhp\Spec\Model\References\ChannelMessageReference;
+use Siemendev\AsyncapiPhp\Spec\Model\References\ChannelReference;
+use Siemendev\AsyncapiPhp\Spec\Model\References\ComponentMessageReference;
+use Siemendev\AsyncapiPhp\Spec\Model\References\ServerReference;
 use Siemendev\AsyncapiPhp\Spec\Model\Schema;
 use Siemendev\AsyncapiPhp\Spec\Model\SecurityScheme;
 use Siemendev\AsyncapiPhp\Spec\Model\Server;
@@ -30,10 +33,10 @@ return (new AsyncApi(
         'test_publish',
         (new Channel())
             ->setTitle('Test Publish Channel')
-            ->addServer(new Reference('#/servers/rabbitmq'))
+            ->addServer(new ServerReference('rabbitmq'))
             ->addMessage(
                 'test',
-                new Reference('#/components/messages/test')
+                new ComponentMessageReference('test')
             )
             ->addBinding(
                 'amqp',
@@ -50,10 +53,10 @@ return (new AsyncApi(
         'test_receive',
         (new Channel())
             ->setTitle('Test Channel')
-            ->addServer(new Reference('#/servers/rabbitmq'))
+            ->addServer(new ServerReference('rabbitmq'))
             ->addMessage(
                 'test',
-                new Reference('#/components/messages/test')
+                new ComponentMessageReference('test')
             )
             ->addBinding(
                 'amqp',
@@ -71,8 +74,8 @@ return (new AsyncApi(
         (new Operation())
             ->setSummary('Publish a test message')
             ->setDescription('This operation publishes a test message to a test channel')
-            ->setChannel(new Reference('#/channels/test_publish'))
-            ->addMessage(new Reference('#/channels/test_publish/messages/test'))
+            ->setChannel(new ChannelReference('test_publish'))
+            ->addMessage(new ChannelMessageReference('test_publish', 'test'))
             ->addBinding(
                 'amqp',
                 (new AmqpOperationBinding())->setCc(['test'])
@@ -83,8 +86,8 @@ return (new AsyncApi(
         (new Operation())
             ->setSummary('Receive a test message')
             ->setDescription('This operation receives messages from a test channel')
-            ->setChannel(new Reference('#/channels/test_receive'))
-            ->addMessage(new Reference('#/components/messages/test'))
+            ->setChannel(new ChannelReference('test_receive'))
+            ->addMessage(new ChannelMessageReference('test_receive', 'test'))
             ->addBinding(
                 'amqp',
                 (new AmqpOperationBinding())->setAck(true)
