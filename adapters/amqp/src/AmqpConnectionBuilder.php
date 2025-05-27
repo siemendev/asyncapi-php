@@ -32,7 +32,7 @@ class AmqpConnectionBuilder
         $config = new AMQPConnectionConfig();
         $config->setIoType(AMQPConnectionConfig::IO_TYPE_STREAM);
         $config->setHost($host ?: 'changeme');
-        $config->setPort($port ?: 5672);
+        $config->setPort(is_numeric($port) && $port > 0 ? (int) $port : 5672);
         if ($credentials->getUsername()) {
             $config->setUser($credentials->getUsername());
         }

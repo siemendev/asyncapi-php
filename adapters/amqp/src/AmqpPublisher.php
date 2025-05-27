@@ -65,7 +65,7 @@ class AmqpPublisher
             foreach ($operationBinding->getCc() ?? [] as $routingKey) {
                 $connection->channel()->basic_publish(
                     $amqpMessage,
-                    $channelBinding->getExchange()?->getName(),
+                    $channelBinding->getExchange()?->getName() ?? '',
                     $routingKey,
                     $operationBinding->getMandatory() ?? false,
                 );
@@ -74,7 +74,7 @@ class AmqpPublisher
             foreach ($operationBinding->getBcc() ?? [] as $routingKey) {
                 $connection->channel()->basic_publish(
                     $amqpMessage,
-                    $channelBinding->getExchange()?->getName(),
+                    $channelBinding->getExchange()?->getName() ?? '',
                     $routingKey,
                     $operationBinding->getMandatory() ?? false,
                 );

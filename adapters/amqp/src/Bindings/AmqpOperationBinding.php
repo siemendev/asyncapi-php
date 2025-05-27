@@ -28,6 +28,8 @@ class AmqpOperationBinding extends OperationBinding
     /**
      * The routing keys the message should be routed to at the time of publishing.
      * Applies to actions: receive, send
+     *
+     * @var string[]|null
      */
     protected ?array $cc = null;
 
@@ -52,6 +54,8 @@ class AmqpOperationBinding extends OperationBinding
     /**
      * Like cc but consumers will not receive this information.
      * Applies to actions: receive
+     *
+     * @var string[]|null
      */
     protected ?array $bcc = null;
 
@@ -104,6 +108,8 @@ class AmqpOperationBinding extends OperationBinding
 
     /**
      * Get the routing keys (cc).
+     *
+     * @return string[]|null
      */
     public function getCc(): ?array
     {
@@ -112,6 +118,8 @@ class AmqpOperationBinding extends OperationBinding
 
     /**
      * Set the routing keys (cc).
+     *
+     * @param string[]|null $cc
      */
     public function setCc(?array $cc): self
     {
@@ -173,6 +181,8 @@ class AmqpOperationBinding extends OperationBinding
 
     /**
      * Get the blind carbon copy routing keys (bcc).
+     *
+     * @return string[]|null
      */
     public function getBcc(): ?array
     {
@@ -181,6 +191,8 @@ class AmqpOperationBinding extends OperationBinding
 
     /**
      * Set the blind carbon copy routing keys (bcc).
+     *
+     * @param string[]|null $bcc
      */
     public function setBcc(?array $bcc): self
     {
