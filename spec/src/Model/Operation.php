@@ -2,8 +2,6 @@
 
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
-use Siemendev\AsyncapiPhp\Spec\Helper\ReferenceResolver;
-
 /**
  * Describes an operation that can be performed on a channel.
  */
@@ -373,18 +371,18 @@ class Operation extends AsyncApiObject
     /**
      * Resolves the reference to the channel and returns a Channel object.
      */
-    public function resolveChannel(AsyncApi $spec): Channel
+    public function resolveChannel(): Channel
     {
-        return ReferenceResolver::dereference($spec, $this->channel, Channel::class);
+        return $this->channel->resolve(Channel::class);
     }
 
     /**
      * Resolves the reference to the external documentation and returns an ExternalDocumentation object.
      */
-    public function resolveExternalDocs(AsyncApi $spec): ?ExternalDocumentation
+    public function resolveExternalDocs(): ?ExternalDocumentation
     {
         if ($this->externalDocs instanceof Reference) {
-            return ReferenceResolver::dereference($spec, $this->externalDocs, ExternalDocumentation::class);
+            return $this->externalDocs->resolve(ExternalDocumentation::class);
         }
         return $this->externalDocs;
     }
@@ -394,10 +392,10 @@ class Operation extends AsyncApiObject
      *
      * @return array
      */
-    public function resolveBindings(AsyncApi $spec): array
+    public function resolveBindings(): array
     {
         if ($this->bindings instanceof Reference) {
-            return ReferenceResolver::dereference($spec, $this->bindings);
+            return $this->bindings->resolve();
         }
         return $this->bindings;
     }
@@ -405,10 +403,10 @@ class Operation extends AsyncApiObject
     /**
      * Resolves the reference to the message and returns a Message object.
      */
-    public function resolveMessage(AsyncApi $spec): ?Message
+    public function resolveMessage(): ?Message
     {
         if ($this->message instanceof Reference) {
-            return ReferenceResolver::dereference($spec, $this->message, Message::class);
+            return $this->message->resolve(Message::class);
         }
         return $this->message;
     }
@@ -418,7 +416,7 @@ class Operation extends AsyncApiObject
      *
      * @return array<Message>|null
      */
-    public function resolveMessages(AsyncApi $spec): ?array
+    public function resolveMessages(): ?array
     {
         if ($this->messages === null) {
             return null;
@@ -426,7 +424,7 @@ class Operation extends AsyncApiObject
 
         $messages = [];
         foreach ($this->messages as $messageRef) {
-            $messages[] = ReferenceResolver::dereference($spec, $messageRef, Message::class);
+            $messages[] = $messageRef->resolve(Message::class);
         }
         return $messages;
     }
@@ -436,10 +434,10 @@ class Operation extends AsyncApiObject
      *
      * @return mixed
      */
-    public function resolveReply(AsyncApi $spec): mixed
+    public function resolveReply(): mixed
     {
         if ($this->reply instanceof Reference) {
-            return ReferenceResolver::dereference($spec, $this->reply);
+            return $this->reply->resolve();
         }
         return $this->reply;
     }
@@ -449,12 +447,12 @@ class Operation extends AsyncApiObject
      *
      * @return array<string, Channel>
      */
-    public function resolveCallbacks(AsyncApi $spec): array
+    public function resolveCallbacks(): array
     {
         $callbacks = [];
         foreach ($this->callbacks as $name => $callback) {
             if ($callback instanceof Reference) {
-                $callbacks[$name] = ReferenceResolver::dereference($spec, $callback, Channel::class);
+                $callbacks[$name] = $callback->resolve(Channel::class);
             } else {
                 $callbacks[$name] = $callback;
             }
@@ -467,12 +465,12 @@ class Operation extends AsyncApiObject
      *
      * @return array<OperationTrait>
      */
-    public function resolveTraits(AsyncApi $spec): array
+    public function resolveTraits(): array
     {
         $traits = [];
         foreach ($this->traits as $trait) {
             if ($trait instanceof Reference) {
-                $traits[] = ReferenceResolver::dereference($spec, $trait, OperationTrait::class);
+                $traits[] = $trait->resolve(OperationTrait::class);
             } else {
                 $traits[] = $trait;
             }
@@ -485,12 +483,12 @@ class Operation extends AsyncApiObject
      *
      * @return array<SecurityScheme>
      */
-    public function resolveSecurity(AsyncApi $spec): array
+    public function resolveSecurity(): array
     {
         $security = [];
         foreach ($this->security as $securityScheme) {
             if ($securityScheme instanceof Reference) {
-                $security[] = ReferenceResolver::dereference($spec, $securityScheme, SecurityScheme::class);
+                $security[] = $securityScheme->resolve(SecurityScheme::class);
             } else {
                 $security[] = $securityScheme;
             }

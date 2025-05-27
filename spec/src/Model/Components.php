@@ -2,8 +2,6 @@
 
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
-use Siemendev\AsyncapiPhp\Spec\Helper\ReferenceResolver;
-
 /**
  * Holds a set of reusable objects for different aspects of the AsyncAPI specification.
  */
@@ -516,12 +514,12 @@ class Components extends AsyncApiObject
      *
      * @return array<string, Schema>
      */
-    public function resolveSchemas(AsyncApi $spec): array
+    public function resolveSchemas(): array
     {
         $schemas = [];
         foreach ($this->schemas as $name => $schemaRef) {
             if ($schemaRef instanceof Reference) {
-                $schemas[$name] = ReferenceResolver::dereference($spec, $schemaRef, Schema::class);
+                $schemas[$name] = $schemaRef->resolve(Schema::class);
             } else {
                 $schemas[$name] = $schemaRef;
             }
@@ -534,12 +532,12 @@ class Components extends AsyncApiObject
      *
      * @return array<string, Tag>
      */
-    public function resolveTags(AsyncApi $spec): array
+    public function resolveTags(): array
     {
         $tags = [];
         foreach ($this->tags as $name => $tagRef) {
             if ($tagRef instanceof Reference) {
-                $tags[$name] = ReferenceResolver::dereference($spec, $tagRef, Tag::class);
+                $tags[$name] = $tagRef->resolve(Tag::class);
             } else {
                 $tags[$name] = $tagRef;
             }
@@ -557,7 +555,7 @@ class Components extends AsyncApiObject
         $externalDocs = [];
         foreach ($this->externalDocs as $name => $externalDocRef) {
             if ($externalDocRef instanceof Reference) {
-                $externalDocs[$name] = ReferenceResolver::dereference($spec, $externalDocRef, ExternalDocumentation::class);
+                $externalDocs[$name] = $externalDocRef->resolve(ExternalDocumentation::class);
             } else {
                 $externalDocs[$name] = $externalDocRef;
             }
@@ -575,7 +573,7 @@ class Components extends AsyncApiObject
         $servers = [];
         foreach ($this->servers as $name => $serverRef) {
             if ($serverRef instanceof Reference) {
-                $servers[$name] = ReferenceResolver::dereference($spec, $serverRef, Server::class);
+                $servers[$name] = $serverRef->resolve(Server::class);
             } else {
                 $servers[$name] = $serverRef;
             }
@@ -593,7 +591,7 @@ class Components extends AsyncApiObject
         $channels = [];
         foreach ($this->channels as $name => $channelRef) {
             if ($channelRef instanceof Reference) {
-                $channels[$name] = ReferenceResolver::dereference($spec, $channelRef, Channel::class);
+                $channels[$name] = $channelRef->resolve(Channel::class);
             } else {
                 $channels[$name] = $channelRef;
             }
@@ -611,7 +609,7 @@ class Components extends AsyncApiObject
         $operations = [];
         foreach ($this->operations as $name => $operationRef) {
             if ($operationRef instanceof Reference) {
-                $operations[$name] = ReferenceResolver::dereference($spec, $operationRef, Operation::class);
+                $operations[$name] = $operationRef->resolve(Operation::class);
             } else {
                 $operations[$name] = $operationRef;
             }
@@ -629,7 +627,7 @@ class Components extends AsyncApiObject
         $messages = [];
         foreach ($this->messages as $name => $messageRef) {
             if ($messageRef instanceof Reference) {
-                $messages[$name] = ReferenceResolver::dereference($spec, $messageRef, Message::class);
+                $messages[$name] = $messageRef->resolve(Message::class);
             } else {
                 $messages[$name] = $messageRef;
             }
@@ -647,7 +645,7 @@ class Components extends AsyncApiObject
         $securitySchemes = [];
         foreach ($this->securitySchemes as $name => $securitySchemeRef) {
             if ($securitySchemeRef instanceof Reference) {
-                $securitySchemes[$name] = ReferenceResolver::dereference($spec, $securitySchemeRef, SecurityScheme::class);
+                $securitySchemes[$name] = $securitySchemeRef->resolve(SecurityScheme::class);
             } else {
                 $securitySchemes[$name] = $securitySchemeRef;
             }
@@ -665,7 +663,7 @@ class Components extends AsyncApiObject
         $parameters = [];
         foreach ($this->parameters as $name => $parameterRef) {
             if ($parameterRef instanceof Reference) {
-                $parameters[$name] = ReferenceResolver::dereference($spec, $parameterRef, Parameter::class);
+                $parameters[$name] = $parameterRef->resolve(Parameter::class);
             } else {
                 $parameters[$name] = $parameterRef;
             }
@@ -683,7 +681,7 @@ class Components extends AsyncApiObject
         $correlationIds = [];
         foreach ($this->correlationIds as $name => $correlationIdRef) {
             if ($correlationIdRef instanceof Reference) {
-                $correlationIds[$name] = ReferenceResolver::dereference($spec, $correlationIdRef, CorrelationId::class);
+                $correlationIds[$name] = $correlationIdRef->resolve(CorrelationId::class);
             } else {
                 $correlationIds[$name] = $correlationIdRef;
             }
@@ -701,7 +699,7 @@ class Components extends AsyncApiObject
         $operationTraits = [];
         foreach ($this->operationTraits as $name => $operationTraitRef) {
             if ($operationTraitRef instanceof Reference) {
-                $operationTraits[$name] = ReferenceResolver::dereference($spec, $operationTraitRef, OperationTrait::class);
+                $operationTraits[$name] = $operationTraitRef->resolve(OperationTrait::class);
             } else {
                 $operationTraits[$name] = $operationTraitRef;
             }
@@ -719,7 +717,7 @@ class Components extends AsyncApiObject
         $messageTraits = [];
         foreach ($this->messageTraits as $name => $messageTraitRef) {
             if ($messageTraitRef instanceof Reference) {
-                $messageTraits[$name] = ReferenceResolver::dereference($spec, $messageTraitRef, MessageTrait::class);
+                $messageTraits[$name] = $messageTraitRef->resolve(MessageTrait::class);
             } else {
                 $messageTraits[$name] = $messageTraitRef;
             }
@@ -737,7 +735,7 @@ class Components extends AsyncApiObject
         $serverVariables = [];
         foreach ($this->serverVariables as $name => $serverVariableRef) {
             if ($serverVariableRef instanceof Reference) {
-                $serverVariables[$name] = ReferenceResolver::dereference($spec, $serverVariableRef, ServerVariable::class);
+                $serverVariables[$name] = $serverVariableRef->resolve(ServerVariable::class);
             } else {
                 $serverVariables[$name] = $serverVariableRef;
             }
@@ -755,7 +753,7 @@ class Components extends AsyncApiObject
         $serverBindings = [];
         foreach ($this->serverBindings as $name => $bindingRef) {
             if ($bindingRef instanceof Reference) {
-                $serverBindings[$name] = ReferenceResolver::dereference($spec, $bindingRef);
+                $serverBindings[$name] = $bindingRef->resolve();
             } else {
                 $serverBindings[$name] = $bindingRef;
             }
@@ -773,7 +771,7 @@ class Components extends AsyncApiObject
         $channelBindings = [];
         foreach ($this->channelBindings as $name => $bindingRef) {
             if ($bindingRef instanceof Reference) {
-                $channelBindings[$name] = ReferenceResolver::dereference($spec, $bindingRef);
+                $channelBindings[$name] = $bindingRef->resolve();
             } else {
                 $channelBindings[$name] = $bindingRef;
             }
@@ -791,7 +789,7 @@ class Components extends AsyncApiObject
         $operationBindings = [];
         foreach ($this->operationBindings as $name => $bindingRef) {
             if ($bindingRef instanceof Reference) {
-                $operationBindings[$name] = ReferenceResolver::dereference($spec, $bindingRef);
+                $operationBindings[$name] = $bindingRef->resolve();
             } else {
                 $operationBindings[$name] = $bindingRef;
             }
@@ -809,7 +807,7 @@ class Components extends AsyncApiObject
         $messageBindings = [];
         foreach ($this->messageBindings as $name => $bindingRef) {
             if ($bindingRef instanceof Reference) {
-                $messageBindings[$name] = ReferenceResolver::dereference($spec, $bindingRef);
+                $messageBindings[$name] = $bindingRef->resolve();
             } else {
                 $messageBindings[$name] = $bindingRef;
             }
@@ -827,7 +825,7 @@ class Components extends AsyncApiObject
         $replies = [];
         foreach ($this->replies as $name => $replyRef) {
             if ($replyRef instanceof Reference) {
-                $replies[$name] = ReferenceResolver::dereference($spec, $replyRef);
+                $replies[$name] = $replyRef->resolve();
             } else {
                 $replies[$name] = $replyRef;
             }
@@ -845,7 +843,7 @@ class Components extends AsyncApiObject
         $replyAddresses = [];
         foreach ($this->replyAddresses as $name => $replyAddressRef) {
             if ($replyAddressRef instanceof Reference) {
-                $replyAddresses[$name] = ReferenceResolver::dereference($spec, $replyAddressRef);
+                $replyAddresses[$name] = $replyAddressRef->resolve();
             } else {
                 $replyAddresses[$name] = $replyAddressRef;
             }

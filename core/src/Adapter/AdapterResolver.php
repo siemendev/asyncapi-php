@@ -24,12 +24,11 @@ class AdapterResolver
     /**
      * @throws NoMatchingAdapterFoundException
      */
-    public function resolveAdapter(AsyncApi $rootSpec, Server $serverSpec, CredentialsInterface $credentials): AdapterInterface
+    public function resolveAdapter(Server $serverSpec, CredentialsInterface $credentials): AdapterInterface
     {
         foreach ($this->adapters as $adapter) {
             if ($adapter->supports($serverSpec, $credentials)) {
                 return (clone $adapter)
-                    ->setRootSpec($rootSpec)
                     ->setServerSpec($serverSpec)
                     ->setCredentials($credentials)
                 ;

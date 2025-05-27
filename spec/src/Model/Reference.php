@@ -2,8 +2,6 @@
 
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
-use Siemendev\AsyncapiPhp\Spec\Helper\ReferenceResolver;
-
 /**
  * A simple object to allow referencing other components in the specification.
  */
@@ -100,12 +98,53 @@ class Reference extends AsyncApiObject
 
     /**
      * @template T of AsyncApiObject
-     * @param class-string<T> $model The model name to resolve
+     * @param class-string<T>|null $model The model name to resolve
      * @return T
      */
-    public function resolve(AsyncApi $spec, string $model): AsyncApiObject
+    public function resolve(?string $model = null): AsyncApiObject
     {
-        return ReferenceResolver::dereference($spec, $this, $model);
+        $ref = trim($this->getRef(), '#/');
+        $parts = explode('/', $ref);
+
+        $value = $this->getRootElement();
+        foreach ($parts as $part) {
+            if (is_object($value)) {
+                if (method_exists($value, 'get' . ucfirst($part))) {
+                    $value = $value->{'get' . ucfirst($part)}();
+                    continue;
+                }
+                if (property_exists($value, $part)) {
+                    $value = $value->{$part};
+                    continue;
+                }
+                throw new \LogicException(sprintf('Reference "%s" not found in spec', $this->getRef()));
+            }
+
+            if (is_array($value)) {
+                if (!array_key_exists($part, $value)) {
+                    throw new \LogicException(sprintf('Reference "%s" not found in spec', $this->getRef()));
+                }
+                $value = $value[$part];
+                continue;
+            }
+            if ($value instanceof \ArrayAccess) {
+                if (!$value->offsetExists($part)) {
+                    throw new \LogicException(sprintf('Reference "%s" not found in spec', $this->getRef()));
+                }
+                $value = $value[$part];
+                continue;
+            }
+
+            if ($value instanceof Reference) {
+                $value = $value->resolve($model);
+            }
+        }
+
+        if ($model && !($value instanceof $model)) {
+            throw new \LogicException(sprintf('Reference "%s" is not of type %s', $this->getRef(), $model));
+        }
+
+        return $value;
     }
 
     /**

@@ -7,10 +7,8 @@ use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\Printer;
 use Siemendev\AsyncapiPhp\Configuration\StubConfiguration;
 use Siemendev\AsyncapiPhp\Message\AbstractMessage;
-use Siemendev\AsyncapiPhp\Spec\Helper\ReferenceResolver;
 use Siemendev\AsyncapiPhp\Spec\Model\AsyncApi;
 use Siemendev\AsyncapiPhp\Spec\Model\Message;
-use Siemendev\AsyncapiPhp\Spec\Model\Reference;
 use Siemendev\AsyncapiPhp\Spec\Model\Schema;
 
 class Generator
@@ -22,7 +20,7 @@ class Generator
 
         $result = null;
         foreach ($this->extractMessages($spec) as $message) {
-            $result = $this->generateClass($configuration, $spec, $message, $result);
+            $result = $this->generateClass($configuration, $message, $result);
         }
 
         foreach ($result->getFiles() as $fileName => $file) {
@@ -59,7 +57,6 @@ class Generator
 
     private function generateClass(
         StubConfiguration $configuration,
-        AsyncApi $spec,
         Message $message,
         ?ClassGenerationResult $result = null,
     ): ClassGenerationResult {
@@ -94,7 +91,7 @@ class Generator
 
         $requiredProperties = [];
         $optionalProperties = [];
-        foreach ($message->getPayload()?->resolveProperties($spec) ?? [] as $name => $property) {
+        foreach ($message->getPayload()?->resolveProperties() ?? [] as $name => $property) {
             $classProperty = $class->addProperty($name)
                 ->setNullable(false)
                 ->setPrivate()
@@ -164,7 +161,7 @@ class Generator
         $messages = [];
 
         foreach ($spec->getChannels() as $channel) {
-            foreach ($channel->resolveMessages($spec) as $message) {
+            foreach ($channel->resolveMessages() as $message) {
                 $messages[] = $message;
             }
         }

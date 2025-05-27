@@ -5,7 +5,6 @@ namespace Siemendev\AsyncapiPhp\Adapter\Amqp;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use Siemendev\AsyncapiPhp\Adapter\AbstractAdapter;
 use Siemendev\AsyncapiPhp\Configuration\Credentials\CredentialsInterface;
-use Siemendev\AsyncapiPhp\Spec\Helper\ReferenceResolver;
 use Siemendev\AsyncapiPhp\Spec\Model\Channel;
 use Siemendev\AsyncapiPhp\Spec\Model\Message;
 use Siemendev\AsyncapiPhp\Spec\Model\Operation;
@@ -15,7 +14,7 @@ class AmqpAdapter extends AbstractAdapter
 {
     public function __construct(
         private ?AmqpConnectionBuilder $connectionFactory = null,
-        private ?AmqpPublisher         $publisher = null,
+        private ?AmqpPublisher $publisher = null,
     ) {
         $this->connectionFactory ??= new AmqpConnectionBuilder();
         $this->publisher ??= new AmqpPublisher();
@@ -28,7 +27,7 @@ class AmqpAdapter extends AbstractAdapter
 
     public function publishMessage(Operation $operation, Message $message, string $content, string $contentType, array $headers = []): void
     {
-        $channel = $operation->resolveChannel($this->getRootSpec());
+        $channel = $operation->resolveChannel();
         $this->publisher->publishMessage(
             $this->getConnection($channel),
             $channel,

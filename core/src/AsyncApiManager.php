@@ -18,9 +18,6 @@ use Siemendev\AsyncapiPhp\Serializer\Exception\SerializationException;
 use Siemendev\AsyncapiPhp\Serializer\SerializationHandler;
 use Siemendev\AsyncapiPhp\Serializer\SerializerInterface;
 use Siemendev\AsyncapiPhp\Spec\Exception\InvalidSpecificationException;
-use Siemendev\AsyncapiPhp\Spec\Helper\ReferenceResolver;
-use Siemendev\AsyncapiPhp\Spec\Model\Channel;
-use Siemendev\AsyncapiPhp\Spec\Model\Message;
 use Siemendev\AsyncapiPhp\Spec\Model\Operation;
 use Siemendev\AsyncapiPhp\Spec\SpecRepository;
 
@@ -150,7 +147,6 @@ class AsyncApiManager
 
         $this->adapterManager
             ->resolveAdapter(
-                $this->configuration->getSpec(),
                 $this->specRepo->getServerForChannel($this->configuration->getSpec(), $channel, $serverName),
                 $this->configuration->getCredentials($serverName),
             )

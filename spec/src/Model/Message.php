@@ -2,8 +2,6 @@
 
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
-use Siemendev\AsyncapiPhp\Spec\Helper\ReferenceResolver;
-
 /**
  * Describes a message that can be published or received on a channel.
  */
@@ -362,10 +360,10 @@ class Message extends AsyncApiObject
     /**
      * Resolves the reference to the headers and returns a Schema object.
      */
-    public function resolveHeaders(AsyncApi $spec): ?Schema
+    public function resolveHeaders(): ?Schema
     {
         if ($this->headers instanceof Reference) {
-            return ReferenceResolver::dereference($spec, $this->headers, Schema::class);
+            return $this->headers->resolve(Schema::class);
         }
         return $this->headers;
     }
@@ -373,10 +371,10 @@ class Message extends AsyncApiObject
     /**
      * Resolves the reference to the payload and returns a Schema object.
      */
-    public function resolvePayload(AsyncApi $spec): ?Schema
+    public function resolvePayload(): ?Schema
     {
         if ($this->payload instanceof Reference) {
-            return ReferenceResolver::dereference($spec, $this->payload, Schema::class);
+            return $this->payload->resolve(Schema::class);
         }
         return $this->payload;
     }
@@ -386,12 +384,12 @@ class Message extends AsyncApiObject
      *
      * @return array<MessageTrait>
      */
-    public function resolveTraits(AsyncApi $spec): array
+    public function resolveTraits(): array
     {
         $traits = [];
         foreach ($this->traits as $trait) {
             if ($trait instanceof Reference) {
-                $traits[] = ReferenceResolver::dereference($spec, $trait, MessageTrait::class);
+                $traits[] = $trait->resolve(MessageTrait::class);
             } else {
                 $traits[] = $trait;
             }
@@ -404,12 +402,12 @@ class Message extends AsyncApiObject
      *
      * @return array<string, CorrelationId>
      */
-    public function resolveCorrelationIds(AsyncApi $spec): array
+    public function resolveCorrelationIds(): array
     {
         $correlationIds = [];
         foreach ($this->correlationIds as $name => $correlationId) {
             if ($correlationId instanceof Reference) {
-                $correlationIds[$name] = ReferenceResolver::dereference($spec, $correlationId, CorrelationId::class);
+                $correlationIds[$name] = $correlationId->resolve(CorrelationId::class);
             } else {
                 $correlationIds[$name] = $correlationId;
             }
