@@ -140,6 +140,10 @@ class Reference extends AsyncApiObject
             }
         }
 
+        if ($value instanceof Reference) {
+            $value = $value->resolve($model);
+        }
+
         if ($model && !($value instanceof $model)) {
             throw new \LogicException(sprintf('Reference "%s" is not of type %s', $this->getRef(), $model));
         }
