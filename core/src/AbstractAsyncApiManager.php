@@ -6,6 +6,8 @@ use Siemendev\AsyncapiPhp\Adapter\AdapterResolver;
 use Siemendev\AsyncapiPhp\Configuration\Configuration;
 use Siemendev\AsyncapiPhp\Generator\Generator;
 use Siemendev\AsyncapiPhp\MessageHandler\MessageHandlerResolver;
+use Siemendev\AsyncapiPhp\Provision\AsyncApiProvisioner;
+use Siemendev\AsyncapiPhp\Provision\AsyncApiProvisionerInterface;
 use Siemendev\AsyncapiPhp\Publish\AsyncApiPublisher;
 use Siemendev\AsyncapiPhp\Publish\AsyncApiPublisherInterface;
 use Siemendev\AsyncapiPhp\Receive\AsyncApiReceiver;
@@ -16,6 +18,7 @@ abstract class AbstractAsyncApiManager implements AsyncApiManagerInterface
 {
     protected AsyncApiPublisherInterface $publisher;
     protected AsyncApiReceiverInterface $receiver;
+    protected AsyncApiProvisionerInterface $provisioner;
     protected AdapterResolver $adapterResolver;
     protected MessageHandlerResolver $messageHandlerResolver;
     protected SerializationHandler $serializer;
@@ -25,6 +28,7 @@ abstract class AbstractAsyncApiManager implements AsyncApiManagerInterface
         protected Configuration $configuration,
         ?AsyncApiPublisherInterface $publisher = null,
         ?AsyncApiReceiverInterface $receiver = null,
+        ?AsyncApiProvisionerInterface $provisioner = null,
         ?AdapterResolver $adapterManager = null,
         ?MessageHandlerResolver $messageHandlerResolver = null,
         ?SerializationHandler $serializer = null,
@@ -43,6 +47,10 @@ abstract class AbstractAsyncApiManager implements AsyncApiManagerInterface
             ->setAdapterResolver($this->adapterResolver)
             ->setMessageHandlerResolver($this->messageHandlerResolver)
             ->setSerializationHandler($this->serializer)
+        ;
+        $this->provisioner = $provisioner ?? new AsyncApiProvisioner();
+        $this->provisioner
+            ->setAdapterResolver($this->adapterResolver)
         ;
         if ($generator) {
             $this->generator = $generator;

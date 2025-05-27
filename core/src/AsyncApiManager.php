@@ -31,7 +31,12 @@ class AsyncApiManager extends AbstractAsyncApiManager
         );
     }
 
-    public function receiveMessages(string $operationName, ?string $serverName = null,): void
+    public function provisionOperation(string $operation, ?string $serverName = null): void
+    {
+        $this->provisioner->provisionOperation($this->configuration, $operation, $serverName);
+    }
+
+    public function receiveMessages(string $operationName, ?string $serverName = null): void
     {
         $this->receiver->receiveMessages($this->configuration, $operationName, $serverName);
     }

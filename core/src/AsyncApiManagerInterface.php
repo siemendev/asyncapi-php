@@ -31,6 +31,10 @@ interface AsyncApiManagerInterface
         ?string $serverName = null,
     ): void;
 
+    public function receiveMessages(string $operationName, ?string $serverName = null): void;
+
+    public function provisionOperation(string $operation, ?string $serverName = null): void;
+
     /**
      * @return $this
      */
