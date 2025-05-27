@@ -129,14 +129,14 @@ class Components extends AsyncApiObject
     /**
      * An object to hold reusable Operation Reply Objects.
      *
-     * @var array<string, mixed|Reference>
+     * @var array<string, OperationReply|Reference<OperationReply>>
      */
     protected array $replies = [];
 
     /**
      * An object to hold reusable Operation Reply Address Objects.
      *
-     * @var array<string, mixed|Reference>
+     * @var array<string, OperationReplyAddress|Reference<OperationReplyAddress>>
      */
     protected array $replyAddresses = [];
 
@@ -500,7 +500,7 @@ class Components extends AsyncApiObject
     /**
      * Get the replies.
      *
-     * @return array<string, mixed|Reference>
+     * @return array<string, OperationReply|Reference<OperationReply>>
      */
     public function getReplies(): array
     {
@@ -509,21 +509,19 @@ class Components extends AsyncApiObject
 
     /**
      * Add a reply.
+     *
+     * @param OperationReply|Reference<OperationReply> $reply
      */
-    public function addReply(string $name, mixed $reply): self
+    public function addReply(string $name, OperationReply|Reference $reply): self
     {
-        if ($reply instanceof AsyncApiObject) {
-            $this->replies[$name] = $reply->setParentElement($this);
-        } else {
-            $this->replies[$name] = $reply;
-        }
+        $this->replies[$name] = $reply->setParentElement($this);
         return $this;
     }
 
     /**
      * Get the reply addresses.
      *
-     * @return array<string, mixed|Reference>
+     * @return array<string, OperationReplyAddress|Reference<OperationReplyAddress>>
      */
     public function getReplyAddresses(): array
     {
@@ -532,14 +530,12 @@ class Components extends AsyncApiObject
 
     /**
      * Add a reply address.
+     *
+     * @param OperationReplyAddress|Reference<OperationReplyAddress> $replyAddress
      */
-    public function addReplyAddress(string $name, mixed $replyAddress): self
+    public function addReplyAddress(string $name, OperationReplyAddress|Reference $replyAddress): self
     {
-        if ($replyAddress instanceof AsyncApiObject) {
-            $this->replyAddresses[$name] = $replyAddress->setParentElement($this);
-        } else {
-            $this->replyAddresses[$name] = $replyAddress;
-        }
+        $this->replyAddresses[$name] = $replyAddress->setParentElement($this);
         return $this;
     }
 
@@ -852,7 +848,7 @@ class Components extends AsyncApiObject
     /**
      * Resolves the references to the replies.
      *
-     * @return array<string, mixed>
+     * @return array<string, OperationReply>
      */
     public function resolveReplies(AsyncApi $spec): array
     {
@@ -870,7 +866,7 @@ class Components extends AsyncApiObject
     /**
      * Resolves the references to the reply addresses.
      *
-     * @return array<string, mixed>
+     * @return array<string, OperationReplyAddress>
      */
     public function resolveReplyAddresses(AsyncApi $spec): array
     {

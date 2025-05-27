@@ -80,8 +80,10 @@ class Operation extends AsyncApiObject
 
     /**
      * The definition of the reply in a request-reply operation.
+     *
+     * @var OperationReply|Reference<OperationReply>|null
      */
-    protected mixed $reply = null;
+    protected OperationReply|Reference|null $reply = null;
 
     /**
      * Get the title.
@@ -333,8 +335,10 @@ class Operation extends AsyncApiObject
 
     /**
      * Get the reply.
+     *
+     * @return OperationReply|Reference<OperationReply>|null
      */
-    public function getReply(): mixed
+    public function getReply(): OperationReply|Reference|null
     {
         return $this->reply;
     }
@@ -342,16 +346,14 @@ class Operation extends AsyncApiObject
     /**
      * Set the reply.
      *
-     * @param mixed|Reference $reply The reply or reference
-     * @return $this
+     * @param OperationReply|Reference<OperationReply>|null $reply The reply or reference
      */
-    public function setReply(mixed $reply): self
+    public function setReply(OperationReply|Reference|null $reply): self
     {
         if ($reply instanceof AsyncApiObject) {
-            $this->reply = $reply->setParentElement($this);
-        } else {
-            $this->reply = $reply;
+            $reply->setParentElement($this);
         }
+        $this->reply = $reply;
         return $this;
     }
 
@@ -413,9 +415,9 @@ class Operation extends AsyncApiObject
     /**
      * Resolves the reference to the reply and returns the resolved object.
      *
-     * @return mixed
+     * @return OperationReply|null
      */
-    public function resolveReply(): mixed
+    public function resolveReply(): ?OperationReply
     {
         if ($this->reply instanceof Reference) {
             return $this->reply->resolve();
