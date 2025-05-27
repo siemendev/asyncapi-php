@@ -17,6 +17,9 @@
     "require": {
         "siemendev/asyncapi-php-spec": "*"
     },
+    "require-dev": {
+        "phpstan/phpstan": "^2.1"
+    },
     "repositories": [
         {
             "type": "path",
