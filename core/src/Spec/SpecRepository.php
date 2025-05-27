@@ -4,7 +4,6 @@ namespace Siemendev\AsyncapiPhp\Spec;
 
 use LogicException;
 use Siemendev\AsyncapiPhp\Spec\Model\Channel;
-use Siemendev\AsyncapiPhp\Spec\Model\Reference;
 use Siemendev\AsyncapiPhp\Spec\Model\Server;
 
 class SpecRepository
