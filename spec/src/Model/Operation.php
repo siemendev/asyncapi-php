@@ -343,9 +343,9 @@ class Operation extends AsyncApiObject
     /**
      * Resolves the reference to the channel and returns a Channel object.
      */
-    public function resolveChannel(): Channel
+    public function resolveChannel(): ?Channel
     {
-        return $this->channel->resolve();
+        return $this->channel?->resolve();
     }
 
     /**

@@ -17,6 +17,7 @@ use Siemendev\AsyncapiPhp\Spec\Model\Operation;
 class AmqpPublisher
 {
     /**
+     * @param array<string, string> $headers
      * @throws InvalidSpecificationException
      * @throws InvalidAdapterConfigurationException
      * @throws MessagePublishFailedException

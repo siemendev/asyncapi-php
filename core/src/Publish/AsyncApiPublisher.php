@@ -37,6 +37,10 @@ class AsyncApiPublisher extends AbstractAsyncApiPublisher
             throw new InvalidSpecificationException('Operation does not have a channel defined'); # todo change this to be more helpful
         }
         $channel = $operation->resolveChannel();
+        if (!$channel) {
+            throw new InvalidSpecificationException('Channel not found'); # todo change this to be more helpful
+        }
+
         $serverName ??= $this->specRepo->getDefaultServerNameForChannel($channel);
 
         foreach ($operation->resolveMessages() as $operationMessage) {

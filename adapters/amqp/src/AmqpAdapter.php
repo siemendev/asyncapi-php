@@ -5,6 +5,7 @@ namespace Siemendev\AsyncapiPhp\Adapter\Amqp;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use Siemendev\AsyncapiPhp\Adapter\AbstractAdapter;
 use Siemendev\AsyncapiPhp\Configuration\Credentials\CredentialsInterface;
+use Siemendev\AsyncapiPhp\Spec\Exception\InvalidSpecificationException;
 use Siemendev\AsyncapiPhp\Spec\Model\Channel;
 use Siemendev\AsyncapiPhp\Spec\Model\Message;
 use Siemendev\AsyncapiPhp\Spec\Model\Operation;
@@ -12,12 +13,15 @@ use Siemendev\AsyncapiPhp\Spec\Model\Server;
 
 class AmqpAdapter extends AbstractAdapter
 {
+    private AmqpConnectionBuilder $connectionFactory;
+    private AmqpPublisher $publisher;
+
     public function __construct(
-        private ?AmqpConnectionBuilder $connectionFactory = null,
-        private ?AmqpPublisher $publisher = null,
+        ?AmqpConnectionBuilder $connectionFactory = null,
+        ?AmqpPublisher $publisher = null,
     ) {
-        $this->connectionFactory ??= new AmqpConnectionBuilder();
-        $this->publisher ??= new AmqpPublisher();
+        $this->connectionFactory = $connectionFactory ?? new AmqpConnectionBuilder();
+        $this->publisher = $publisher ??new AmqpPublisher();
     }
 
     public function supports(Server $serverSpec, CredentialsInterface $credentials): bool
@@ -25,9 +29,21 @@ class AmqpAdapter extends AbstractAdapter
         return strtolower($serverSpec->getProtocol()) === 'amqp';
     }
 
-    public function publishMessage(Operation $operation, Message $message, string $content, string $contentType, array $headers = []): void
-    {
+    /**
+     * @param array<string, string> $headers
+     * @throws InvalidSpecificationException
+     */
+    public function publishMessage(
+        Operation $operation,
+        Message $message,
+        string $content,
+        string $contentType,
+        array $headers = [],
+    ): void {
         $channel = $operation->resolveChannel();
+        if (!$channel instanceof Channel) {
+            throw new InvalidSpecificationException('Channel not found'); # todo change this to be more helpful
+        }
         $this->publisher->publishMessage(
             $this->getConnection($channel),
             $channel,
