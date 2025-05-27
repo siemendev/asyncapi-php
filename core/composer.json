@@ -18,15 +18,21 @@
         "siemendev/asyncapi-php-spec": "*"
     },
     "require-dev": {
+        "siemendev/asyncapi-php-generator": "*",
         "phpstan/phpstan": "^2.1"
     },
     "repositories": [
         {
             "type": "path",
             "url": "../adapters/amqp"
-        },{
+        },
+        {
             "type": "path",
             "url": "../spec"
+        },
+        {
+            "type": "path",
+            "url": "../generator"
         }
     ]
 }

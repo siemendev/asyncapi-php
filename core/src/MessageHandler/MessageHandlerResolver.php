@@ -7,12 +7,17 @@ use Siemendev\AsyncapiPhp\MessageHandler\Exception\MessageHandlerNotFoundExcepti
 
 class MessageHandlerResolver
 {
-    /** @param array<string, MessageHandlerInterface> $messageHandlers key is message name */
+    /**
+     * @param array<string, MessageHandlerInterface<MessageInterface>> $messageHandlers key is message name
+     */
     public function __construct(
         private array $messageHandlers = [],
     ) {
     }
 
+    /**
+     * @param MessageHandlerInterface<MessageInterface> $messageHandler
+     */
     public function addMessageHandler(MessageHandlerInterface $messageHandler): self
     {
         $this->messageHandlers[$messageHandler->getMessageClass()] = $messageHandler;
@@ -20,9 +25,19 @@ class MessageHandlerResolver
         return $this;
     }
 
-    /** @param class-string<MessageInterface> $messageClass */
+    /**
+     * @template T of MessageInterface
+     * @param class-string<T> $messageClass
+     * @return MessageHandlerInterface<T>
+     */
     public function resolveMessageHandler(string $messageClass): MessageHandlerInterface
     {
-        return $this->messageHandlers[$messageClass] ?? throw new MessageHandlerNotFoundException($messageClass);
+        /** @var MessageHandlerInterface<T>|null $handler */
+        $handler = $this->messageHandlers[$messageClass] ?? null;
+        if (!$handler) {
+            throw new MessageHandlerNotFoundException($messageClass);
+        }
+
+        return $handler;
     }
 }

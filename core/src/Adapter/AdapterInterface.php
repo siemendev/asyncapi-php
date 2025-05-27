@@ -15,11 +15,18 @@ interface AdapterInterface
     public function supports(Server $serverSpec, CredentialsInterface $credentials): bool;
 
     /**
+     * @param array<string, scalar|null> $headers
      * @throws InvalidAdapterConfigurationException
      * @throws InvalidSpecificationException
      * @throws MessagePublishFailedException
      */
-    public function publishMessage(Operation $operation, Message $message, string $content, string $contentType, array $headers = []): void;
+    public function publishMessage(
+        Operation $operation,
+        Message $message,
+        string $content,
+        string $contentType,
+        array $headers = [],
+    ): void;
 
     /**
      * @param callable(string $messageData): void $callback

@@ -29,7 +29,7 @@ class AsyncApi extends AsyncApiObject
     /**
      * Servers object to be used by the application.
      *
-     * @var array<string, Server>
+     * @var array<string, Server|Reference<Server>>
      */
     protected array $servers = [];
 
@@ -133,7 +133,7 @@ class AsyncApi extends AsyncApiObject
     /**
      * Get the servers.
      *
-     * @return array<string, Server>
+     * @return array<string, Server|Reference<Server>>
      */
     public function getServers(): array
     {
@@ -142,11 +142,31 @@ class AsyncApi extends AsyncApiObject
 
     /**
      * Add a server.
+     *
+     * @param Server|Reference<Server> $server
      */
-    public function addServer(string $name, Server $server): self
+    public function addServer(string $name, Server|Reference $server): self
     {
         $this->servers[$name] = $server->setParentElement($this);
         return $this;
+    }
+
+    /**
+     * Resolves the references to the servers and returns an array of Server objects.
+     *
+     * @return array<string, Server>
+     */
+    public function resolveServers(): array
+    {
+        $servers = [];
+        foreach ($this->servers as $name => $serverRef) {
+            if ($serverRef instanceof Reference) {
+                $servers[$name] = $serverRef->resolve();
+            } else {
+                $servers[$name] = $serverRef;
+            }
+        }
+        return $servers;
     }
 
     /**

@@ -4,6 +4,9 @@ namespace Siemendev\AsyncapiPhp\Message;
 
 trait MessageHeadersTrait
 {
+    /**
+     * @var array<string|int, mixed>
+     */
     private array $headers = [];
 
     public function setHeader(string|int $key, mixed $value): self
@@ -13,6 +16,9 @@ trait MessageHeadersTrait
         return $this;
     }
 
+    /**
+     * @param array<string|int, mixed> $headers
+     */
     public function setHeaders(array $headers): self
     {
         $this->headers = $headers;
@@ -25,6 +31,9 @@ trait MessageHeadersTrait
         return $this->headers[$key] ?? null;
     }
 
+    /**
+     * @return array<string|int, mixed>
+     */
     public function getHeaders(): array
     {
         return $this->headers;
