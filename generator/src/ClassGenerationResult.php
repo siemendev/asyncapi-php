@@ -9,7 +9,9 @@ class ClassGenerationResult
     /** @var array<string, PhpFile> key is filename, value is class */
     private array $files = [];
 
-    /** @var array<string, PhpFile> key is filename, value is class */
+    /**
+     * @return array<string, PhpFile> key is filename, value is class
+     */
     public function getFiles(): array
     {
         return $this->files;
