@@ -62,7 +62,7 @@ class AsyncApi extends AsyncApiObject
      */
     public function __construct(Info $info)
     {
-        $this->info = $info;
+        $this->info = $info->setParentElement($this);
     }
 
     /**
@@ -104,7 +104,7 @@ class AsyncApi extends AsyncApiObject
      */
     public function setInfo(Info $info): self
     {
-        $this->info = $info;
+        $this->info = $info->setParentElement($this);
         return $this;
     }
 
@@ -123,6 +123,9 @@ class AsyncApi extends AsyncApiObject
      */
     public function setServers(array $servers): self
     {
+        foreach ($servers as $server) {
+            $server->setParentElement($this);
+        }
         $this->servers = $servers;
         return $this;
     }
@@ -142,7 +145,7 @@ class AsyncApi extends AsyncApiObject
      */
     public function addServer(string $name, Server $server): self
     {
-        $this->servers[$name] = $server;
+        $this->servers[$name] = $server->setParentElement($this);
         return $this;
     }
 
@@ -170,6 +173,11 @@ class AsyncApi extends AsyncApiObject
      */
     public function setChannels(array $channels): self
     {
+        foreach ($channels as $channel) {
+            if ($channel instanceof AsyncApiObject) {
+                $channel->setParentElement($this);
+            }
+        }
         $this->channels = $channels;
         return $this;
     }
@@ -189,7 +197,7 @@ class AsyncApi extends AsyncApiObject
      */
     public function addChannel(string $name, Channel $channel): self
     {
-        $this->channels[$name] = $channel;
+        $this->channels[$name] = $channel->setParentElement($this);
         return $this;
     }
 
@@ -200,6 +208,11 @@ class AsyncApi extends AsyncApiObject
      */
     public function setOperations(array $operations): self
     {
+        foreach ($operations as $operation) {
+            if ($operation instanceof AsyncApiObject) {
+                $operation->setParentElement($this);
+            }
+        }
         $this->operations = $operations;
         return $this;
     }
@@ -219,7 +232,7 @@ class AsyncApi extends AsyncApiObject
      */
     public function addOperation(string $name, Operation $operation): self
     {
-        $this->operations[$name] = $operation;
+        $this->operations[$name] = $operation->setParentElement($this);
         return $this;
     }
 
@@ -236,7 +249,7 @@ class AsyncApi extends AsyncApiObject
      */
     public function setComponents(Components $components): self
     {
-        $this->components = $components;
+        $this->components = $components->setParentElement($this);
         return $this;
     }
 }

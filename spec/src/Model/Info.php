@@ -115,7 +115,7 @@ class Info extends AsyncApiObject
      */
     public function setContact(Contact $contact): self
     {
-        $this->contact = $contact;
+        $this->contact = $contact->setParentElement($this);
         return $this;
     }
 
@@ -132,7 +132,7 @@ class Info extends AsyncApiObject
      */
     public function setLicense(License $license): self
     {
-        $this->license = $license;
+        $this->license = $license->setParentElement($this);
         return $this;
     }
 }

@@ -123,7 +123,7 @@ class OperationTrait extends AsyncApiObject
      */
     public function addSecurity(SecurityRequirement $security): self
     {
-        $this->security[] = $security;
+        $this->security[] = $security->setParentElement($this);
         return $this;
     }
 
@@ -142,7 +142,7 @@ class OperationTrait extends AsyncApiObject
      */
     public function addTag(Tag $tag): self
     {
-        $this->tags[] = $tag;
+        $this->tags[] = $tag->setParentElement($this);
         return $this;
     }
 
@@ -159,7 +159,7 @@ class OperationTrait extends AsyncApiObject
      */
     public function setExternalDocs(ExternalDocumentation $externalDocs): self
     {
-        $this->externalDocs = $externalDocs;
+        $this->externalDocs = $externalDocs->setParentElement($this);
         return $this;
     }
 
@@ -178,7 +178,11 @@ class OperationTrait extends AsyncApiObject
      */
     public function addBinding(string $name, $binding): self
     {
-        $this->bindings[$name] = $binding;
+        if ($binding instanceof AsyncApiObject) {
+            $this->bindings[$name] = $binding->setParentElement($this);
+        } else {
+            $this->bindings[$name] = $binding;
+        }
         return $this;
     }
 
@@ -195,7 +199,7 @@ class OperationTrait extends AsyncApiObject
      */
     public function setMessage(Message|Reference $message): self
     {
-        $this->message = $message;
+        $this->message = $message->setParentElement($this);
         return $this;
     }
 
@@ -217,6 +221,11 @@ class OperationTrait extends AsyncApiObject
      */
     public function setMessages(array $messages): self
     {
+        foreach ($messages as $key => $message) {
+            if ($message instanceof AsyncApiObject) {
+                $messages[$key] = $message->setParentElement($this);
+            }
+        }
         $this->messages = $messages;
         return $this;
     }
@@ -238,6 +247,11 @@ class OperationTrait extends AsyncApiObject
      */
     public function setReply(array $reply): self
     {
+        foreach ($reply as $key => $item) {
+            if ($item instanceof AsyncApiObject) {
+                $reply[$key] = $item->setParentElement($this);
+            }
+        }
         $this->reply = $reply;
         return $this;
     }

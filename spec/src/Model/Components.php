@@ -157,7 +157,7 @@ class Components extends AsyncApiObject
      */
     public function addSchema(string $name, Schema|Reference $schema): self
     {
-        $this->schemas[$name] = $schema;
+        $this->schemas[$name] = $schema->setParentElement($this);
         return $this;
     }
 
@@ -176,7 +176,7 @@ class Components extends AsyncApiObject
      */
     public function addServer(string $name, Server|Reference $server): self
     {
-        $this->servers[$name] = $server;
+        $this->servers[$name] = $server->setParentElement($this);
         return $this;
     }
 
@@ -195,7 +195,7 @@ class Components extends AsyncApiObject
      */
     public function addChannel(string $name, Channel|Reference $channel): self
     {
-        $this->channels[$name] = $channel;
+        $this->channels[$name] = $channel->setParentElement($this);
         return $this;
     }
 
@@ -214,7 +214,7 @@ class Components extends AsyncApiObject
      */
     public function addOperation(string $name, Operation|Reference $operation): self
     {
-        $this->operations[$name] = $operation;
+        $this->operations[$name] = $operation->setParentElement($this);
         return $this;
     }
 
@@ -233,7 +233,7 @@ class Components extends AsyncApiObject
      */
     public function addMessage(string $name, Message|Reference $message): self
     {
-        $this->messages[$name] = $message;
+        $this->messages[$name] = $message->setParentElement($this);
         return $this;
     }
 
@@ -252,7 +252,7 @@ class Components extends AsyncApiObject
      */
     public function addSecurityScheme(string $name, SecurityScheme|Reference $securityScheme): self
     {
-        $this->securitySchemes[$name] = $securityScheme;
+        $this->securitySchemes[$name] = $securityScheme->setParentElement($this);
         return $this;
     }
 
@@ -271,7 +271,7 @@ class Components extends AsyncApiObject
      */
     public function addParameter(string $name, Parameter|Reference $parameter): self
     {
-        $this->parameters[$name] = $parameter;
+        $this->parameters[$name] = $parameter->setParentElement($this);
         return $this;
     }
 
@@ -290,7 +290,7 @@ class Components extends AsyncApiObject
      */
     public function addCorrelationId(string $name, CorrelationId|Reference $correlationId): self
     {
-        $this->correlationIds[$name] = $correlationId;
+        $this->correlationIds[$name] = $correlationId->setParentElement($this);
         return $this;
     }
 
@@ -309,7 +309,7 @@ class Components extends AsyncApiObject
      */
     public function addOperationTrait(string $name, OperationTrait|Reference $operationTrait): self
     {
-        $this->operationTraits[$name] = $operationTrait;
+        $this->operationTraits[$name] = $operationTrait->setParentElement($this);
         return $this;
     }
 
@@ -328,7 +328,7 @@ class Components extends AsyncApiObject
      */
     public function addMessageTrait(string $name, MessageTrait|Reference $messageTrait): self
     {
-        $this->messageTraits[$name] = $messageTrait;
+        $this->messageTraits[$name] = $messageTrait->setParentElement($this);
         return $this;
     }
 
@@ -347,7 +347,7 @@ class Components extends AsyncApiObject
      */
     public function addServerVariable(string $name, ServerVariable|Reference $serverVariable): self
     {
-        $this->serverVariables[$name] = $serverVariable;
+        $this->serverVariables[$name] = $serverVariable->setParentElement($this);
         return $this;
     }
 
@@ -366,7 +366,7 @@ class Components extends AsyncApiObject
      */
     public function addTag(string $name, Tag|Reference $tag): self
     {
-        $this->tags[$name] = $tag;
+        $this->tags[$name] = $tag->setParentElement($this);
         return $this;
     }
 
@@ -385,7 +385,7 @@ class Components extends AsyncApiObject
      */
     public function addExternalDoc(string $name, ExternalDocumentation|Reference $externalDoc): self
     {
-        $this->externalDocs[$name] = $externalDoc;
+        $this->externalDocs[$name] = $externalDoc->setParentElement($this);
         return $this;
     }
 
@@ -404,7 +404,7 @@ class Components extends AsyncApiObject
      */
     public function addServerBinding(string $name, AsyncApiObject $binding): self
     {
-        $this->serverBindings[$name] = $binding;
+        $this->serverBindings[$name] = $binding->setParentElement($this);
         return $this;
     }
 
@@ -423,7 +423,7 @@ class Components extends AsyncApiObject
      */
     public function addChannelBinding(string $name, AsyncApiObject $binding): self
     {
-        $this->channelBindings[$name] = $binding;
+        $this->channelBindings[$name] = $binding->setParentElement($this);
         return $this;
     }
 
@@ -442,7 +442,7 @@ class Components extends AsyncApiObject
      */
     public function addOperationBinding(string $name, AsyncApiObject $binding): self
     {
-        $this->operationBindings[$name] = $binding;
+        $this->operationBindings[$name] = $binding->setParentElement($this);
         return $this;
     }
 
@@ -461,7 +461,7 @@ class Components extends AsyncApiObject
      */
     public function addMessageBinding(string $name, AsyncApiObject $binding): self
     {
-        $this->messageBindings[$name] = $binding;
+        $this->messageBindings[$name] = $binding->setParentElement($this);
         return $this;
     }
 
@@ -480,7 +480,11 @@ class Components extends AsyncApiObject
      */
     public function addReply(string $name, mixed $reply): self
     {
-        $this->replies[$name] = $reply;
+        if ($reply instanceof AsyncApiObject) {
+            $this->replies[$name] = $reply->setParentElement($this);
+        } else {
+            $this->replies[$name] = $reply;
+        }
         return $this;
     }
 
@@ -499,7 +503,11 @@ class Components extends AsyncApiObject
      */
     public function addReplyAddress(string $name, mixed $replyAddress): self
     {
-        $this->replyAddresses[$name] = $replyAddress;
+        if ($replyAddress instanceof AsyncApiObject) {
+            $this->replyAddresses[$name] = $replyAddress->setParentElement($this);
+        } else {
+            $this->replyAddresses[$name] = $replyAddress;
+        }
         return $this;
     }
 

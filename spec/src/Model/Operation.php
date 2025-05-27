@@ -164,7 +164,7 @@ class Operation extends AsyncApiObject
      */
     public function setChannel(Reference $channel): self
     {
-        $this->channel = $channel;
+        $this->channel = $channel->setParentElement($this);
         return $this;
     }
 
@@ -181,7 +181,7 @@ class Operation extends AsyncApiObject
      */
     public function addSecurity(SecurityScheme|Reference $security): self
     {
-        $this->security[] = $security;
+        $this->security[] = $security->setParentElement($this);
         return $this;
     }
 
@@ -198,7 +198,7 @@ class Operation extends AsyncApiObject
      */
     public function addTag(Tag $tag): self
     {
-        $this->tags[] = $tag;
+        $this->tags[] = $tag->setParentElement($this);
         return $this;
     }
 
@@ -215,7 +215,7 @@ class Operation extends AsyncApiObject
      */
     public function setExternalDocs(ExternalDocumentation|Reference $externalDocs): self
     {
-        $this->externalDocs = $externalDocs;
+        $this->externalDocs = $externalDocs->setParentElement($this);
         return $this;
     }
 
@@ -236,7 +236,16 @@ class Operation extends AsyncApiObject
      */
     public function setBindings(array|Reference $bindings): self
     {
-        $this->bindings = $bindings;
+        if ($bindings instanceof Reference) {
+            $this->bindings = $bindings->setParentElement($this);
+        } else {
+            foreach ($bindings as $key => $binding) {
+                if ($binding instanceof AsyncApiObject) {
+                    $bindings[$key] = $binding->setParentElement($this);
+                }
+            }
+            $this->bindings = $bindings;
+        }
         return $this;
     }
 
@@ -248,7 +257,7 @@ class Operation extends AsyncApiObject
         if (!is_array($this->bindings)) {
             $this->bindings = [];
         }
-        $this->bindings[$name] = $binding;
+        $this->bindings[$name] = $binding->setParentElement($this);
         return $this;
     }
 
@@ -265,7 +274,7 @@ class Operation extends AsyncApiObject
      */
     public function addTrait(OperationTrait|Reference $trait): self
     {
-        $this->traits[] = $trait;
+        $this->traits[] = $trait->setParentElement($this);
         return $this;
     }
 
@@ -282,7 +291,7 @@ class Operation extends AsyncApiObject
      */
     public function setMessage(Message|Reference $message): self
     {
-        $this->message = $message;
+        $this->message = $message->setParentElement($this);
         return $this;
     }
 
@@ -299,6 +308,11 @@ class Operation extends AsyncApiObject
      */
     public function setMessages(array $messages): self
     {
+        foreach ($messages as $key => $message) {
+            if ($message instanceof AsyncApiObject) {
+                $messages[$key] = $message->setParentElement($this);
+            }
+        }
         $this->messages = $messages;
         return $this;
     }
@@ -311,7 +325,7 @@ class Operation extends AsyncApiObject
         if ($this->messages === null) {
             $this->messages = [];
         }
-        $this->messages[] = $message;
+        $this->messages[] = $message->setParentElement($this);
         return $this;
     }
 
@@ -331,7 +345,11 @@ class Operation extends AsyncApiObject
      */
     public function setReply(mixed $reply): self
     {
-        $this->reply = $reply;
+        if ($reply instanceof AsyncApiObject) {
+            $this->reply = $reply->setParentElement($this);
+        } else {
+            $this->reply = $reply;
+        }
         return $this;
     }
 
@@ -348,7 +366,7 @@ class Operation extends AsyncApiObject
      */
     public function addCallback(string $name, Channel|Reference $callback): self
     {
-        $this->callbacks[$name] = $callback;
+        $this->callbacks[$name] = $callback->setParentElement($this);
         return $this;
     }
 

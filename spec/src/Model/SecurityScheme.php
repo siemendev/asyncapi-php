@@ -163,7 +163,7 @@ class SecurityScheme extends AsyncApiObject
      */
     public function setFlows(OAuthFlows $flows): self
     {
-        $this->flows = $flows;
+        $this->flows = $flows->setParentElement($this);
         return $this;
     }
 

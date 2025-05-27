@@ -289,7 +289,7 @@ class Schema extends AsyncApiObject
             $this->properties = [];
         }
 
-        $this->properties[$name] = $property;
+        $this->properties[$name] = $property->setParentElement($this);
         return $this;
     }
 
@@ -340,7 +340,7 @@ class Schema extends AsyncApiObject
      */
     public function setItems(Schema|Reference $items): self
     {
-        $this->items = $items;
+        $this->items = $items->setParentElement($this);
         return $this;
     }
 

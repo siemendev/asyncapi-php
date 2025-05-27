@@ -40,7 +40,7 @@ class OAuthFlows extends AsyncApiObject
      */
     public function setImplicit(OAuthFlow $implicit): self
     {
-        $this->implicit = $implicit;
+        $this->implicit = $implicit->setParentElement($this);
         return $this;
     }
 
@@ -57,7 +57,7 @@ class OAuthFlows extends AsyncApiObject
      */
     public function setPassword(OAuthFlow $password): self
     {
-        $this->password = $password;
+        $this->password = $password->setParentElement($this);
         return $this;
     }
 
@@ -74,7 +74,7 @@ class OAuthFlows extends AsyncApiObject
      */
     public function setClientCredentials(OAuthFlow $clientCredentials): self
     {
-        $this->clientCredentials = $clientCredentials;
+        $this->clientCredentials = $clientCredentials->setParentElement($this);
         return $this;
     }
 
@@ -91,7 +91,7 @@ class OAuthFlows extends AsyncApiObject
      */
     public function setAuthorizationCode(OAuthFlow $authorizationCode): self
     {
-        $this->authorizationCode = $authorizationCode;
+        $this->authorizationCode = $authorizationCode->setParentElement($this);
         return $this;
     }
 }

@@ -68,7 +68,7 @@ class Tag extends AsyncApiObject
      */
     public function setExternalDocs(ExternalDocumentation $externalDocs): self
     {
-        $this->externalDocs = $externalDocs;
+        $this->externalDocs = $externalDocs->setParentElement($this);
         return $this;
     }
 }

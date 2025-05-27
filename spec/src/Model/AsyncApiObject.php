@@ -10,6 +10,7 @@ namespace Siemendev\AsyncapiPhp\Spec\Model;
  */
 abstract class AsyncApiObject implements \JsonSerializable
 {
+    private ?AsyncApiObject $parentElement = null;
     /**
      * Specification extensions.
      */
@@ -24,7 +25,7 @@ abstract class AsyncApiObject implements \JsonSerializable
 
         // Add all properties
         foreach (get_object_vars($this) as $property => $value) {
-            if ($property === 'extensions') {
+            if (in_array($property, ['extensions', 'parentElement'], true)) {
                 continue;
             }
 
@@ -115,5 +116,30 @@ abstract class AsyncApiObject implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return $this->toArray();
+    }
+
+    protected function getRootElement(): AsyncApiObject
+    {
+        return $this->parentElement?->getRootElement() ?? $this;
+    }
+
+    protected function getParentElement(): ?AsyncApiObject
+    {
+        return $this->parentElement;
+    }
+
+    protected function setParentElement(AsyncApiObject $parent): self
+    {
+        $this->parentElement = $parent;
+        return $this;
+    }
+
+    public function __debugInfo(): array
+    {
+        $vars = get_object_vars($this);
+
+        unset($vars['parentElement']);
+
+        return $vars;
     }
 }

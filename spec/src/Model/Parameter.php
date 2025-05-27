@@ -69,7 +69,7 @@ class Parameter extends AsyncApiObject
      */
     public function setSchema(Schema|Reference $schema): self
     {
-        $this->schema = $schema;
+        $this->schema = $schema->setParentElement($this);
         return $this;
     }
 }

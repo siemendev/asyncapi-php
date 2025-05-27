@@ -162,7 +162,7 @@ class Channel extends AsyncApiObject
      */
     public function addOperation(string $operationId, ChannelOperation $operation): self
     {
-        $this->operations[$operationId] = $operation;
+        $this->operations[$operationId] = $operation->setParentElement($this);
         return $this;
     }
 
@@ -181,7 +181,7 @@ class Channel extends AsyncApiObject
      */
     public function addParameter(string $name, Parameter $parameter): self
     {
-        $this->parameters[$name] = $parameter;
+        $this->parameters[$name] = $parameter->setParentElement($this);
         return $this;
     }
 
@@ -200,7 +200,7 @@ class Channel extends AsyncApiObject
      */
     public function addTag(Tag $tag): self
     {
-        $this->tags[] = $tag;
+        $this->tags[] = $tag->setParentElement($this);
         return $this;
     }
 
@@ -217,7 +217,7 @@ class Channel extends AsyncApiObject
      */
     public function setExternalDocs(ExternalDocumentation $externalDocs): self
     {
-        $this->externalDocs = $externalDocs;
+        $this->externalDocs = $externalDocs->setParentElement($this);
         return $this;
     }
 
@@ -236,7 +236,7 @@ class Channel extends AsyncApiObject
      */
     public function addBinding(string $name, AsyncApiObject $binding): self
     {
-        $this->bindings[$name] = $binding;
+        $this->bindings[$name] = $binding->setParentElement($this);
         return $this;
     }
 
@@ -273,7 +273,7 @@ class Channel extends AsyncApiObject
      */
     public function addMessage(string $name, Message|Reference $message): self
     {
-        $this->messages[$name] = $message;
+        $this->messages[$name] = $message->setParentElement($this);
         return $this;
     }
 
@@ -306,7 +306,7 @@ class Channel extends AsyncApiObject
      */
     public function addServer(Reference $server): self
     {
-        $this->servers[] = $server;
+        $this->servers[] = $server->setParentElement($this);
         return $this;
     }
 }

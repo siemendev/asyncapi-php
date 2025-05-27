@@ -153,7 +153,7 @@ class Server extends AsyncApiObject
      */
     public function addVariable(string $name, ServerVariable $variable): self
     {
-        $this->variables[$name] = $variable;
+        $this->variables[$name] = $variable->setParentElement($this);
         return $this;
     }
 
@@ -172,7 +172,7 @@ class Server extends AsyncApiObject
      */
     public function addSecurity(SecurityScheme $security): self
     {
-        $this->security[] = $security;
+        $this->security[] = $security->setParentElement($this);
         return $this;
     }
 
@@ -191,7 +191,7 @@ class Server extends AsyncApiObject
      */
     public function addTag(Tag $tag): self
     {
-        $this->tags[] = $tag;
+        $this->tags[] = $tag->setParentElement($this);
         return $this;
     }
 
@@ -208,7 +208,7 @@ class Server extends AsyncApiObject
      */
     public function setExternalDocs(ExternalDocumentation $externalDocs): self
     {
-        $this->externalDocs = $externalDocs;
+        $this->externalDocs = $externalDocs->setParentElement($this);
         return $this;
     }
 
@@ -278,7 +278,7 @@ class Server extends AsyncApiObject
      */
     public function addBinding(string $name, AsyncApiObject $binding): self
     {
-        $this->bindings[$name] = $binding;
+        $this->bindings[$name] = $binding->setParentElement($this);
         return $this;
     }
 }

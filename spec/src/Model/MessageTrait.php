@@ -98,7 +98,7 @@ class MessageTrait extends AsyncApiObject
      */
     public function setHeaders(Schema|Reference $headers): self
     {
-        $this->headers = $headers;
+        $this->headers = $headers->setParentElement($this);
         return $this;
     }
 
@@ -115,7 +115,7 @@ class MessageTrait extends AsyncApiObject
      */
     public function setPayload(Schema|Reference $payload): self
     {
-        $this->payload = $payload;
+        $this->payload = $payload->setParentElement($this);
         return $this;
     }
 
@@ -202,7 +202,7 @@ class MessageTrait extends AsyncApiObject
      */
     public function addTag(Tag $tag): self
     {
-        $this->tags[] = $tag;
+        $this->tags[] = $tag->setParentElement($this);
         return $this;
     }
 
@@ -219,7 +219,7 @@ class MessageTrait extends AsyncApiObject
      */
     public function setExternalDocs(ExternalDocumentation $externalDocs): self
     {
-        $this->externalDocs = $externalDocs;
+        $this->externalDocs = $externalDocs->setParentElement($this);
         return $this;
     }
 
@@ -238,7 +238,7 @@ class MessageTrait extends AsyncApiObject
      */
     public function addBinding(string $name, AsyncApiObject $binding): self
     {
-        $this->bindings[$name] = $binding;
+        $this->bindings[$name] = $binding->setParentElement($this);
         return $this;
     }
 
@@ -257,7 +257,7 @@ class MessageTrait extends AsyncApiObject
      */
     public function addExample(MessageExample $example): self
     {
-        $this->examples[] = $example;
+        $this->examples[] = $example->setParentElement($this);
         return $this;
     }
 
@@ -327,7 +327,7 @@ class MessageTrait extends AsyncApiObject
      */
     public function addCorrelationId(string $name, CorrelationId|Reference $correlationId): self
     {
-        $this->correlationIds[$name] = $correlationId;
+        $this->correlationIds[$name] = $correlationId->setParentElement($this);
         return $this;
     }
 }
