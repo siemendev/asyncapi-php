@@ -134,9 +134,13 @@ abstract class AsyncApiObject implements \JsonSerializable
         return $this->toArray();
     }
 
-    protected function getRootElement(): AsyncApiObject
+    public function getRootElement(): AsyncApi
     {
-        return $this->parentElement?->getRootElement() ?? $this;
+        $element = $this->parentElement?->getRootElement() ?? $this;
+        if (!$element instanceof AsyncApi) {
+            throw new \LogicException('Root element is not an AsyncApi object');
+        }
+        return $element;
     }
 
     protected function getParentElement(): ?AsyncApiObject

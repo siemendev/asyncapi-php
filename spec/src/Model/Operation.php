@@ -18,9 +18,9 @@ class Operation extends AsyncApiObject
     /**
      * Required. A $ref pointer to the definition of the channel in which this operation is performed.
      *
-     * @var Reference<Channel>
+     * @var Reference<Channel>|null
      */
-    protected Reference $channel;
+    protected ?Reference $channel;
 
     /**
      * A human-friendly title for the operation.
@@ -160,9 +160,9 @@ class Operation extends AsyncApiObject
     /**
      * Get the channel.
      *
-     * @return Reference<Channel>
+     * @return Reference<Channel>|null
      */
-    public function getChannel(): Reference
+    public function getChannel(): ?Reference
     {
         return $this->channel;
     }
@@ -170,11 +170,11 @@ class Operation extends AsyncApiObject
     /**
      * Set the channel.
      *
-     * @param Reference<Channel> $channel
+     * @param Reference<Channel>|null $channel
      */
-    public function setChannel(Reference $channel): self
+    public function setChannel(?Reference $channel): self
     {
-        $this->channel = $channel->setParentElement($this);
+        $this->channel = $channel?->setParentElement($this);
         return $this;
     }
 

@@ -11,4 +11,4 @@ $manager = include __DIR__ . '/includes/setup.php';
 
 $message = new TestMessage('John Doe', 30);
 
-$manager->publishMessage('test_publish', $message);
+$manager->publishMessage($message, 'test_publish');
