@@ -19,6 +19,8 @@ class Parameter extends AsyncApiObject
 
     /**
      * The schema defining the type used for the parameter.
+     *
+     * @var Schema|Reference<Schema>|null
      */
     protected Schema|Reference|null $schema = null;
 
@@ -58,6 +60,8 @@ class Parameter extends AsyncApiObject
 
     /**
      * Get the schema.
+     *
+     * @return Schema|Reference<Schema>|null
      */
     public function getSchema(): Schema|Reference|null
     {
@@ -66,6 +70,8 @@ class Parameter extends AsyncApiObject
 
     /**
      * Set the schema.
+     *
+     * @param Schema|Reference<Schema> $schema
      */
     public function setSchema(Schema|Reference $schema): self
     {

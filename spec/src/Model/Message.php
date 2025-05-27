@@ -9,11 +9,15 @@ class Message extends AsyncApiObject
 {
     /**
      * Schema definition of the application headers.
+     *
+     * @var Schema|Reference<Schema>|null
      */
     protected Schema|Reference|null $headers = null;
 
     /**
      * Definition of the message payload.
+     *
+     * @var Schema|Reference<Schema>|null
      */
     protected Schema|Reference|null $payload = null;
 
@@ -66,7 +70,7 @@ class Message extends AsyncApiObject
     /**
      * A list of traits to apply to the message object.
      * 
-     * @var array<MessageTrait|Reference>
+     * @var array<MessageTrait|Reference<MessageTrait>>
      */
     protected array $traits = [];
 
@@ -88,12 +92,14 @@ class Message extends AsyncApiObject
     /**
      * A map of the correlation ID objects.
      * 
-     * @var array<string, CorrelationId|Reference>
+     * @var array<string, CorrelationId|Reference<CorrelationId>>
      */
     protected array $correlationIds = [];
 
     /**
      * Get the headers.
+     *
+     * @return Schema|Reference<Schema>|null
      */
     public function getHeaders(): Schema|Reference|null
     {
@@ -102,6 +108,8 @@ class Message extends AsyncApiObject
 
     /**
      * Set the headers.
+     *
+     * @param Schema|Reference<Schema> $headers
      */
     public function setHeaders(Schema|Reference $headers): self
     {
@@ -111,6 +119,8 @@ class Message extends AsyncApiObject
 
     /**
      * Get the payload.
+     *
+     * @return Schema|Reference<Schema>|null
      */
     public function getPayload(): Schema|Reference|null
     {
@@ -119,6 +129,8 @@ class Message extends AsyncApiObject
 
     /**
      * Set the payload.
+     *
+     * @param Schema|Reference<Schema> $payload
      */
     public function setPayload(Schema|Reference $payload): self
     {
@@ -271,7 +283,7 @@ class Message extends AsyncApiObject
     /**
      * Get the traits.
      *
-     * @return array<MessageTrait|Reference>
+     * @return array<MessageTrait|Reference<MessageTrait>>
      */
     public function getTraits(): array
     {
@@ -280,6 +292,8 @@ class Message extends AsyncApiObject
 
     /**
      * Add a trait.
+     *
+     * @param MessageTrait|Reference<MessageTrait> $trait
      */
     public function addTrait(MessageTrait|Reference $trait): self
     {
@@ -341,7 +355,7 @@ class Message extends AsyncApiObject
     /**
      * Get the correlation IDs.
      *
-     * @return array<string, CorrelationId|Reference>
+     * @return array<string, CorrelationId|Reference<CorrelationId>>
      */
     public function getCorrelationIds(): array
     {
@@ -350,6 +364,8 @@ class Message extends AsyncApiObject
 
     /**
      * Add a correlation ID.
+     *
+     * @param CorrelationId|Reference<CorrelationId> $correlationId
      */
     public function addCorrelationId(string $name, CorrelationId|Reference $correlationId): self
     {
@@ -363,7 +379,7 @@ class Message extends AsyncApiObject
     public function resolveHeaders(): ?Schema
     {
         if ($this->headers instanceof Reference) {
-            return $this->headers->resolve(Schema::class);
+            return $this->headers->resolve();
         }
         return $this->headers;
     }
@@ -374,7 +390,7 @@ class Message extends AsyncApiObject
     public function resolvePayload(): ?Schema
     {
         if ($this->payload instanceof Reference) {
-            return $this->payload->resolve(Schema::class);
+            return $this->payload->resolve();
         }
         return $this->payload;
     }
@@ -389,7 +405,7 @@ class Message extends AsyncApiObject
         $traits = [];
         foreach ($this->traits as $trait) {
             if ($trait instanceof Reference) {
-                $traits[] = $trait->resolve(MessageTrait::class);
+                $traits[] = $trait->resolve();
             } else {
                 $traits[] = $trait;
             }
@@ -407,7 +423,7 @@ class Message extends AsyncApiObject
         $correlationIds = [];
         foreach ($this->correlationIds as $name => $correlationId) {
             if ($correlationId instanceof Reference) {
-                $correlationIds[$name] = $correlationId->resolve(CorrelationId::class);
+                $correlationIds[$name] = $correlationId->resolve();
             } else {
                 $correlationIds[$name] = $correlationId;
             }

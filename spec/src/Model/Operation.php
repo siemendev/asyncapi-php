@@ -15,6 +15,8 @@ class Operation extends AsyncApiObject
 
     /**
      * Required. A $ref pointer to the definition of the channel in which this operation is performed.
+     *
+     * @var Reference<Channel>
      */
     protected Reference $channel;
 
@@ -46,28 +48,31 @@ class Operation extends AsyncApiObject
 
     /**
      * Additional external documentation for this operation.
+     *
+     * @var ExternalDocumentation|Reference<ExternalDocumentation>|null
      */
     protected ExternalDocumentation|Reference|null $externalDocs = null;
 
     /**
      * A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the operation.
+     *
+     * @var array<string, AsyncApiObject>|Reference<AsyncApiObject>
      */
     protected array|Reference $bindings = [];
 
     /**
      * A list of traits to apply to the operation object.
+     *
+     * @var array<OperationTrait|Reference<OperationTrait>>
      */
     protected array $traits = [];
 
     /**
-     * The definition of the message that will be published or received by this operation.
-     */
-    protected Message|Reference|null $message = null;
-
-    /**
      * A list of $ref pointers pointing to the supported Message Objects that can be processed by this operation.
+     *
+     * @var array<Reference<Message>>
      */
-    protected ?array $messages = null;
+    protected array $messages = [];
 
     /**
      * The definition of the reply in a request-reply operation.
@@ -220,7 +225,7 @@ class Operation extends AsyncApiObject
     /**
      * Get the bindings.
      *
-     * @return array<string, AsyncApiObject>|Reference
+     * @return array<string, AsyncApiObject>|Reference<AsyncApiObject>
      */
     public function getBindings(): array|Reference
     {
@@ -230,7 +235,7 @@ class Operation extends AsyncApiObject
     /**
      * Set the bindings.
      *
-     * @param array<string, AsyncApiObject>|Reference $bindings
+     * @param array<string, AsyncApiObject>|Reference<AsyncApiObject> $bindings
      */
     public function setBindings(array|Reference $bindings): self
     {
@@ -277,39 +282,24 @@ class Operation extends AsyncApiObject
     }
 
     /**
-     * Get the message.
-     */
-    public function getMessage(): Message|Reference|null
-    {
-        return $this->message;
-    }
-
-    /**
-     * Set the message.
-     */
-    public function setMessage(Message|Reference $message): self
-    {
-        $this->message = $message->setParentElement($this);
-        return $this;
-    }
-
-    /**
      * Get the messages.
+     *
+     * @return array<Reference<Message>>
      */
-    public function getMessages(): ?array
+    public function getMessages(): array
     {
         return $this->messages;
     }
 
     /**
      * Set the messages.
+     *
+     * @param array<Reference<Message>> $messages
      */
     public function setMessages(array $messages): self
     {
-        foreach ($messages as $key => $message) {
-            if ($message instanceof AsyncApiObject) {
-                $messages[$key] = $message->setParentElement($this);
-            }
+        foreach ($messages as $message) {
+            $message->setParentElement($this);
         }
         $this->messages = $messages;
         return $this;
@@ -317,12 +307,11 @@ class Operation extends AsyncApiObject
 
     /**
      * Add a message reference.
+     *
+     * @param Reference<Message> $message
      */
     public function addMessage(Reference $message): self
     {
-        if ($this->messages === null) {
-            $this->messages = [];
-        }
         $this->messages[] = $message->setParentElement($this);
         return $this;
     }
@@ -373,7 +362,7 @@ class Operation extends AsyncApiObject
      */
     public function resolveChannel(): Channel
     {
-        return $this->channel->resolve(Channel::class);
+        return $this->channel->resolve();
     }
 
     /**
@@ -382,7 +371,7 @@ class Operation extends AsyncApiObject
     public function resolveExternalDocs(): ?ExternalDocumentation
     {
         if ($this->externalDocs instanceof Reference) {
-            return $this->externalDocs->resolve(ExternalDocumentation::class);
+            return $this->externalDocs->resolve();
         }
         return $this->externalDocs;
     }
@@ -390,41 +379,35 @@ class Operation extends AsyncApiObject
     /**
      * Resolves the reference to the bindings and returns an array.
      *
-     * @return array
+     * @return array<string, AsyncApiObject>
      */
     public function resolveBindings(): array
     {
         if ($this->bindings instanceof Reference) {
             return $this->bindings->resolve();
         }
-        return $this->bindings;
-    }
 
-    /**
-     * Resolves the reference to the message and returns a Message object.
-     */
-    public function resolveMessage(): ?Message
-    {
-        if ($this->message instanceof Reference) {
-            return $this->message->resolve(Message::class);
+        $resolvedBindings = [];
+        foreach ($this->bindings as $name => $binding) {
+            if ($binding instanceof Reference) {
+                $resolvedBindings[$name] = $binding->resolve();
+            } else {
+                $resolvedBindings[$name] = $binding;
+            }
         }
-        return $this->message;
+        return $resolvedBindings;
     }
 
     /**
      * Resolves the references to the messages and returns an array of Message objects.
      *
-     * @return array<Message>|null
+     * @return array<Message>
      */
-    public function resolveMessages(): ?array
+    public function resolveMessages(): array
     {
-        if ($this->messages === null) {
-            return null;
-        }
-
         $messages = [];
         foreach ($this->messages as $messageRef) {
-            $messages[] = $messageRef->resolve(Message::class);
+            $messages[] = $messageRef->resolve();
         }
         return $messages;
     }
@@ -452,7 +435,7 @@ class Operation extends AsyncApiObject
         $callbacks = [];
         foreach ($this->callbacks as $name => $callback) {
             if ($callback instanceof Reference) {
-                $callbacks[$name] = $callback->resolve(Channel::class);
+                $callbacks[$name] = $callback->resolve();
             } else {
                 $callbacks[$name] = $callback;
             }
@@ -470,7 +453,7 @@ class Operation extends AsyncApiObject
         $traits = [];
         foreach ($this->traits as $trait) {
             if ($trait instanceof Reference) {
-                $traits[] = $trait->resolve(OperationTrait::class);
+                $traits[] = $trait->resolve();
             } else {
                 $traits[] = $trait;
             }
@@ -488,7 +471,7 @@ class Operation extends AsyncApiObject
         $security = [];
         foreach ($this->security as $securityScheme) {
             if ($securityScheme instanceof Reference) {
-                $security[] = $securityScheme->resolve(SecurityScheme::class);
+                $security[] = $securityScheme->resolve();
             } else {
                 $security[] = $securityScheme;
             }

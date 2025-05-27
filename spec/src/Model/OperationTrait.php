@@ -43,21 +43,6 @@ class OperationTrait extends AsyncApiObject
     protected array $bindings = [];
 
     /**
-     * The definition of the message that will be published or received by this operation.
-     */
-    protected Message|Reference|null $message = null;
-
-    /**
-     * The definition of the messages that will be published or received by this operation.
-     */
-    protected ?array $messages = null;
-
-    /**
-     * The definition of the reply message that will be sent back as a response to this operation.
-     */
-    protected ?array $reply = null;
-
-    /**
      * Get the title.
      */
     public function getTitle(): ?string
@@ -183,76 +168,6 @@ class OperationTrait extends AsyncApiObject
         } else {
             $this->bindings[$name] = $binding;
         }
-        return $this;
-    }
-
-    /**
-     * Get the message.
-     */
-    public function getMessage(): Message|Reference|null
-    {
-        return $this->message;
-    }
-
-    /**
-     * Set the message.
-     */
-    public function setMessage(Message|Reference $message): self
-    {
-        $this->message = $message->setParentElement($this);
-        return $this;
-    }
-
-    /**
-     * Get the messages.
-     *
-     * @return array<Message|Reference>|null
-     */
-    public function getMessages(): ?array
-    {
-        return $this->messages;
-    }
-
-    /**
-     * Set the messages.
-     *
-     * @param array<Message|Reference> $messages The messages
-     * @return $this
-     */
-    public function setMessages(array $messages): self
-    {
-        foreach ($messages as $key => $message) {
-            if ($message instanceof AsyncApiObject) {
-                $messages[$key] = $message->setParentElement($this);
-            }
-        }
-        $this->messages = $messages;
-        return $this;
-    }
-
-    /**
-     * Get the reply.
-     *
-     * @return array<Message|Reference>|null
-     */
-    public function getReply(): ?array
-    {
-        return $this->reply;
-    }
-
-    /**
-     * Set the reply.
-     *
-     * @param array<Message|Reference> $reply The reply
-     */
-    public function setReply(array $reply): self
-    {
-        foreach ($reply as $key => $item) {
-            if ($item instanceof AsyncApiObject) {
-                $reply[$key] = $item->setParentElement($this);
-            }
-        }
-        $this->reply = $reply;
         return $this;
     }
 }

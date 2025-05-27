@@ -4,6 +4,7 @@ namespace Siemendev\AsyncapiPhp\Spec\Model;
 
 /**
  * A simple object to allow referencing other components in the specification.
+ * @template T of AsyncApiObject
  */
 class Reference extends AsyncApiObject
 {
@@ -97,8 +98,6 @@ class Reference extends AsyncApiObject
     }
 
     /**
-     * @template T of AsyncApiObject
-     * @param class-string<T>|null $model The model name to resolve
      * @return T
      */
     public function resolve(?string $model = null): AsyncApiObject
@@ -109,6 +108,16 @@ class Reference extends AsyncApiObject
         $value = $this->getRootElement();
         foreach ($parts as $part) {
             if (is_object($value)) {
+                if ($value instanceof Reference) {
+                    $value = $value->resolve($model);
+                }
+                if ($value instanceof \ArrayAccess) {
+                    if (!$value->offsetExists($part)) {
+                        throw new \LogicException(sprintf('Reference "%s" not found in spec', $this->getRef()));
+                    }
+                    $value = $value[$part];
+                    continue;
+                }
                 if (method_exists($value, 'get' . ucfirst($part))) {
                     $value = $value->{'get' . ucfirst($part)}();
                     continue;
@@ -126,17 +135,6 @@ class Reference extends AsyncApiObject
                 }
                 $value = $value[$part];
                 continue;
-            }
-            if ($value instanceof \ArrayAccess) {
-                if (!$value->offsetExists($part)) {
-                    throw new \LogicException(sprintf('Reference "%s" not found in spec', $this->getRef()));
-                }
-                $value = $value[$part];
-                continue;
-            }
-
-            if ($value instanceof Reference) {
-                $value = $value->resolve($model);
             }
         }
 

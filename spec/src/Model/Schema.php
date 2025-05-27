@@ -112,44 +112,50 @@ class Schema extends AsyncApiObject
 
     /**
      * The type of the items in the schema.
+     *
+     * @var Schema|Reference<Schema>|null
      */
     protected Schema|Reference|null $items = null;
 
     /**
      * The all-of schemas.
      * 
-     * @var array<Schema|Reference>|null
+     * @var array<Schema|Reference<Schema>>|null
      */
     protected ?array $allOf = null;
 
     /**
      * The one-of schemas.
      * 
-     * @var array<Schema|Reference>|null
+     * @var array<Schema|Reference<Schema>>|null
      */
     protected ?array $oneOf = null;
 
     /**
      * The any-of schemas.
      * 
-     * @var array<Schema|Reference>|null
+     * @var array<Schema|Reference<Schema>>|null
      */
     protected ?array $anyOf = null;
 
     /**
      * The not schema.
+     *
+     * @var Schema|Reference<Schema>|null
      */
     protected Schema|Reference|null $not = null;
 
     /**
      * The properties of the schema.
      * 
-     * @var array<string, Schema|Reference>|null
+     * @var array<string, Schema|Reference<Schema>>|null
      */
     protected ?array $properties = null;
 
     /**
      * The additional properties of the schema.
+     *
+     * @var bool|Schema|Reference<Schema>|null
      */
     protected bool|Schema|Reference|null $additionalProperties = null;
 
@@ -261,7 +267,7 @@ class Schema extends AsyncApiObject
     /**
      * Get the properties.
      *
-     * @return array<string, Schema|Reference>|null
+     * @return array<string, Schema|Reference<Schema>>|null
      */
     public function getProperties(): ?array
     {
@@ -271,7 +277,7 @@ class Schema extends AsyncApiObject
     /**
      * Set the properties.
      *
-     * @param array<string, Schema|Reference> $properties The properties
+     * @param array<string, Schema|Reference<Schema>> $properties
      */
     public function setProperties(array $properties): self
     {
@@ -281,6 +287,8 @@ class Schema extends AsyncApiObject
 
     /**
      * Add a property.
+     *
+     * @param Schema|Reference<Schema> $property
      */
     public function addProperty(string $name, Schema|Reference $property): self
     {
@@ -328,6 +336,8 @@ class Schema extends AsyncApiObject
 
     /**
      * Get the items.
+     *
+     * @return Schema|Reference<Schema>|null
      */
     public function getItems(): Schema|Reference|null
     {
@@ -336,6 +346,8 @@ class Schema extends AsyncApiObject
 
     /**
      * Set the items.
+     *
+     * @param Schema|Reference<Schema> $items
      */
     public function setItems(Schema|Reference $items): self
     {
@@ -370,7 +382,7 @@ class Schema extends AsyncApiObject
     public function resolveItems(): ?Schema
     {
         if ($this->items instanceof Reference) {
-            return $this->items->resolve(Schema::class);
+            return $this->items->resolve();
         }
         return $this->items;
     }
@@ -389,7 +401,7 @@ class Schema extends AsyncApiObject
         $schemas = [];
         foreach ($this->allOf as $schema) {
             if ($schema instanceof Reference) {
-                $schemas[] = $schema->resolve(Schema::class);
+                $schemas[] = $schema->resolve();
             } else {
                 $schemas[] = $schema;
             }
@@ -411,7 +423,7 @@ class Schema extends AsyncApiObject
         $schemas = [];
         foreach ($this->oneOf as $schema) {
             if ($schema instanceof Reference) {
-                $schemas[] = $schema->resolve(Schema::class);
+                $schemas[] = $schema->resolve();
             } else {
                 $schemas[] = $schema;
             }
@@ -433,7 +445,7 @@ class Schema extends AsyncApiObject
         $schemas = [];
         foreach ($this->anyOf as $schema) {
             if ($schema instanceof Reference) {
-                $schemas[] = $schema->resolve(Schema::class);
+                $schemas[] = $schema->resolve();
             } else {
                 $schemas[] = $schema;
             }
@@ -447,7 +459,7 @@ class Schema extends AsyncApiObject
     public function resolveNot(): ?Schema
     {
         if ($this->not instanceof Reference) {
-            return $this->not->resolve(Schema::class);
+            return $this->not->resolve();
         }
         return $this->not;
     }
@@ -466,7 +478,7 @@ class Schema extends AsyncApiObject
         $properties = [];
         foreach ($this->properties as $name => $property) {
             if ($property instanceof Reference) {
-                $properties[$name] = $property->resolve(Schema::class);
+                $properties[$name] = $property->resolve();
             } else {
                 $properties[$name] = $property;
             }
@@ -482,7 +494,7 @@ class Schema extends AsyncApiObject
     public function resolveAdditionalProperties(): bool|Schema|null
     {
         if ($this->additionalProperties instanceof Reference) {
-            return $this->additionalProperties->resolve(Schema::class);
+            return $this->additionalProperties->resolve();
         }
         return $this->additionalProperties;
     }

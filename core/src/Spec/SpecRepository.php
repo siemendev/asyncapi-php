@@ -26,7 +26,7 @@ class SpecRepository
         $serverSpecs = [];
         foreach ($channel->getServers() as $serverRef) {
             $parts = explode('/', $serverRef->getRef());
-            $serverSpecs[end($parts)] = $serverRef->resolve(Server::class);
+            $serverSpecs[end($parts)] = $serverRef->resolve();
         }
         if (empty($serverSpecs)) {
             $serverSpecs = $spec->getServers();
@@ -37,7 +37,7 @@ class SpecRepository
             return $serverSpec;
         }
         if ($serverSpec instanceof Reference) {
-            $serverSpec = $serverSpec->resolve(Server::class);
+            $serverSpec = $serverSpec->resolve();
         }
         if ($serverSpec instanceof Server) {
             return $serverSpec;

@@ -174,9 +174,7 @@ class AsyncApi extends AsyncApiObject
     public function setChannels(array $channels): self
     {
         foreach ($channels as $channel) {
-            if ($channel instanceof AsyncApiObject) {
-                $channel->setParentElement($this);
-            }
+            $channel->setParentElement($this);
         }
         $this->channels = $channels;
         return $this;
@@ -209,9 +207,7 @@ class AsyncApi extends AsyncApiObject
     public function setOperations(array $operations): self
     {
         foreach ($operations as $operation) {
-            if ($operation instanceof AsyncApiObject) {
-                $operation->setParentElement($this);
-            }
+            $operation->setParentElement($this);
         }
         $this->operations = $operations;
         return $this;

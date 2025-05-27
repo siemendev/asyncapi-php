@@ -10,119 +10,119 @@ class Components extends AsyncApiObject
     /**
      * An object to hold reusable Schema Objects.
      *
-     * @var array<string, Schema|Reference>
+     * @var array<string, Schema|Reference<Schema>>
      */
     protected array $schemas = [];
 
     /**
      * An object to hold reusable Tag Objects.
      *
-     * @var array<string, Tag|Reference>
+     * @var array<string, Tag|Reference<Tag>>
      */
     protected array $tags = [];
 
     /**
      * An object to hold reusable External Documentation Objects.
      *
-     * @var array<string, ExternalDocumentation|Reference>
+     * @var array<string, ExternalDocumentation|Reference<ExternalDocumentation>>
      */
     protected array $externalDocs = [];
 
     /**
      * An object to hold reusable Server Objects.
      *
-     * @var array<string, Server|Reference>
+     * @var array<string, Server|Reference<Server>>
      */
     protected array $servers = [];
 
     /**
      * An object to hold reusable Channel Item Objects.
      *
-     * @var array<string, Channel|Reference>
+     * @var array<string, Channel|Reference<Channel>>
      */
     protected array $channels = [];
 
     /**
      * An object to hold reusable Operation Objects.
      *
-     * @var array<string, Operation|Reference>
+     * @var array<string, Operation|Reference<Operation>>
      */
     protected array $operations = [];
 
     /**
      * An object to hold reusable Message Objects.
      *
-     * @var array<string, Message|Reference>
+     * @var array<string, Message|Reference<Message>>
      */
     protected array $messages = [];
 
     /**
      * An object to hold reusable Security Scheme Objects.
      *
-     * @var array<string, SecurityScheme|Reference>
+     * @var array<string, SecurityScheme|Reference<SecurityScheme>>
      */
     protected array $securitySchemes = [];
 
     /**
      * An object to hold reusable Parameter Objects.
      *
-     * @var array<string, Parameter|Reference>
+     * @var array<string, Parameter|Reference<Parameter>>
      */
     protected array $parameters = [];
 
     /**
      * An object to hold reusable Correlation ID Objects.
      *
-     * @var array<string, CorrelationId|Reference>
+     * @var array<string, CorrelationId|Reference<CorrelationId>>
      */
     protected array $correlationIds = [];
 
     /**
      * An object to hold reusable Operation Trait Objects.
      *
-     * @var array<string, OperationTrait|Reference>
+     * @var array<string, OperationTrait|Reference<OperationTrait>>
      */
     protected array $operationTraits = [];
 
     /**
      * An object to hold reusable Message Trait Objects.
      *
-     * @var array<string, MessageTrait|Reference>
+     * @var array<string, MessageTrait|Reference<MessageTrait>>
      */
     protected array $messageTraits = [];
 
     /**
      * An object to hold reusable Server Variable Objects.
      *
-     * @var array<string, ServerVariable|Reference>
+     * @var array<string, ServerVariable|Reference<ServerVariable>>
      */
     protected array $serverVariables = [];
 
     /**
      * An object to hold reusable Server Bindings Objects.
      *
-     * @var array<string, AsyncApiObject|Reference>
+     * @var array<string, AsyncApiObject|Reference<AsyncApiObject>>
      */
     protected array $serverBindings = [];
 
     /**
      * An object to hold reusable Channel Bindings Objects.
      *
-     * @var array<string, AsyncApiObject|Reference>
+     * @var array<string, AsyncApiObject|Reference<AsyncApiObject>>
      */
     protected array $channelBindings = [];
 
     /**
      * An object to hold reusable Operation Bindings Objects.
      *
-     * @var array<string, AsyncApiObject|Reference>
+     * @var array<string, AsyncApiObject|Reference<AsyncApiObject>>
      */
     protected array $operationBindings = [];
 
     /**
      * An object to hold reusable Message Bindings Objects.
      *
-     * @var array<string, AsyncApiObject|Reference>
+     * @var array<string, AsyncApiObject|Reference<AsyncApiObject>>
      */
     protected array $messageBindings = [];
 
@@ -152,6 +152,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add a schema.
+     *
+     * @param Schema|Reference<Schema> $schema
      */
     public function addSchema(string $name, Schema|Reference $schema): self
     {
@@ -162,7 +164,7 @@ class Components extends AsyncApiObject
     /**
      * Get the servers.
      *
-     * @return array<string, Server|Reference>
+     * @return array<string, Server|Reference<Server>>
      */
     public function getServers(): array
     {
@@ -171,6 +173,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add a server.
+     *
+     * @param Server|Reference<Server> $server
      */
     public function addServer(string $name, Server|Reference $server): self
     {
@@ -181,7 +185,7 @@ class Components extends AsyncApiObject
     /**
      * Get the channels.
      *
-     * @return array<string, Channel|Reference>
+     * @return array<string, Channel|Reference<Channel>>
      */
     public function getChannels(): array
     {
@@ -190,6 +194,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add a channel.
+     *
+     * @param Channel|Reference<Channel> $channel
      */
     public function addChannel(string $name, Channel|Reference $channel): self
     {
@@ -200,7 +206,7 @@ class Components extends AsyncApiObject
     /**
      * Get the operations.
      *
-     * @return array<string, Operation|Reference>
+     * @return array<string, Operation|Reference<Operation>>
      */
     public function getOperations(): array
     {
@@ -209,6 +215,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add an operation.
+     *
+     * @param Operation|Reference<Operation> $operation
      */
     public function addOperation(string $name, Operation|Reference $operation): self
     {
@@ -219,7 +227,7 @@ class Components extends AsyncApiObject
     /**
      * Get the messages.
      *
-     * @return array<string, Message|Reference>
+     * @return array<string, Message|Reference<Message>>
      */
     public function getMessages(): array
     {
@@ -228,6 +236,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add a message.
+     *
+     * @param Message|Reference<Message> $message
      */
     public function addMessage(string $name, Message|Reference $message): self
     {
@@ -238,7 +248,7 @@ class Components extends AsyncApiObject
     /**
      * Get the security schemes.
      *
-     * @return array<string, SecurityScheme|Reference>
+     * @return array<string, SecurityScheme|Reference<SecurityScheme>>
      */
     public function getSecuritySchemes(): array
     {
@@ -247,6 +257,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add a security scheme.
+     *
+     * @param SecurityScheme|Reference<SecurityScheme> $securityScheme
      */
     public function addSecurityScheme(string $name, SecurityScheme|Reference $securityScheme): self
     {
@@ -257,7 +269,7 @@ class Components extends AsyncApiObject
     /**
      * Get the parameters.
      *
-     * @return array<string, Parameter|Reference>
+     * @return array<string, Parameter|Reference<Parameter>>
      */
     public function getParameters(): array
     {
@@ -266,6 +278,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add a parameter.
+     *
+     * @param Parameter|Reference<Parameter> $parameter
      */
     public function addParameter(string $name, Parameter|Reference $parameter): self
     {
@@ -276,7 +290,7 @@ class Components extends AsyncApiObject
     /**
      * Get the correlation IDs.
      *
-     * @return array<string, CorrelationId|Reference>
+     * @return array<string, CorrelationId|Reference<CorrelationId>>
      */
     public function getCorrelationIds(): array
     {
@@ -285,6 +299,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add a correlation ID.
+     *
+     * @param CorrelationId|Reference<CorrelationId> $correlationId
      */
     public function addCorrelationId(string $name, CorrelationId|Reference $correlationId): self
     {
@@ -295,7 +311,7 @@ class Components extends AsyncApiObject
     /**
      * Get the operation traits.
      *
-     * @return array<string, OperationTrait|Reference>
+     * @return array<string, OperationTrait|Reference<OperationTrait>>
      */
     public function getOperationTraits(): array
     {
@@ -304,6 +320,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add an operation trait.
+     *
+     * @param OperationTrait|Reference<OperationTrait> $operationTrait
      */
     public function addOperationTrait(string $name, OperationTrait|Reference $operationTrait): self
     {
@@ -314,7 +332,7 @@ class Components extends AsyncApiObject
     /**
      * Get the message traits.
      *
-     * @return array<string, MessageTrait|Reference>
+     * @return array<string, MessageTrait|Reference<MessageTrait>>
      */
     public function getMessageTraits(): array
     {
@@ -323,6 +341,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add a message trait.
+     *
+     * @param MessageTrait|Reference<MessageTrait> $messageTrait
      */
     public function addMessageTrait(string $name, MessageTrait|Reference $messageTrait): self
     {
@@ -333,7 +353,7 @@ class Components extends AsyncApiObject
     /**
      * Get the server variables.
      *
-     * @return array<string, ServerVariable|Reference>
+     * @return array<string, ServerVariable|Reference<ServerVariable>>
      */
     public function getServerVariables(): array
     {
@@ -342,6 +362,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add a server variable.
+     *
+     * @param ServerVariable|Reference<ServerVariable> $serverVariable
      */
     public function addServerVariable(string $name, ServerVariable|Reference $serverVariable): self
     {
@@ -352,7 +374,7 @@ class Components extends AsyncApiObject
     /**
      * Get the tags.
      *
-     * @return array<string, Tag|Reference>
+     * @return array<string, Tag|Reference<Tag>>
      */
     public function getTags(): array
     {
@@ -361,6 +383,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add a tag.
+     *
+     * @param Tag|Reference<Tag> $tag
      */
     public function addTag(string $name, Tag|Reference $tag): self
     {
@@ -371,7 +395,7 @@ class Components extends AsyncApiObject
     /**
      * Get the external documentation.
      *
-     * @return array<string, ExternalDocumentation|Reference>
+     * @return array<string, ExternalDocumentation|Reference<ExternalDocumentation>>
      */
     public function getExternalDocs(): array
     {
@@ -380,6 +404,8 @@ class Components extends AsyncApiObject
 
     /**
      * Add external documentation.
+     *
+     * @param ExternalDocumentation|Reference<ExternalDocumentation> $externalDoc
      */
     public function addExternalDoc(string $name, ExternalDocumentation|Reference $externalDoc): self
     {
@@ -390,7 +416,7 @@ class Components extends AsyncApiObject
     /**
      * Get the server bindings.
      *
-     * @return array<string, AsyncApiObject|Reference>
+     * @return array<string, AsyncApiObject|Reference<AsyncApiObject>>
      */
     public function getServerBindings(): array
     {
@@ -399,8 +425,10 @@ class Components extends AsyncApiObject
 
     /**
      * Add a server binding.
+     *
+     * @param AsyncApiObject|Reference<AsyncApiObject> $binding
      */
-    public function addServerBinding(string $name, AsyncApiObject $binding): self
+    public function addServerBinding(string $name, AsyncApiObject|Reference $binding): self
     {
         $this->serverBindings[$name] = $binding->setParentElement($this);
         return $this;
@@ -409,7 +437,7 @@ class Components extends AsyncApiObject
     /**
      * Get the channel bindings.
      *
-     * @return array<string, AsyncApiObject|Reference>
+     * @return array<string, AsyncApiObject|Reference<AsyncApiObject>>
      */
     public function getChannelBindings(): array
     {
@@ -418,8 +446,10 @@ class Components extends AsyncApiObject
 
     /**
      * Add a channel binding.
+     *
+     * @param AsyncApiObject|Reference<AsyncApiObject> $binding
      */
-    public function addChannelBinding(string $name, AsyncApiObject $binding): self
+    public function addChannelBinding(string $name, AsyncApiObject|Reference $binding): self
     {
         $this->channelBindings[$name] = $binding->setParentElement($this);
         return $this;
@@ -428,7 +458,7 @@ class Components extends AsyncApiObject
     /**
      * Get the operation bindings.
      *
-     * @return array<string, AsyncApiObject|Reference>
+     * @return array<string, AsyncApiObject|Reference<AsyncApiObject>>
      */
     public function getOperationBindings(): array
     {
@@ -437,8 +467,10 @@ class Components extends AsyncApiObject
 
     /**
      * Add an operation binding.
+     *
+     * @param AsyncApiObject|Reference<AsyncApiObject> $binding
      */
-    public function addOperationBinding(string $name, AsyncApiObject $binding): self
+    public function addOperationBinding(string $name, AsyncApiObject|Reference $binding): self
     {
         $this->operationBindings[$name] = $binding->setParentElement($this);
         return $this;
@@ -447,7 +479,7 @@ class Components extends AsyncApiObject
     /**
      * Get the message bindings.
      *
-     * @return array<string, AsyncApiObject|Reference>
+     * @return array<string, AsyncApiObject|Reference<AsyncApiObject>>
      */
     public function getMessageBindings(): array
     {
@@ -456,8 +488,10 @@ class Components extends AsyncApiObject
 
     /**
      * Add a message binding.
+     *
+     * @param AsyncApiObject|Reference<AsyncApiObject> $binding
      */
-    public function addMessageBinding(string $name, AsyncApiObject $binding): self
+    public function addMessageBinding(string $name, AsyncApiObject|Reference $binding): self
     {
         $this->messageBindings[$name] = $binding->setParentElement($this);
         return $this;
@@ -519,7 +553,7 @@ class Components extends AsyncApiObject
         $schemas = [];
         foreach ($this->schemas as $name => $schemaRef) {
             if ($schemaRef instanceof Reference) {
-                $schemas[$name] = $schemaRef->resolve(Schema::class);
+                $schemas[$name] = $schemaRef->resolve();
             } else {
                 $schemas[$name] = $schemaRef;
             }
@@ -537,7 +571,7 @@ class Components extends AsyncApiObject
         $tags = [];
         foreach ($this->tags as $name => $tagRef) {
             if ($tagRef instanceof Reference) {
-                $tags[$name] = $tagRef->resolve(Tag::class);
+                $tags[$name] = $tagRef->resolve();
             } else {
                 $tags[$name] = $tagRef;
             }
@@ -555,7 +589,7 @@ class Components extends AsyncApiObject
         $externalDocs = [];
         foreach ($this->externalDocs as $name => $externalDocRef) {
             if ($externalDocRef instanceof Reference) {
-                $externalDocs[$name] = $externalDocRef->resolve(ExternalDocumentation::class);
+                $externalDocs[$name] = $externalDocRef->resolve();
             } else {
                 $externalDocs[$name] = $externalDocRef;
             }
@@ -573,7 +607,7 @@ class Components extends AsyncApiObject
         $servers = [];
         foreach ($this->servers as $name => $serverRef) {
             if ($serverRef instanceof Reference) {
-                $servers[$name] = $serverRef->resolve(Server::class);
+                $servers[$name] = $serverRef->resolve();
             } else {
                 $servers[$name] = $serverRef;
             }
@@ -591,7 +625,7 @@ class Components extends AsyncApiObject
         $channels = [];
         foreach ($this->channels as $name => $channelRef) {
             if ($channelRef instanceof Reference) {
-                $channels[$name] = $channelRef->resolve(Channel::class);
+                $channels[$name] = $channelRef->resolve();
             } else {
                 $channels[$name] = $channelRef;
             }
@@ -609,7 +643,7 @@ class Components extends AsyncApiObject
         $operations = [];
         foreach ($this->operations as $name => $operationRef) {
             if ($operationRef instanceof Reference) {
-                $operations[$name] = $operationRef->resolve(Operation::class);
+                $operations[$name] = $operationRef->resolve();
             } else {
                 $operations[$name] = $operationRef;
             }
@@ -627,7 +661,7 @@ class Components extends AsyncApiObject
         $messages = [];
         foreach ($this->messages as $name => $messageRef) {
             if ($messageRef instanceof Reference) {
-                $messages[$name] = $messageRef->resolve(Message::class);
+                $messages[$name] = $messageRef->resolve();
             } else {
                 $messages[$name] = $messageRef;
             }
@@ -645,7 +679,7 @@ class Components extends AsyncApiObject
         $securitySchemes = [];
         foreach ($this->securitySchemes as $name => $securitySchemeRef) {
             if ($securitySchemeRef instanceof Reference) {
-                $securitySchemes[$name] = $securitySchemeRef->resolve(SecurityScheme::class);
+                $securitySchemes[$name] = $securitySchemeRef->resolve();
             } else {
                 $securitySchemes[$name] = $securitySchemeRef;
             }
@@ -663,7 +697,7 @@ class Components extends AsyncApiObject
         $parameters = [];
         foreach ($this->parameters as $name => $parameterRef) {
             if ($parameterRef instanceof Reference) {
-                $parameters[$name] = $parameterRef->resolve(Parameter::class);
+                $parameters[$name] = $parameterRef->resolve();
             } else {
                 $parameters[$name] = $parameterRef;
             }
@@ -681,7 +715,7 @@ class Components extends AsyncApiObject
         $correlationIds = [];
         foreach ($this->correlationIds as $name => $correlationIdRef) {
             if ($correlationIdRef instanceof Reference) {
-                $correlationIds[$name] = $correlationIdRef->resolve(CorrelationId::class);
+                $correlationIds[$name] = $correlationIdRef->resolve();
             } else {
                 $correlationIds[$name] = $correlationIdRef;
             }
@@ -699,7 +733,7 @@ class Components extends AsyncApiObject
         $operationTraits = [];
         foreach ($this->operationTraits as $name => $operationTraitRef) {
             if ($operationTraitRef instanceof Reference) {
-                $operationTraits[$name] = $operationTraitRef->resolve(OperationTrait::class);
+                $operationTraits[$name] = $operationTraitRef->resolve();
             } else {
                 $operationTraits[$name] = $operationTraitRef;
             }
@@ -717,7 +751,7 @@ class Components extends AsyncApiObject
         $messageTraits = [];
         foreach ($this->messageTraits as $name => $messageTraitRef) {
             if ($messageTraitRef instanceof Reference) {
-                $messageTraits[$name] = $messageTraitRef->resolve(MessageTrait::class);
+                $messageTraits[$name] = $messageTraitRef->resolve();
             } else {
                 $messageTraits[$name] = $messageTraitRef;
             }
@@ -735,7 +769,7 @@ class Components extends AsyncApiObject
         $serverVariables = [];
         foreach ($this->serverVariables as $name => $serverVariableRef) {
             if ($serverVariableRef instanceof Reference) {
-                $serverVariables[$name] = $serverVariableRef->resolve(ServerVariable::class);
+                $serverVariables[$name] = $serverVariableRef->resolve();
             } else {
                 $serverVariables[$name] = $serverVariableRef;
             }

@@ -128,6 +128,9 @@ abstract class AsyncApiObject implements \JsonSerializable
         return $this->parentElement;
     }
 
+    /**
+     * @return $this
+     */
     protected function setParentElement(AsyncApiObject $parent): self
     {
         $this->parentElement = $parent;

@@ -65,7 +65,7 @@ class Channel extends AsyncApiObject
     /**
      * A map of the messages that will be published or received on this channel.
      *
-     * @var array<string, Message|Reference>
+     * @var array<string, Message|Reference<Message>>
      */
     protected array $messages = [];
 
@@ -73,7 +73,7 @@ class Channel extends AsyncApiObject
      * An array of $ref pointers to the definition of the servers in which this channel is available.
      * If servers is absent or empty, this channel MUST be available on all the servers defined in the Servers Object.
      *
-     * @var array<Reference>
+     * @var array<Reference<Server>>
      */
     protected array $servers = [];
 
@@ -241,7 +241,7 @@ class Channel extends AsyncApiObject
     /**
      * Get the messages.
      *
-     * @return array<string, Message|Reference>
+     * @return array<string, Message|Reference<Message>>
      */
     public function getMessages(): array
     {
@@ -261,13 +261,15 @@ class Channel extends AsyncApiObject
                 $resolvedMessages[$name] = $messageRef;
                 continue;
             }
-            $resolvedMessages[$name] = $messageRef->resolve(Message::class);
+            $resolvedMessages[$name] = $messageRef->resolve();
         }
         return $resolvedMessages;
     }
 
     /**
      * Add a message.
+     *
+     * @param Message|Reference<Message> $message
      */
     public function addMessage(string $name, Message|Reference $message): self
     {
@@ -278,7 +280,7 @@ class Channel extends AsyncApiObject
     /**
      * Get the servers.
      *
-     * @return array<Reference>
+     * @return array<Reference<Server>>
      */
     public function getServers(): array
     {
@@ -294,13 +296,15 @@ class Channel extends AsyncApiObject
     {
         $servers = [];
         foreach ($this->servers as $serverRef) {
-            $servers[] = $serverRef->resolve(Server::class);
+            $servers[] = $serverRef->resolve();
         }
         return $servers;
     }
 
     /**
      * Add a server.
+     *
+     * @param Reference<Server> $server
      */
     public function addServer(Reference $server): self
     {
