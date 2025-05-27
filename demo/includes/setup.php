@@ -2,11 +2,12 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Siemendev\AsyncapiPhp\Adapter\Amqp\AmqpAdapter;
+use Siemendev\AsyncapiPhp\AsyncApiManager;
 use Siemendev\AsyncapiPhp\Configuration\Configuration;
 use Siemendev\AsyncapiPhp\Configuration\Credentials\UsernamePasswordCredentials;
 use Siemendev\AsyncapiPhp\Configuration\StubConfiguration;
 use Siemendev\AsyncapiPhp\Demo\TestMessageHandler;
-use Siemendev\AsyncapiPhp\AsyncApiManager;
+use Siemendev\AsyncapiPhp\Generator\Generator;
 use Siemendev\AsyncapiPhp\Serializer\Symfony\JsonSerializer;
 
 $config = new Configuration(
@@ -20,7 +21,7 @@ $config = new Configuration(
 );
 
 return (new AsyncApiManager($config))
-    ->setGenerator(new \Siemendev\AsyncapiPhp\Generator\Generator())
+    ->setGenerator(new Generator())
     ->addAdapter(new AmqpAdapter())
     ->addMessageHandler(new TestMessageHandler())
     ->addSerializer(new JsonSerializer())
