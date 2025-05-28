@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Adapter\Amqp;
 
 use LogicException;
@@ -25,7 +27,7 @@ class AmqpConnectionBuilder
             return $this->connection;
         }
         if (!$credentials instanceof UsernamePasswordCredentials) {
-            throw new LogicException('AMQP adapter only supports username/password credentials'); # todo make exception more helpful
+            throw new LogicException('AMQP adapter only supports username/password credentials'); // todo make exception more helpful
         }
 
         [$host, $port] = explode(':', $server->getHost());

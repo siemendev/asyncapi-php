@@ -1,33 +1,35 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Adapter\Amqp\Bindings;
 
 use Siemendev\AsyncapiPhp\Spec\Model\Bindings\OperationBinding;
 
 /**
- * AMQP Operation Binding Object
- * 
+ * AMQP Operation Binding Object.
+ *
  * This object contains information about the operation representation in AMQP.
- * 
+ *
  * @see https://github.com/asyncapi/bindings/blob/master/amqp/README.md#operation-binding-object
  */
 class AmqpOperationBinding extends OperationBinding
 {
     /**
      * TTL (Time-To-Live) for the message. It MUST be greater than or equal to zero.
-     * Applies to actions: receive, send
+     * Applies to actions: receive, send.
      */
     protected ?int $expiration = null;
 
     /**
      * Identifies the user who has sent the message.
-     * Applies to actions: receive, send
+     * Applies to actions: receive, send.
      */
     protected ?string $userId = null;
 
     /**
      * The routing keys the message should be routed to at the time of publishing.
-     * Applies to actions: receive, send
+     * Applies to actions: receive, send.
      *
      * @var string[]|null
      */
@@ -35,25 +37,25 @@ class AmqpOperationBinding extends OperationBinding
 
     /**
      * A priority for the message.
-     * Applies to actions: receive, send
+     * Applies to actions: receive, send.
      */
     protected ?int $priority = null;
 
     /**
      * Delivery mode of the message. Its value MUST be either 1 (transient) or 2 (persistent).
-     * Applies to actions: receive, send
+     * Applies to actions: receive, send.
      */
     protected ?int $deliveryMode = null;
 
     /**
      * Whether the message is mandatory or not.
-     * Applies to actions: receive
+     * Applies to actions: receive.
      */
     protected ?bool $mandatory = null;
 
     /**
      * Like cc but consumers will not receive this information.
-     * Applies to actions: receive
+     * Applies to actions: receive.
      *
      * @var string[]|null
      */
@@ -61,13 +63,13 @@ class AmqpOperationBinding extends OperationBinding
 
     /**
      * Whether the message should include a timestamp or not.
-     * Applies to actions: receive, send
+     * Applies to actions: receive, send.
      */
     protected ?bool $timestamp = null;
 
     /**
      * Whether the consumer should ack the message or not.
-     * Applies to actions: subscribe
+     * Applies to actions: subscribe.
      */
     protected ?bool $ack = null;
 
@@ -86,6 +88,7 @@ class AmqpOperationBinding extends OperationBinding
     public function setExpiration(?int $expiration): self
     {
         $this->expiration = $expiration;
+
         return $this;
     }
 
@@ -103,6 +106,7 @@ class AmqpOperationBinding extends OperationBinding
     public function setUserId(?string $userId): self
     {
         $this->userId = $userId;
+
         return $this;
     }
 
@@ -124,6 +128,7 @@ class AmqpOperationBinding extends OperationBinding
     public function setCc(?array $cc): self
     {
         $this->cc = $cc;
+
         return $this;
     }
 
@@ -141,6 +146,7 @@ class AmqpOperationBinding extends OperationBinding
     public function setPriority(?int $priority): self
     {
         $this->priority = $priority;
+
         return $this;
     }
 
@@ -159,6 +165,7 @@ class AmqpOperationBinding extends OperationBinding
     public function setDeliveryMode(?int $deliveryMode): self
     {
         $this->deliveryMode = $deliveryMode;
+
         return $this;
     }
 
@@ -176,6 +183,7 @@ class AmqpOperationBinding extends OperationBinding
     public function setMandatory(?bool $mandatory): self
     {
         $this->mandatory = $mandatory;
+
         return $this;
     }
 
@@ -197,6 +205,7 @@ class AmqpOperationBinding extends OperationBinding
     public function setBcc(?array $bcc): self
     {
         $this->bcc = $bcc;
+
         return $this;
     }
 
@@ -214,6 +223,7 @@ class AmqpOperationBinding extends OperationBinding
     public function setTimestamp(?bool $timestamp): self
     {
         $this->timestamp = $timestamp;
+
         return $this;
     }
 
@@ -231,6 +241,7 @@ class AmqpOperationBinding extends OperationBinding
     public function setAck(?bool $ack): self
     {
         $this->ack = $ack;
+
         return $this;
     }
 }

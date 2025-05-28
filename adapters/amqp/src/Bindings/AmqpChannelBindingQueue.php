@@ -1,39 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Adapter\Amqp\Bindings;
 
 use Siemendev\AsyncapiPhp\Spec\Model\AsyncApiObject;
 
 /**
- * AMQP Queue Object
- * 
+ * AMQP Queue Object.
+ *
  * This object contains information about the queue representation in AMQP.
  */
 class AmqpChannelBindingQueue extends AsyncApiObject
 {
-    /**
-     * The name of the queue. It MUST NOT exceed 255 characters long.
-     */
+    /** The name of the queue. It MUST NOT exceed 255 characters long. */
     protected ?string $name = null;
 
-    /**
-     * Whether the queue should survive broker restarts or not.
-     */
+    /** Whether the queue should survive broker restarts or not. */
     protected ?bool $durable = null;
 
-    /**
-     * Whether the queue should be used only by one connection or not.
-     */
+    /** Whether the queue should be used only by one connection or not. */
     protected ?bool $exclusive = null;
 
-    /**
-     * Whether the queue should be deleted when the last consumer unsubscribes.
-     */
+    /** Whether the queue should be deleted when the last consumer unsubscribes. */
     protected ?bool $autoDelete = null;
 
-    /**
-     * The virtual host of the queue. Defaults to /.
-     */
+    /** The virtual host of the queue. Defaults to /. */
     protected ?string $vhost = null;
 
     /**
@@ -50,6 +42,7 @@ class AmqpChannelBindingQueue extends AsyncApiObject
     public function setName(?string $name): self
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -67,6 +60,7 @@ class AmqpChannelBindingQueue extends AsyncApiObject
     public function setDurable(?bool $durable): self
     {
         $this->durable = $durable;
+
         return $this;
     }
 
@@ -84,6 +78,7 @@ class AmqpChannelBindingQueue extends AsyncApiObject
     public function setExclusive(?bool $exclusive): self
     {
         $this->exclusive = $exclusive;
+
         return $this;
     }
 
@@ -101,6 +96,7 @@ class AmqpChannelBindingQueue extends AsyncApiObject
     public function setAutoDelete(?bool $autoDelete): self
     {
         $this->autoDelete = $autoDelete;
+
         return $this;
     }
 
@@ -118,6 +114,7 @@ class AmqpChannelBindingQueue extends AsyncApiObject
     public function setVhost(?string $vhost): self
     {
         $this->vhost = $vhost;
+
         return $this;
     }
 }

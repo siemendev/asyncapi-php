@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Adapter\Amqp;
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
@@ -14,6 +16,7 @@ use Siemendev\AsyncapiPhp\Spec\Model\Server;
 class AmqpAdapter extends AbstractAdapter
 {
     private AmqpConnectionBuilder $connectionFactory;
+
     private AmqpPublisher $publisher;
 
     public function __construct(
@@ -21,7 +24,7 @@ class AmqpAdapter extends AbstractAdapter
         ?AmqpPublisher $publisher = null,
     ) {
         $this->connectionFactory = $connectionFactory ?? new AmqpConnectionBuilder();
-        $this->publisher = $publisher ??new AmqpPublisher();
+        $this->publisher = $publisher ?? new AmqpPublisher();
     }
 
     public function supports(Server $serverSpec, CredentialsInterface $credentials): bool
@@ -42,7 +45,7 @@ class AmqpAdapter extends AbstractAdapter
     ): void {
         $channel = $operation->resolveChannel();
         if (!$channel instanceof Channel) {
-            throw new InvalidSpecificationException('Channel not found'); # todo change this to be more helpful
+            throw new InvalidSpecificationException('Channel not found'); // todo change this to be more helpful
         }
         $this->publisher->publishMessage(
             $this->getConnection($channel),
@@ -51,7 +54,7 @@ class AmqpAdapter extends AbstractAdapter
             $message,
             $content,
             $contentType,
-            $headers
+            $headers,
         );
     }
 
@@ -68,7 +71,7 @@ class AmqpAdapter extends AbstractAdapter
         return $this->connectionFactory->getConnection(
             $this->getCredentials(),
             $this->getServerSpec(),
-            $channel
+            $channel,
         );
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Adapter\Amqp;
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
@@ -33,16 +35,16 @@ class AmqpPublisher
     ): void {
         $operationBinding = $operation->resolveBindings()->getAmqp();
         if (!$operationBinding instanceof AmqpOperationBinding) {
-            throw new InvalidSpecificationException('Operation binding is not of type AmqpOperationBinding'); # todo change this to be more helpful
+            throw new InvalidSpecificationException('Operation binding is not of type AmqpOperationBinding'); // todo change this to be more helpful
         }
 
         $channelBinding = $channel->resolveBindings()->getAmqp();
         if (!$channelBinding instanceof AmqpChannelBinding) {
-            throw new InvalidSpecificationException('Channel binding is not of type AmqpChannelBinding'); # todo change this to be more helpful
+            throw new InvalidSpecificationException('Channel binding is not of type AmqpChannelBinding'); // todo change this to be more helpful
         }
 
         if ($channelBinding->getIs() !== AmqpChannelBinding::TYPE_ROUTING_KEY) {
-            throw new InvalidAdapterConfigurationException('Channel binding is not of type routing key'); # todo change this to be more helpful
+            throw new InvalidAdapterConfigurationException('Channel binding is not of type routing key'); // todo change this to be more helpful
         }
 
         $messageHeaders = [
@@ -85,7 +87,7 @@ class AmqpPublisher
         }
 
         if (!$sent) {
-            throw new MessagePublishFailedException('No routing keys provided for message publishing.'); # todo change this to be more helpful
+            throw new MessagePublishFailedException('No routing keys provided for message publishing.'); // todo change this to be more helpful
         }
     }
 }
