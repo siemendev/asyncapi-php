@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
 use Siemendev\AsyncapiPhp\Spec\Model\Bindings\ChannelBindings;
@@ -163,6 +165,7 @@ class Components extends AsyncApiObject
     public function addSchema(string $name, Schema|Reference $schema): self
     {
         $this->schemas[$name] = $schema->setParentElement($this);
+
         return $this;
     }
 
@@ -184,6 +187,7 @@ class Components extends AsyncApiObject
     public function addServer(string $name, Server|Reference $server): self
     {
         $this->servers[$name] = $server->setParentElement($this);
+
         return $this;
     }
 
@@ -205,6 +209,7 @@ class Components extends AsyncApiObject
     public function addChannel(string $name, Channel|Reference $channel): self
     {
         $this->channels[$name] = $channel->setParentElement($this);
+
         return $this;
     }
 
@@ -226,6 +231,7 @@ class Components extends AsyncApiObject
     public function addOperation(string $name, Operation|Reference $operation): self
     {
         $this->operations[$name] = $operation->setParentElement($this);
+
         return $this;
     }
 
@@ -247,6 +253,7 @@ class Components extends AsyncApiObject
     public function addMessage(string $name, Message|Reference $message): self
     {
         $this->messages[$name] = $message->setParentElement($this);
+
         return $this;
     }
 
@@ -268,6 +275,7 @@ class Components extends AsyncApiObject
     public function addSecurityScheme(string $name, SecurityScheme|Reference $securityScheme): self
     {
         $this->securitySchemes[$name] = $securityScheme->setParentElement($this);
+
         return $this;
     }
 
@@ -289,6 +297,7 @@ class Components extends AsyncApiObject
     public function addParameter(string $name, Parameter|Reference $parameter): self
     {
         $this->parameters[$name] = $parameter->setParentElement($this);
+
         return $this;
     }
 
@@ -310,6 +319,7 @@ class Components extends AsyncApiObject
     public function addCorrelationId(string $name, CorrelationId|Reference $correlationId): self
     {
         $this->correlationIds[$name] = $correlationId->setParentElement($this);
+
         return $this;
     }
 
@@ -331,6 +341,7 @@ class Components extends AsyncApiObject
     public function addOperationTrait(string $name, OperationTrait|Reference $operationTrait): self
     {
         $this->operationTraits[$name] = $operationTrait->setParentElement($this);
+
         return $this;
     }
 
@@ -352,6 +363,7 @@ class Components extends AsyncApiObject
     public function addMessageTrait(string $name, MessageTrait|Reference $messageTrait): self
     {
         $this->messageTraits[$name] = $messageTrait->setParentElement($this);
+
         return $this;
     }
 
@@ -373,6 +385,7 @@ class Components extends AsyncApiObject
     public function addServerVariable(string $name, ServerVariable|Reference $serverVariable): self
     {
         $this->serverVariables[$name] = $serverVariable->setParentElement($this);
+
         return $this;
     }
 
@@ -394,6 +407,7 @@ class Components extends AsyncApiObject
     public function addTag(string $name, Tag|Reference $tag): self
     {
         $this->tags[$name] = $tag->setParentElement($this);
+
         return $this;
     }
 
@@ -415,6 +429,7 @@ class Components extends AsyncApiObject
     public function addExternalDoc(string $name, ExternalDocumentation|Reference $externalDoc): self
     {
         $this->externalDocs[$name] = $externalDoc->setParentElement($this);
+
         return $this;
     }
 
@@ -434,6 +449,7 @@ class Components extends AsyncApiObject
     public function setServerBindings(ServerBindings|Reference|null $bindings): self
     {
         $this->serverBindings = $bindings?->setParentElement($this);
+
         return $this;
     }
 
@@ -453,6 +469,7 @@ class Components extends AsyncApiObject
     public function setChannelBindings(ChannelBindings|Reference|null $bindings): self
     {
         $this->channelBindings = $bindings?->setParentElement($this);
+
         return $this;
     }
 
@@ -472,6 +489,7 @@ class Components extends AsyncApiObject
     public function setOperationBindings(OperationBindings|Reference|null $bindings): self
     {
         $this->operationBindings = $bindings?->setParentElement($this);
+
         return $this;
     }
 
@@ -491,6 +509,7 @@ class Components extends AsyncApiObject
     public function setMessageBindings(MessageBindings|Reference|null $bindings): self
     {
         $this->messageBindings = $bindings?->setParentElement($this);
+
         return $this;
     }
 
@@ -512,6 +531,7 @@ class Components extends AsyncApiObject
     public function addReply(string $name, OperationReply|Reference $reply): self
     {
         $this->replies[$name] = $reply->setParentElement($this);
+
         return $this;
     }
 
@@ -533,6 +553,7 @@ class Components extends AsyncApiObject
     public function addReplyAddress(string $name, OperationReplyAddress|Reference $replyAddress): self
     {
         $this->replyAddresses[$name] = $replyAddress->setParentElement($this);
+
         return $this;
     }
 
@@ -551,6 +572,7 @@ class Components extends AsyncApiObject
                 $schemas[$name] = $schemaRef;
             }
         }
+
         return $schemas;
     }
 
@@ -569,6 +591,7 @@ class Components extends AsyncApiObject
                 $tags[$name] = $tagRef;
             }
         }
+
         return $tags;
     }
 
@@ -587,6 +610,7 @@ class Components extends AsyncApiObject
                 $externalDocs[$name] = $externalDocRef;
             }
         }
+
         return $externalDocs;
     }
 
@@ -605,6 +629,7 @@ class Components extends AsyncApiObject
                 $servers[$name] = $serverRef;
             }
         }
+
         return $servers;
     }
 
@@ -623,6 +648,7 @@ class Components extends AsyncApiObject
                 $channels[$name] = $channelRef;
             }
         }
+
         return $channels;
     }
 
@@ -641,6 +667,7 @@ class Components extends AsyncApiObject
                 $operations[$name] = $operationRef;
             }
         }
+
         return $operations;
     }
 
@@ -659,6 +686,7 @@ class Components extends AsyncApiObject
                 $messages[$name] = $messageRef;
             }
         }
+
         return $messages;
     }
 
@@ -677,6 +705,7 @@ class Components extends AsyncApiObject
                 $securitySchemes[$name] = $securitySchemeRef;
             }
         }
+
         return $securitySchemes;
     }
 
@@ -695,6 +724,7 @@ class Components extends AsyncApiObject
                 $parameters[$name] = $parameterRef;
             }
         }
+
         return $parameters;
     }
 
@@ -713,6 +743,7 @@ class Components extends AsyncApiObject
                 $correlationIds[$name] = $correlationIdRef;
             }
         }
+
         return $correlationIds;
     }
 
@@ -731,6 +762,7 @@ class Components extends AsyncApiObject
                 $operationTraits[$name] = $operationTraitRef;
             }
         }
+
         return $operationTraits;
     }
 
@@ -749,6 +781,7 @@ class Components extends AsyncApiObject
                 $messageTraits[$name] = $messageTraitRef;
             }
         }
+
         return $messageTraits;
     }
 
@@ -767,58 +800,55 @@ class Components extends AsyncApiObject
                 $serverVariables[$name] = $serverVariableRef;
             }
         }
+
         return $serverVariables;
     }
 
     /**
      * Resolves the references to the server bindings.
-     *
-     * @return ServerBindings|null
      */
     public function resolveServerBindings(): ?ServerBindings
     {
         if ($this->serverBindings instanceof Reference) {
             return $this->serverBindings->resolve();
         }
+
         return $this->serverBindings;
     }
 
     /**
      * Resolves the references to the channel bindings.
-     *
-     * @return ChannelBindings|null
      */
     public function resolveChannelBindings(): ?ChannelBindings
     {
         if ($this->channelBindings instanceof Reference) {
             return $this->channelBindings->resolve();
         }
+
         return $this->channelBindings;
     }
 
     /**
      * Resolves the references to the operation bindings.
-     *
-     * @return OperationBindings|null
      */
     public function resolveOperationBindings(): ?OperationBindings
     {
         if ($this->operationBindings instanceof Reference) {
             return $this->operationBindings->resolve();
         }
+
         return $this->operationBindings;
     }
 
     /**
      * Resolves the references to the message bindings.
-     *
-     * @return MessageBindings|null
      */
     public function resolveMessageBindings(): ?MessageBindings
     {
         if ($this->messageBindings instanceof Reference) {
             return $this->messageBindings->resolve();
         }
+
         return $this->messageBindings;
     }
 
@@ -837,6 +867,7 @@ class Components extends AsyncApiObject
                 $replies[$name] = $replyRef;
             }
         }
+
         return $replies;
     }
 
@@ -855,6 +886,7 @@ class Components extends AsyncApiObject
                 $replyAddresses[$name] = $replyAddressRef;
             }
         }
+
         return $replyAddresses;
     }
 }

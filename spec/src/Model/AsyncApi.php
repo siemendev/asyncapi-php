@@ -1,29 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
 /**
  * Represents the root AsyncAPI document.
- * 
+ *
  * This is the main class that represents an AsyncAPI document.
  * It contains all the information about the API, including metadata,
  * servers, channels, operations, and components.
  */
 class AsyncApi extends AsyncApiObject
 {
-    /**
-     * The AsyncAPI specification version.
-     */
+    /** The AsyncAPI specification version. */
     protected string $asyncapi = '3.0.0';
 
-    /**
-     * Identifier of the application the AsyncAPI document is defining.
-     */
+    /** Identifier of the application the AsyncAPI document is defining. */
     protected ?string $id = null;
 
-    /**
-     * General information about the API.
-     */
+    /** General information about the API. */
     protected Info $info;
 
     /**
@@ -33,9 +29,7 @@ class AsyncApi extends AsyncApiObject
      */
     protected array $servers = [];
 
-    /**
-     * Default content type to use when encoding/decoding a message's payload.
-     */
+    /** Default content type to use when encoding/decoding a message's payload. */
     protected ?string $defaultContentType = null;
 
     /**
@@ -52,9 +46,7 @@ class AsyncApi extends AsyncApiObject
      */
     protected array $operations = [];
 
-    /**
-     * An element to hold various schemas for the specification.
-     */
+    /** An element to hold various schemas for the specification. */
     protected ?Components $components = null;
 
     /**
@@ -71,6 +63,7 @@ class AsyncApi extends AsyncApiObject
     public function setAsyncapi(string $asyncapi): self
     {
         $this->asyncapi = $asyncapi;
+
         return $this;
     }
 
@@ -96,6 +89,7 @@ class AsyncApi extends AsyncApiObject
     public function setId(string $id): self
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -105,6 +99,7 @@ class AsyncApi extends AsyncApiObject
     public function setInfo(Info $info): self
     {
         $this->info = $info->setParentElement($this);
+
         return $this;
     }
 
@@ -127,6 +122,7 @@ class AsyncApi extends AsyncApiObject
             $server->setParentElement($this);
         }
         $this->servers = $servers;
+
         return $this;
     }
 
@@ -148,6 +144,7 @@ class AsyncApi extends AsyncApiObject
     public function addServer(string $name, Server|Reference $server): self
     {
         $this->servers[$name] = $server->setParentElement($this);
+
         return $this;
     }
 
@@ -166,6 +163,7 @@ class AsyncApi extends AsyncApiObject
                 $servers[$name] = $serverRef;
             }
         }
+
         return $servers;
     }
 
@@ -183,6 +181,7 @@ class AsyncApi extends AsyncApiObject
     public function setDefaultContentType(string $defaultContentType): self
     {
         $this->defaultContentType = $defaultContentType;
+
         return $this;
     }
 
@@ -197,6 +196,7 @@ class AsyncApi extends AsyncApiObject
             $channel->setParentElement($this);
         }
         $this->channels = $channels;
+
         return $this;
     }
 
@@ -216,6 +216,7 @@ class AsyncApi extends AsyncApiObject
     public function addChannel(string $name, Channel $channel): self
     {
         $this->channels[$name] = $channel->setParentElement($this);
+
         return $this;
     }
 
@@ -230,6 +231,7 @@ class AsyncApi extends AsyncApiObject
             $operation->setParentElement($this);
         }
         $this->operations = $operations;
+
         return $this;
     }
 
@@ -249,6 +251,7 @@ class AsyncApi extends AsyncApiObject
     public function addOperation(string $name, Operation $operation): self
     {
         $this->operations[$name] = $operation->setParentElement($this);
+
         return $this;
     }
 
@@ -266,6 +269,7 @@ class AsyncApi extends AsyncApiObject
     public function setComponents(Components $components): self
     {
         $this->components = $components->setParentElement($this);
+
         return $this;
     }
 }

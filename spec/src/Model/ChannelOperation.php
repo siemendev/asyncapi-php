@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
 /**
@@ -7,24 +9,16 @@ namespace Siemendev\AsyncapiPhp\Spec\Model;
  */
 class ChannelOperation extends AsyncApiObject
 {
-    /**
-     * The operation this channel is related to.
-     */
+    /** The operation this channel is related to. */
     protected string $operationId;
 
-    /**
-     * A human-friendly title for the operation.
-     */
+    /** A human-friendly title for the operation. */
     protected ?string $title = null;
 
-    /**
-     * A short summary of what the operation is about.
-     */
+    /** A short summary of what the operation is about. */
     protected ?string $summary = null;
 
-    /**
-     * A verbose explanation of the operation.
-     */
+    /** A verbose explanation of the operation. */
     protected ?string $description = null;
 
     /**
@@ -34,9 +28,7 @@ class ChannelOperation extends AsyncApiObject
      */
     protected array $tags = [];
 
-    /**
-     * Additional external documentation for this operation.
-     */
+    /** Additional external documentation for this operation. */
     protected ?ExternalDocumentation $externalDocs = null;
 
     /**
@@ -78,6 +70,7 @@ class ChannelOperation extends AsyncApiObject
     public function setTitle(string $title): self
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -95,6 +88,7 @@ class ChannelOperation extends AsyncApiObject
     public function setSummary(string $summary): self
     {
         $this->summary = $summary;
+
         return $this;
     }
 
@@ -112,6 +106,7 @@ class ChannelOperation extends AsyncApiObject
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -134,6 +129,7 @@ class ChannelOperation extends AsyncApiObject
     public function addTag(Tag $tag): self
     {
         $this->tags[] = $tag->setParentElement($this);
+
         return $this;
     }
 
@@ -151,6 +147,7 @@ class ChannelOperation extends AsyncApiObject
     public function setExternalDocs(ExternalDocumentation $externalDocs): self
     {
         $this->externalDocs = $externalDocs->setParentElement($this);
+
         return $this;
     }
 
@@ -170,6 +167,7 @@ class ChannelOperation extends AsyncApiObject
     public function addBinding(string $name, AsyncApiObject $binding): self
     {
         $this->bindings[$name] = $binding->setParentElement($this);
+
         return $this;
     }
 }

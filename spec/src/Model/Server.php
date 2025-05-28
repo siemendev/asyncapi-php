@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
 use Siemendev\AsyncapiPhp\Spec\Model\Bindings\ServerBindings;
@@ -9,39 +11,25 @@ use Siemendev\AsyncapiPhp\Spec\Model\Bindings\ServerBindings;
  */
 class Server extends AsyncApiObject
 {
-    /**
-     * A host (name or IP) of the server.
-     */
+    /** A host (name or IP) of the server. */
     protected string $host;
 
-    /**
-     * The protocol this server supports for connection.
-     */
+    /** The protocol this server supports for connection. */
     protected string $protocol;
 
-    /**
-     * The version of the protocol used for connection.
-     */
+    /** The version of the protocol used for connection. */
     protected ?string $protocolVersion = null;
 
-    /**
-     * The path to a resource in the host.
-     */
+    /** The path to a resource in the host. */
     protected ?string $pathname = null;
 
-    /**
-     * A short description of the server.
-     */
+    /** A short description of the server. */
     protected ?string $description = null;
 
-    /**
-     * A human-friendly title for the server.
-     */
+    /** A human-friendly title for the server. */
     protected ?string $title = null;
 
-    /**
-     * A short summary of the server.
-     */
+    /** A short summary of the server. */
     protected ?string $summary = null;
 
     /**
@@ -66,9 +54,7 @@ class Server extends AsyncApiObject
      */
     protected array $tags = [];
 
-    /**
-     * Additional external documentation for this server.
-     */
+    /** Additional external documentation for this server. */
     protected ?ExternalDocumentation $externalDocs = null;
 
     /**
@@ -120,6 +106,7 @@ class Server extends AsyncApiObject
     public function setProtocolVersion(string $protocolVersion): self
     {
         $this->protocolVersion = $protocolVersion;
+
         return $this;
     }
 
@@ -137,6 +124,7 @@ class Server extends AsyncApiObject
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -156,6 +144,7 @@ class Server extends AsyncApiObject
     public function addVariable(string $name, ServerVariable $variable): self
     {
         $this->variables[$name] = $variable->setParentElement($this);
+
         return $this;
     }
 
@@ -175,6 +164,7 @@ class Server extends AsyncApiObject
     public function addSecurity(SecurityScheme $security): self
     {
         $this->security[] = $security->setParentElement($this);
+
         return $this;
     }
 
@@ -194,6 +184,7 @@ class Server extends AsyncApiObject
     public function addTag(Tag $tag): self
     {
         $this->tags[] = $tag->setParentElement($this);
+
         return $this;
     }
 
@@ -211,6 +202,7 @@ class Server extends AsyncApiObject
     public function setExternalDocs(ExternalDocumentation $externalDocs): self
     {
         $this->externalDocs = $externalDocs->setParentElement($this);
+
         return $this;
     }
 
@@ -228,6 +220,7 @@ class Server extends AsyncApiObject
     public function setPathname(string $pathname): self
     {
         $this->pathname = $pathname;
+
         return $this;
     }
 
@@ -245,6 +238,7 @@ class Server extends AsyncApiObject
     public function setTitle(string $title): self
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -262,6 +256,7 @@ class Server extends AsyncApiObject
     public function setSummary(string $summary): self
     {
         $this->summary = $summary;
+
         return $this;
     }
 
@@ -283,6 +278,7 @@ class Server extends AsyncApiObject
     public function setBindings(ServerBindings|Reference $bindings): self
     {
         $this->bindings = $bindings->setParentElement($this);
+
         return $this;
     }
 
@@ -294,6 +290,7 @@ class Server extends AsyncApiObject
         if ($this->bindings instanceof Reference) {
             return $this->bindings->resolve();
         }
+
         return $this->bindings;
     }
 }

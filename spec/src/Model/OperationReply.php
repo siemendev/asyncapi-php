@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
 /**
@@ -21,7 +23,7 @@ class OperationReply extends AsyncApiObject
      *
      * @var Reference<Channel>|null
      */
-    protected Reference|null $channel = null;
+    protected ?Reference $channel = null;
 
     /**
      * A list of $ref pointers pointing to the supported Message Objects that can be processed by this operation as reply.
@@ -53,6 +55,7 @@ class OperationReply extends AsyncApiObject
         } else {
             $this->address = $address;
         }
+
         return $this;
     }
 
@@ -61,7 +64,7 @@ class OperationReply extends AsyncApiObject
      *
      * @return Reference<Channel>|null
      */
-    public function getChannel(): Reference|null
+    public function getChannel(): ?Reference
     {
         return $this->channel;
     }
@@ -71,13 +74,14 @@ class OperationReply extends AsyncApiObject
      *
      * @param Reference<Channel>|null $channel
      */
-    public function setChannel(Reference|null $channel): self
+    public function setChannel(?Reference $channel): self
     {
         if ($channel instanceof AsyncApiObject) {
             $this->channel = $channel->setParentElement($this);
         } else {
             $this->channel = $channel;
         }
+
         return $this;
     }
 
@@ -99,6 +103,7 @@ class OperationReply extends AsyncApiObject
     public function addMessage(Reference $message): self
     {
         $this->messages[] = $message->setParentElement($this);
+
         return $this;
     }
 
@@ -113,6 +118,7 @@ class OperationReply extends AsyncApiObject
         foreach ($messages as $message) {
             $this->addMessage($message);
         }
+
         return $this;
     }
 
@@ -124,6 +130,7 @@ class OperationReply extends AsyncApiObject
         if ($this->address instanceof Reference) {
             return $this->address->resolve();
         }
+
         return $this->address;
     }
 
@@ -135,6 +142,7 @@ class OperationReply extends AsyncApiObject
         if ($this->channel instanceof Reference) {
             return $this->channel->resolve();
         }
+
         return null;
     }
 
@@ -149,6 +157,7 @@ class OperationReply extends AsyncApiObject
         foreach ($this->messages as $messageRef) {
             $messages[] = $messageRef->resolve();
         }
+
         return $messages;
     }
 }

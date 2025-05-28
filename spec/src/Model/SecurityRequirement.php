@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
 /**
  * Lists the required security schemes to execute this operation.
- * 
+ *
  * The name used for each property MUST correspond to a security scheme declared
  * in the components.securitySchemes section of the AsyncAPI document.
  */
@@ -25,6 +27,7 @@ class SecurityRequirement extends AsyncApiObject
     public function addRequirement(string $name, array $scopes = []): self
     {
         $this->requirements[$name] = $scopes;
+
         return $this;
     }
 

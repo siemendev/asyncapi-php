@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
 /**
@@ -7,14 +9,10 @@ namespace Siemendev\AsyncapiPhp\Spec\Model;
  */
 class License extends AsyncApiObject
 {
-    /**
-     * The license name used for the API.
-     */
+    /** The license name used for the API. */
     protected string $name;
 
-    /**
-     * A URL to the license used for the API.
-     */
+    /** A URL to the license used for the API. */
     protected ?string $url = null;
 
     /**
@@ -49,6 +47,7 @@ class License extends AsyncApiObject
     public function setUrl(string $url): self
     {
         $this->url = $url;
+
         return $this;
     }
 }

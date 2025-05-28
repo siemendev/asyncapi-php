@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
 /**
@@ -7,25 +9,17 @@ namespace Siemendev\AsyncapiPhp\Spec\Model;
  */
 class Contact extends AsyncApiObject
 {
-    /**
-     * The identifying name of the contact person/organization.
-     */
+    /** The identifying name of the contact person/organization. */
     protected ?string $name = null;
 
-    /**
-     * The URL pointing to the contact information.
-     */
+    /** The URL pointing to the contact information. */
     protected ?string $url = null;
 
-    /**
-     * The email address of the contact person/organization.
-     */
+    /** The email address of the contact person/organization. */
     protected ?string $email = null;
 
     /**
      * Get the name of the contact person/organization.
-     *
-     * @return string|null
      */
     public function getName(): ?string
     {
@@ -38,6 +32,7 @@ class Contact extends AsyncApiObject
     public function setName(string $name): self
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -55,6 +50,7 @@ class Contact extends AsyncApiObject
     public function setUrl(string $url): self
     {
         $this->url = $url;
+
         return $this;
     }
 
@@ -72,6 +68,7 @@ class Contact extends AsyncApiObject
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
         return $this;
     }
 }

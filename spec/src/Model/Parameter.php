@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
 /**
@@ -7,14 +9,10 @@ namespace Siemendev\AsyncapiPhp\Spec\Model;
  */
 class Parameter extends AsyncApiObject
 {
-    /**
-     * A brief description of the parameter.
-     */
+    /** A brief description of the parameter. */
     protected ?string $description = null;
 
-    /**
-     * The location of the parameter.
-     */
+    /** The location of the parameter. */
     protected ?string $location = null;
 
     /**
@@ -38,6 +36,7 @@ class Parameter extends AsyncApiObject
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -55,6 +54,7 @@ class Parameter extends AsyncApiObject
     public function setLocation(string $location): self
     {
         $this->location = $location;
+
         return $this;
     }
 
@@ -76,6 +76,7 @@ class Parameter extends AsyncApiObject
     public function setSchema(Schema|Reference $schema): self
     {
         $this->schema = $schema->setParentElement($this);
+
         return $this;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model\References;
 
 use Siemendev\AsyncapiPhp\Spec\Model\Message;
@@ -15,7 +17,7 @@ class ChannelMessageReference extends Reference
         parent::__construct(sprintf(
             '#/channels/%s/messages/%s',
             $channelName,
-            $messageName
+            $messageName,
         ));
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
 /**
@@ -35,6 +37,7 @@ class OperationReplyAddress extends AsyncApiObject
     public function setLocation(?string $location): self
     {
         $this->location = $location;
+
         return $this;
     }
 
@@ -52,6 +55,7 @@ class OperationReplyAddress extends AsyncApiObject
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 }

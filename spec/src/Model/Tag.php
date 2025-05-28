@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
 /**
@@ -7,19 +9,13 @@ namespace Siemendev\AsyncapiPhp\Spec\Model;
  */
 class Tag extends AsyncApiObject
 {
-    /**
-     * The name of the tag.
-     */
+    /** The name of the tag. */
     protected string $name;
 
-    /**
-     * A short description for the tag.
-     */
+    /** A short description for the tag. */
     protected ?string $description = null;
 
-    /**
-     * Additional external documentation for this tag.
-     */
+    /** Additional external documentation for this tag. */
     protected ?ExternalDocumentation $externalDocs = null;
 
     /**
@@ -52,6 +48,7 @@ class Tag extends AsyncApiObject
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -69,6 +66,7 @@ class Tag extends AsyncApiObject
     public function setExternalDocs(ExternalDocumentation $externalDocs): self
     {
         $this->externalDocs = $externalDocs->setParentElement($this);
+
         return $this;
     }
 }

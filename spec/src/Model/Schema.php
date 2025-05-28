@@ -1,39 +1,30 @@
 <?php
 
-namespace Siemendev\AsyncapiPhp\Spec\Model;
+declare(strict_types=1);
 
+namespace Siemendev\AsyncapiPhp\Spec\Model;
 
 /**
  * The Schema Object allows the definition of input and output data types.
- * 
+ *
  * These types can be objects, but also primitives and arrays.
  * This object is a JSON Schema dialect that is a superset of JSON Schema Specification Draft 2020-12.
  */
 class Schema extends AsyncApiObject
 {
-    /**
-     * The type of the schema.
-     */
+    /** The type of the schema. */
     protected ?string $type = null;
 
-    /**
-     * The title of the schema.
-     */
+    /** The title of the schema. */
     protected ?string $title = null;
 
-    /**
-     * A short description of the schema.
-     */
+    /** A short description of the schema. */
     protected ?string $description = null;
 
-    /**
-     * The default value of the schema.
-     */
+    /** The default value of the schema. */
     protected mixed $default = null;
 
-    /**
-     * The format of the schema.
-     */
+    /** The format of the schema. */
     protected ?string $format = null;
 
     /**
@@ -46,59 +37,39 @@ class Schema extends AsyncApiObject
      */
     protected int|float|null $maximum = null;
 
-    /**
-     * Whether the minimum value is exclusive.
-     */
+    /** Whether the minimum value is exclusive. */
     protected ?bool $exclusiveMinimum = null;
 
-    /**
-     * Whether the maximum value is exclusive.
-     */
+    /** Whether the maximum value is exclusive. */
     protected ?bool $exclusiveMaximum = null;
 
-    /**
-     * The minimum length of the schema.
-     */
+    /** The minimum length of the schema. */
     protected ?int $minLength = null;
 
-    /**
-     * The maximum length of the schema.
-     */
+    /** The maximum length of the schema. */
     protected ?int $maxLength = null;
 
-    /**
-     * The pattern of the schema.
-     */
+    /** The pattern of the schema. */
     protected ?string $pattern = null;
 
-    /**
-     * The minimum number of items in the schema.
-     */
+    /** The minimum number of items in the schema. */
     protected ?int $minItems = null;
 
-    /**
-     * The maximum number of items in the schema.
-     */
+    /** The maximum number of items in the schema. */
     protected ?int $maxItems = null;
 
-    /**
-     * Whether the items in the schema must be unique.
-     */
+    /** Whether the items in the schema must be unique. */
     protected ?bool $uniqueItems = null;
 
-    /**
-     * The minimum number of properties in the schema.
-     */
+    /** The minimum number of properties in the schema. */
     protected ?int $minProperties = null;
 
-    /**
-     * The maximum number of properties in the schema.
-     */
+    /** The maximum number of properties in the schema. */
     protected ?int $maxProperties = null;
 
     /**
      * The required properties of the schema.
-     * 
+     *
      * @var array<string>|null
      */
     protected ?array $required = null;
@@ -119,21 +90,21 @@ class Schema extends AsyncApiObject
 
     /**
      * The all-of schemas.
-     * 
+     *
      * @var array<Schema|Reference<Schema>>|null
      */
     protected ?array $allOf = null;
 
     /**
      * The one-of schemas.
-     * 
+     *
      * @var array<Schema|Reference<Schema>>|null
      */
     protected ?array $oneOf = null;
 
     /**
      * The any-of schemas.
-     * 
+     *
      * @var array<Schema|Reference<Schema>>|null
      */
     protected ?array $anyOf = null;
@@ -147,7 +118,7 @@ class Schema extends AsyncApiObject
 
     /**
      * The properties of the schema.
-     * 
+     *
      * @var array<string, Schema|Reference<Schema>>|null
      */
     protected ?array $properties = null;
@@ -159,19 +130,13 @@ class Schema extends AsyncApiObject
      */
     protected bool|Schema|Reference|null $additionalProperties = null;
 
-    /**
-     * The discriminator of the schema.
-     */
+    /** The discriminator of the schema. */
     protected ?Discriminator $discriminator = null;
 
-    /**
-     * Whether the schema is read only.
-     */
+    /** Whether the schema is read only. */
     protected ?bool $readOnly = null;
 
-    /**
-     * Whether the schema is write only.
-     */
+    /** Whether the schema is write only. */
     protected ?bool $writeOnly = null;
 
     /**
@@ -195,6 +160,7 @@ class Schema extends AsyncApiObject
     public function setType(string $type): self
     {
         $this->type = $type;
+
         return $this;
     }
 
@@ -212,6 +178,7 @@ class Schema extends AsyncApiObject
     public function setTitle(string $title): self
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -229,6 +196,7 @@ class Schema extends AsyncApiObject
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -246,6 +214,7 @@ class Schema extends AsyncApiObject
     public function setDefault(mixed $default): self
     {
         $this->default = $default;
+
         return $this;
     }
 
@@ -263,6 +232,7 @@ class Schema extends AsyncApiObject
     public function setFormat(string $format): self
     {
         $this->format = $format;
+
         return $this;
     }
 
@@ -284,6 +254,7 @@ class Schema extends AsyncApiObject
     public function setProperties(array $properties): self
     {
         $this->properties = $properties;
+
         return $this;
     }
 
@@ -299,6 +270,7 @@ class Schema extends AsyncApiObject
         }
 
         $this->properties[$name] = $property->setParentElement($this);
+
         return $this;
     }
 
@@ -320,6 +292,7 @@ class Schema extends AsyncApiObject
     public function setRequired(array $required): self
     {
         $this->required = $required;
+
         return $this;
     }
 
@@ -333,6 +306,7 @@ class Schema extends AsyncApiObject
         }
 
         $this->required[] = $property;
+
         return $this;
     }
 
@@ -354,6 +328,7 @@ class Schema extends AsyncApiObject
     public function setItems(Schema|Reference $items): self
     {
         $this->items = $items->setParentElement($this);
+
         return $this;
     }
 
@@ -375,6 +350,7 @@ class Schema extends AsyncApiObject
     public function setEnum(array $enum): self
     {
         $this->enum = $enum;
+
         return $this;
     }
 
@@ -386,6 +362,7 @@ class Schema extends AsyncApiObject
         if ($this->items instanceof Reference) {
             return $this->items->resolve();
         }
+
         return $this->items;
     }
 
@@ -408,6 +385,7 @@ class Schema extends AsyncApiObject
                 $schemas[] = $schema;
             }
         }
+
         return $schemas;
     }
 
@@ -430,6 +408,7 @@ class Schema extends AsyncApiObject
                 $schemas[] = $schema;
             }
         }
+
         return $schemas;
     }
 
@@ -452,6 +431,7 @@ class Schema extends AsyncApiObject
                 $schemas[] = $schema;
             }
         }
+
         return $schemas;
     }
 
@@ -463,6 +443,7 @@ class Schema extends AsyncApiObject
         if ($this->not instanceof Reference) {
             return $this->not->resolve();
         }
+
         return $this->not;
     }
 
@@ -485,19 +466,19 @@ class Schema extends AsyncApiObject
                 $properties[$name] = $property;
             }
         }
+
         return $properties;
     }
 
     /**
      * Resolves the reference to the additionalProperties and returns a Schema object or a boolean.
-     *
-     * @return bool|Schema|null
      */
     public function resolveAdditionalProperties(): bool|Schema|null
     {
         if ($this->additionalProperties instanceof Reference) {
             return $this->additionalProperties->resolve();
         }
+
         return $this->additionalProperties;
     }
 }

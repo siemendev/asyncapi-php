@@ -1,21 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model;
+
+use InvalidArgumentException;
+use JsonSerializable;
+use LogicException;
 
 /**
  * Base class for all AsyncAPI specification objects.
- * 
+ *
  * This class provides common functionality for all AsyncAPI specification objects,
  * including serialization to array and handling of extensions.
  */
-abstract class AsyncApiObject implements \JsonSerializable
+abstract class AsyncApiObject implements JsonSerializable
 {
     private ?AsyncApiObject $parentElement = null;
 
     /**
      * Specification extensions.
      *
-     * @var array<string, null|scalar|AsyncApiObject>
+     * @var array<string, scalar|AsyncApiObject|null>
      */
     protected array $extensions = [];
 
@@ -89,35 +95,37 @@ abstract class AsyncApiObject implements \JsonSerializable
     /**
      * Add a specification extension.
      *
-     * @param null|scalar|AsyncApiObject $value
+     * @param scalar|AsyncApiObject|null $value
      *
-     * @throws \InvalidArgumentException If the extension name doesn't start with 'x-'
+     * @throws InvalidArgumentException If the extension name doesn't start with 'x-'
      */
     public function addExtension(string $name, mixed $value): self
     {
         if (!str_starts_with($name, 'x-')) {
-            throw new \InvalidArgumentException('Extension names must start with "x-"');
+            throw new InvalidArgumentException('Extension names must start with "x-"');
         }
 
         $this->extensions[$name] = $value;
+
         return $this;
     }
 
     /**
      * Set all extensions.
      *
-     * @param array<string, null|scalar|AsyncApiObject> $extensions
+     * @param array<string, scalar|AsyncApiObject|null> $extensions
      */
     public function setExtensions(array $extensions): self
     {
         $this->extensions = $extensions;
+
         return $this;
     }
 
     /**
      * Get all extensions.
      *
-     * @return array<string, null|scalar|AsyncApiObject>
+     * @return array<string, scalar|AsyncApiObject|null>
      */
     public function getExtensions(): array
     {
@@ -138,8 +146,9 @@ abstract class AsyncApiObject implements \JsonSerializable
     {
         $element = $this->parentElement?->getRootElement() ?? $this;
         if (!$element instanceof AsyncApi) {
-            throw new \LogicException('Root element is not an AsyncApi object');
+            throw new LogicException('Root element is not an AsyncApi object');
         }
+
         return $element;
     }
 
@@ -154,6 +163,7 @@ abstract class AsyncApiObject implements \JsonSerializable
     protected function setParentElement(AsyncApiObject $parent): self
     {
         $this->parentElement = $parent;
+
         return $this;
     }
 

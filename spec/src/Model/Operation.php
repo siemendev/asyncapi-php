@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
 use Siemendev\AsyncapiPhp\Spec\Model\Bindings\OperationBindings;
@@ -22,19 +24,13 @@ class Operation extends AsyncApiObject
      */
     protected ?Reference $channel;
 
-    /**
-     * A human-friendly title for the operation.
-     */
+    /** A human-friendly title for the operation. */
     protected ?string $title = null;
 
-    /**
-     * A short summary of what the operation is about.
-     */
+    /** A short summary of what the operation is about. */
     protected ?string $summary = null;
 
-    /**
-     * A verbose explanation of the operation.
-     */
+    /** A verbose explanation of the operation. */
     protected ?string $description = null;
 
     /**
@@ -101,6 +97,7 @@ class Operation extends AsyncApiObject
     public function setTitle(string $title): self
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -118,6 +115,7 @@ class Operation extends AsyncApiObject
     public function setSummary(string $summary): self
     {
         $this->summary = $summary;
+
         return $this;
     }
 
@@ -135,6 +133,7 @@ class Operation extends AsyncApiObject
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -154,6 +153,7 @@ class Operation extends AsyncApiObject
     public function setAction(string $action): self
     {
         $this->action = $action;
+
         return $this;
     }
 
@@ -175,6 +175,7 @@ class Operation extends AsyncApiObject
     public function setChannel(?Reference $channel): self
     {
         $this->channel = $channel?->setParentElement($this);
+
         return $this;
     }
 
@@ -196,6 +197,7 @@ class Operation extends AsyncApiObject
     public function addSecurity(SecurityScheme|Reference $security): self
     {
         $this->security[] = $security->setParentElement($this);
+
         return $this;
     }
 
@@ -215,6 +217,7 @@ class Operation extends AsyncApiObject
     public function addTag(Tag $tag): self
     {
         $this->tags[] = $tag->setParentElement($this);
+
         return $this;
     }
 
@@ -236,6 +239,7 @@ class Operation extends AsyncApiObject
     public function setExternalDocs(ExternalDocumentation|Reference $externalDocs): self
     {
         $this->externalDocs = $externalDocs->setParentElement($this);
+
         return $this;
     }
 
@@ -257,6 +261,7 @@ class Operation extends AsyncApiObject
     public function setBindings(OperationBindings|Reference $bindings): self
     {
         $this->bindings = $bindings->setParentElement($this);
+
         return $this;
     }
 
@@ -278,6 +283,7 @@ class Operation extends AsyncApiObject
     public function addTrait(OperationTrait|Reference $trait): self
     {
         $this->traits[] = $trait->setParentElement($this);
+
         return $this;
     }
 
@@ -302,6 +308,7 @@ class Operation extends AsyncApiObject
             $message->setParentElement($this);
         }
         $this->messages = $messages;
+
         return $this;
     }
 
@@ -313,6 +320,7 @@ class Operation extends AsyncApiObject
     public function addMessage(Reference $message): self
     {
         $this->messages[] = $message->setParentElement($this);
+
         return $this;
     }
 
@@ -337,6 +345,7 @@ class Operation extends AsyncApiObject
             $reply->setParentElement($this);
         }
         $this->reply = $reply;
+
         return $this;
     }
 
@@ -356,6 +365,7 @@ class Operation extends AsyncApiObject
         if ($this->externalDocs instanceof Reference) {
             return $this->externalDocs->resolve();
         }
+
         return $this->externalDocs;
     }
 
@@ -367,6 +377,7 @@ class Operation extends AsyncApiObject
         if ($this->bindings instanceof Reference) {
             return $this->bindings->resolve();
         }
+
         return $this->bindings;
     }
 
@@ -381,19 +392,19 @@ class Operation extends AsyncApiObject
         foreach ($this->messages as $messageRef) {
             $messages[] = $messageRef->resolve();
         }
+
         return $messages;
     }
 
     /**
      * Resolves the reference to the reply and returns the resolved object.
-     *
-     * @return OperationReply|null
      */
     public function resolveReply(): ?OperationReply
     {
         if ($this->reply instanceof Reference) {
             return $this->reply->resolve();
         }
+
         return $this->reply;
     }
 
@@ -412,6 +423,7 @@ class Operation extends AsyncApiObject
                 $traits[] = $trait;
             }
         }
+
         return $traits;
     }
 
@@ -430,6 +442,7 @@ class Operation extends AsyncApiObject
                 $security[] = $securityScheme;
             }
         }
+
         return $security;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
 use Siemendev\AsyncapiPhp\Spec\Model\Bindings\ChannelBindings;
@@ -16,19 +18,13 @@ class Channel extends AsyncApiObject
      */
     protected ?string $address = null;
 
-    /**
-     * A human-friendly title for the channel.
-     */
+    /** A human-friendly title for the channel. */
     protected ?string $title = null;
 
-    /**
-     * A short summary of what the channel is about.
-     */
+    /** A short summary of what the channel is about. */
     protected ?string $summary = null;
 
-    /**
-     * A description of the channel.
-     */
+    /** A description of the channel. */
     protected ?string $description = null;
 
     /**
@@ -52,9 +48,7 @@ class Channel extends AsyncApiObject
      */
     protected array $tags = [];
 
-    /**
-     * Additional external documentation for this channel.
-     */
+    /** Additional external documentation for this channel. */
     protected ?ExternalDocumentation $externalDocs = null;
 
     /**
@@ -93,6 +87,7 @@ class Channel extends AsyncApiObject
     public function setAddress(string $address): self
     {
         $this->address = $address;
+
         return $this;
     }
 
@@ -110,6 +105,7 @@ class Channel extends AsyncApiObject
     public function setTitle(string $title): self
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -127,6 +123,7 @@ class Channel extends AsyncApiObject
     public function setSummary(string $summary): self
     {
         $this->summary = $summary;
+
         return $this;
     }
 
@@ -144,6 +141,7 @@ class Channel extends AsyncApiObject
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -163,6 +161,7 @@ class Channel extends AsyncApiObject
     public function addOperation(string $operationId, ChannelOperation $operation): self
     {
         $this->operations[$operationId] = $operation->setParentElement($this);
+
         return $this;
     }
 
@@ -182,6 +181,7 @@ class Channel extends AsyncApiObject
     public function addParameter(string $name, Parameter $parameter): self
     {
         $this->parameters[$name] = $parameter->setParentElement($this);
+
         return $this;
     }
 
@@ -201,6 +201,7 @@ class Channel extends AsyncApiObject
     public function addTag(Tag $tag): self
     {
         $this->tags[] = $tag->setParentElement($this);
+
         return $this;
     }
 
@@ -218,6 +219,7 @@ class Channel extends AsyncApiObject
     public function setExternalDocs(ExternalDocumentation $externalDocs): self
     {
         $this->externalDocs = $externalDocs->setParentElement($this);
+
         return $this;
     }
 
@@ -239,6 +241,7 @@ class Channel extends AsyncApiObject
     public function setBindings(ChannelBindings|Reference $bindings): self
     {
         $this->bindings = $bindings->setParentElement($this);
+
         return $this;
     }
 
@@ -247,6 +250,7 @@ class Channel extends AsyncApiObject
         if ($this->bindings instanceof Reference) {
             return $this->bindings->resolve();
         }
+
         return $this->bindings;
     }
 
@@ -275,6 +279,7 @@ class Channel extends AsyncApiObject
             }
             $resolvedMessages[$name] = $messageRef->resolve();
         }
+
         return $resolvedMessages;
     }
 
@@ -286,6 +291,7 @@ class Channel extends AsyncApiObject
     public function addMessage(string $name, Message|Reference $message): self
     {
         $this->messages[$name] = $message->setParentElement($this);
+
         return $this;
     }
 
@@ -310,6 +316,7 @@ class Channel extends AsyncApiObject
         foreach ($this->servers as $serverRef) {
             $servers[] = $serverRef->resolve();
         }
+
         return $servers;
     }
 
@@ -321,6 +328,7 @@ class Channel extends AsyncApiObject
     public function addServer(Reference $server): self
     {
         $this->servers[] = $server->setParentElement($this);
+
         return $this;
     }
 }

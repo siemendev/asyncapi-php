@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
 /**
@@ -7,44 +9,28 @@ namespace Siemendev\AsyncapiPhp\Spec\Model;
  */
 class SecurityScheme extends AsyncApiObject
 {
-    /**
-     * The type of the security scheme.
-     */
+    /** The type of the security scheme. */
     protected string $type;
 
-    /**
-     * A short description for security scheme.
-     */
+    /** A short description for security scheme. */
     protected ?string $description = null;
 
-    /**
-     * The name of the header, query or cookie parameter to be used.
-     */
+    /** The name of the header, query or cookie parameter to be used. */
     protected ?string $name = null;
 
-    /**
-     * The location of the API key.
-     */
+    /** The location of the API key. */
     protected ?string $in = null;
 
-    /**
-     * The name of the HTTP Authorization scheme to be used in the Authorization header.
-     */
+    /** The name of the HTTP Authorization scheme to be used in the Authorization header. */
     protected ?string $scheme = null;
 
-    /**
-     * A hint to the client to identify how the bearer token is formatted.
-     */
+    /** A hint to the client to identify how the bearer token is formatted. */
     protected ?string $bearerFormat = null;
 
-    /**
-     * An object containing configuration information for the flow types supported.
-     */
+    /** An object containing configuration information for the flow types supported. */
     protected ?OAuthFlows $flows = null;
 
-    /**
-     * OpenId Connect URL to discover OAuth2 configuration values.
-     */
+    /** OpenId Connect URL to discover OAuth2 configuration values. */
     protected ?string $openIdConnectUrl = null;
 
     /**
@@ -79,6 +65,7 @@ class SecurityScheme extends AsyncApiObject
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -96,6 +83,7 @@ class SecurityScheme extends AsyncApiObject
     public function setName(string $name): self
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -113,6 +101,7 @@ class SecurityScheme extends AsyncApiObject
     public function setIn(string $in): self
     {
         $this->in = $in;
+
         return $this;
     }
 
@@ -130,6 +119,7 @@ class SecurityScheme extends AsyncApiObject
     public function setScheme(string $scheme): self
     {
         $this->scheme = $scheme;
+
         return $this;
     }
 
@@ -147,6 +137,7 @@ class SecurityScheme extends AsyncApiObject
     public function setBearerFormat(string $bearerFormat): self
     {
         $this->bearerFormat = $bearerFormat;
+
         return $this;
     }
 
@@ -164,6 +155,7 @@ class SecurityScheme extends AsyncApiObject
     public function setFlows(OAuthFlows $flows): self
     {
         $this->flows = $flows->setParentElement($this);
+
         return $this;
     }
 
@@ -181,6 +173,7 @@ class SecurityScheme extends AsyncApiObject
     public function setOpenIdConnectUrl(string $openIdConnectUrl): self
     {
         $this->openIdConnectUrl = $openIdConnectUrl;
+
         return $this;
     }
 }

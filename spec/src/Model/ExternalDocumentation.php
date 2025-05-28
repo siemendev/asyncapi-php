@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
 /**
@@ -7,14 +9,10 @@ namespace Siemendev\AsyncapiPhp\Spec\Model;
  */
 class ExternalDocumentation extends AsyncApiObject
 {
-    /**
-     * The URL for the target documentation.
-     */
+    /** The URL for the target documentation. */
     protected string $url;
 
-    /**
-     * A short description of the target documentation.
-     */
+    /** A short description of the target documentation. */
     protected ?string $description = null;
 
     /**
@@ -29,8 +27,6 @@ class ExternalDocumentation extends AsyncApiObject
 
     /**
      * Get the URL.
-     *
-     * @return string
      */
     public function getUrl(): string
     {
@@ -51,6 +47,7 @@ class ExternalDocumentation extends AsyncApiObject
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
 /**
@@ -7,35 +9,23 @@ namespace Siemendev\AsyncapiPhp\Spec\Model;
  */
 class MessageExample extends AsyncApiObject
 {
-    /**
-     * A machine-friendly name for the example.
-     */
+    /** A machine-friendly name for the example. */
     protected ?string $name = null;
 
-    /**
-     * A short summary of what the example is about.
-     */
+    /** A short summary of what the example is about. */
     protected ?string $summary = null;
 
-    /**
-     * A verbose explanation of the example.
-     */
+    /** A verbose explanation of the example. */
     protected ?string $description = null;
 
-    /**
-     * The value of the example.
-     */
+    /** The value of the example. */
     protected mixed $value = null;
 
-    /**
-     * The value of the message headers.
-     */
+    /** The value of the message headers. */
     protected mixed $headers = null;
 
     /**
      * Get the name.
-     *
-     * @return string|null
      */
     public function getName(): ?string
     {
@@ -48,6 +38,7 @@ class MessageExample extends AsyncApiObject
     public function setName(string $name): self
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -65,6 +56,7 @@ class MessageExample extends AsyncApiObject
     public function setSummary(string $summary): self
     {
         $this->summary = $summary;
+
         return $this;
     }
 
@@ -82,6 +74,7 @@ class MessageExample extends AsyncApiObject
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -99,6 +92,7 @@ class MessageExample extends AsyncApiObject
     public function setValue(mixed $value): self
     {
         $this->value = $value;
+
         return $this;
     }
 
@@ -116,6 +110,7 @@ class MessageExample extends AsyncApiObject
     public function setHeaders(mixed $headers): self
     {
         $this->headers = $headers;
+
         return $this;
     }
 }

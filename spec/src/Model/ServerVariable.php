@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
 /**
@@ -14,14 +16,10 @@ class ServerVariable extends AsyncApiObject
      */
     protected ?array $enum = null;
 
-    /**
-     * The default value to use for substitution, which SHALL be sent if an alternate value is not supplied.
-     */
+    /** The default value to use for substitution, which SHALL be sent if an alternate value is not supplied. */
     protected string $default;
 
-    /**
-     * A description for the server variable.
-     */
+    /** A description for the server variable. */
     protected ?string $description = null;
 
     /**
@@ -59,6 +57,7 @@ class ServerVariable extends AsyncApiObject
     public function setEnum(array $enum): self
     {
         $this->enum = $enum;
+
         return $this;
     }
 
@@ -84,6 +83,7 @@ class ServerVariable extends AsyncApiObject
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -105,6 +105,7 @@ class ServerVariable extends AsyncApiObject
     public function setExamples(array $examples): self
     {
         $this->examples = $examples;
+
         return $this;
     }
 }

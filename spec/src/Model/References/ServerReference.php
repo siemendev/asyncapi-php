@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model\References;
 
 use Siemendev\AsyncapiPhp\Spec\Model\Reference;
@@ -12,7 +14,7 @@ class ServerReference extends Reference
     {
         parent::__construct(sprintf(
             '#/servers/%s',
-            $serverName
+            $serverName,
         ));
     }
 }

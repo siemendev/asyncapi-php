@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
 /**
@@ -21,24 +23,16 @@ class MessageTrait extends AsyncApiObject
      */
     protected Schema|Reference|null $payload = null;
 
-    /**
-     * A machine-friendly name for the message.
-     */
+    /** A machine-friendly name for the message. */
     protected ?string $name = null;
 
-    /**
-     * A human-friendly title for the message.
-     */
+    /** A human-friendly title for the message. */
     protected ?string $title = null;
 
-    /**
-     * A short summary of what the message is about.
-     */
+    /** A short summary of what the message is about. */
     protected ?string $summary = null;
 
-    /**
-     * A verbose explanation of the message.
-     */
+    /** A verbose explanation of the message. */
     protected ?string $description = null;
 
     /**
@@ -48,9 +42,7 @@ class MessageTrait extends AsyncApiObject
      */
     protected array $tags = [];
 
-    /**
-     * Additional external documentation for this message.
-     */
+    /** Additional external documentation for this message. */
     protected ?ExternalDocumentation $externalDocs = null;
 
     /**
@@ -67,19 +59,13 @@ class MessageTrait extends AsyncApiObject
      */
     protected array $examples = [];
 
-    /**
-     * The content type to use when encoding/decoding a message's payload.
-     */
+    /** The content type to use when encoding/decoding a message's payload. */
     protected ?string $contentType = null;
 
-    /**
-     * A string containing the name of the schema format used to define the message payload.
-     */
+    /** A string containing the name of the schema format used to define the message payload. */
     protected ?string $schemaFormat = null;
 
-    /**
-     * The content type to use when encoding/decoding a message's headers.
-     */
+    /** The content type to use when encoding/decoding a message's headers. */
     protected ?string $headerFormat = null;
 
     /**
@@ -107,6 +93,7 @@ class MessageTrait extends AsyncApiObject
     public function setHeaders(Schema|Reference $headers): self
     {
         $this->headers = $headers->setParentElement($this);
+
         return $this;
     }
 
@@ -128,6 +115,7 @@ class MessageTrait extends AsyncApiObject
     public function setPayload(Schema|Reference $payload): self
     {
         $this->payload = $payload->setParentElement($this);
+
         return $this;
     }
 
@@ -145,6 +133,7 @@ class MessageTrait extends AsyncApiObject
     public function setName(string $name): self
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -162,6 +151,7 @@ class MessageTrait extends AsyncApiObject
     public function setTitle(string $title): self
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -179,6 +169,7 @@ class MessageTrait extends AsyncApiObject
     public function setSummary(string $summary): self
     {
         $this->summary = $summary;
+
         return $this;
     }
 
@@ -196,6 +187,7 @@ class MessageTrait extends AsyncApiObject
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -215,6 +207,7 @@ class MessageTrait extends AsyncApiObject
     public function addTag(Tag $tag): self
     {
         $this->tags[] = $tag->setParentElement($this);
+
         return $this;
     }
 
@@ -232,6 +225,7 @@ class MessageTrait extends AsyncApiObject
     public function setExternalDocs(ExternalDocumentation $externalDocs): self
     {
         $this->externalDocs = $externalDocs->setParentElement($this);
+
         return $this;
     }
 
@@ -251,6 +245,7 @@ class MessageTrait extends AsyncApiObject
     public function addBinding(string $name, AsyncApiObject $binding): self
     {
         $this->bindings[$name] = $binding->setParentElement($this);
+
         return $this;
     }
 
@@ -270,6 +265,7 @@ class MessageTrait extends AsyncApiObject
     public function addExample(MessageExample $example): self
     {
         $this->examples[] = $example->setParentElement($this);
+
         return $this;
     }
 
@@ -287,6 +283,7 @@ class MessageTrait extends AsyncApiObject
     public function setContentType(string $contentType): self
     {
         $this->contentType = $contentType;
+
         return $this;
     }
 
@@ -304,6 +301,7 @@ class MessageTrait extends AsyncApiObject
     public function setSchemaFormat(string $schemaFormat): self
     {
         $this->schemaFormat = $schemaFormat;
+
         return $this;
     }
 
@@ -321,6 +319,7 @@ class MessageTrait extends AsyncApiObject
     public function setHeaderFormat(string $headerFormat): self
     {
         $this->headerFormat = $headerFormat;
+
         return $this;
     }
 
@@ -342,6 +341,7 @@ class MessageTrait extends AsyncApiObject
     public function addCorrelationId(string $name, CorrelationId|Reference $correlationId): self
     {
         $this->correlationIds[$name] = $correlationId->setParentElement($this);
+
         return $this;
     }
 }

@@ -1,111 +1,75 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model\Bindings;
 
 use Siemendev\AsyncapiPhp\Spec\Model\AsyncApiObject;
 
 /**
- * Message Bindings Object
- * 
+ * Message Bindings Object.
+ *
  * Map describing protocol-specific definitions for a message.
- * 
+ *
  * @see https://www.asyncapi.com/docs/reference/specification/latest#messageBindingsObject
  */
 class MessageBindings extends AsyncApiObject
 {
-    /**
-     * Protocol-specific information for an HTTP message, i.e., a request or a response.
-     */
+    /** Protocol-specific information for an HTTP message, i.e., a request or a response. */
     protected ?MessageBinding $http = null;
 
-    /**
-     * Protocol-specific information for a WebSockets message.
-     */
+    /** Protocol-specific information for a WebSockets message. */
     protected ?MessageBinding $ws = null;
 
-    /**
-     * Protocol-specific information for a Kafka message.
-     */
+    /** Protocol-specific information for a Kafka message. */
     protected ?MessageBinding $kafka = null;
 
-    /**
-     * Protocol-specific information for an Anypoint MQ message.
-     */
+    /** Protocol-specific information for an Anypoint MQ message. */
     protected ?MessageBinding $anypointmq = null;
 
-    /**
-     * Protocol-specific information for an AMQP 0-9-1 message.
-     */
+    /** Protocol-specific information for an AMQP 0-9-1 message. */
     protected ?MessageBinding $amqp = null;
 
-    /**
-     * Protocol-specific information for an AMQP 1.0 message.
-     */
+    /** Protocol-specific information for an AMQP 1.0 message. */
     protected ?MessageBinding $amqp1 = null;
 
-    /**
-     * Protocol-specific information for an MQTT message.
-     */
+    /** Protocol-specific information for an MQTT message. */
     protected ?MessageBinding $mqtt = null;
 
-    /**
-     * Protocol-specific information for an MQTT 5 message.
-     */
+    /** Protocol-specific information for an MQTT 5 message. */
     protected ?MessageBinding $mqtt5 = null;
 
-    /**
-     * Protocol-specific information for a NATS message.
-     */
+    /** Protocol-specific information for a NATS message. */
     protected ?MessageBinding $nats = null;
 
-    /**
-     * Protocol-specific information for a JMS message.
-     */
+    /** Protocol-specific information for a JMS message. */
     protected ?MessageBinding $jms = null;
 
-    /**
-     * Protocol-specific information for an SNS message.
-     */
+    /** Protocol-specific information for an SNS message. */
     protected ?MessageBinding $sns = null;
 
-    /**
-     * Protocol-specific information for a Solace message.
-     */
+    /** Protocol-specific information for a Solace message. */
     protected ?MessageBinding $solace = null;
 
-    /**
-     * Protocol-specific information for an SQS message.
-     */
+    /** Protocol-specific information for an SQS message. */
     protected ?MessageBinding $sqs = null;
 
-    /**
-     * Protocol-specific information for a STOMP message.
-     */
+    /** Protocol-specific information for a STOMP message. */
     protected ?MessageBinding $stomp = null;
 
-    /**
-     * Protocol-specific information for a Redis message.
-     */
+    /** Protocol-specific information for a Redis message. */
     protected ?MessageBinding $redis = null;
 
-    /**
-     * Protocol-specific information for a Mercure message.
-     */
+    /** Protocol-specific information for a Mercure message. */
     protected ?MessageBinding $mercure = null;
 
-    /**
-     * Protocol-specific information for an IBM MQ message.
-     */
+    /** Protocol-specific information for an IBM MQ message. */
     protected ?MessageBinding $ibmmq = null;
 
-    /**
-     * Protocol-specific information for a Google Cloud Pub/Sub message.
-     */
+    /** Protocol-specific information for a Google Cloud Pub/Sub message. */
     protected ?MessageBinding $googlepubsub = null;
 
-    /**
-     * Protocol-specific information for a Pulsar message.
-     */
+    /** Protocol-specific information for a Pulsar message. */
     protected ?MessageBinding $pulsar = null;
 
     /**
@@ -122,6 +86,7 @@ class MessageBindings extends AsyncApiObject
     public function setHttp(?MessageBinding $http): self
     {
         $this->http = $http?->setParentElement($this);
+
         return $this;
     }
 
@@ -139,6 +104,7 @@ class MessageBindings extends AsyncApiObject
     public function setWs(?MessageBinding $ws): self
     {
         $this->ws = $ws?->setParentElement($this);
+
         return $this;
     }
 
@@ -156,6 +122,7 @@ class MessageBindings extends AsyncApiObject
     public function setKafka(?MessageBinding $kafka): self
     {
         $this->kafka = $kafka?->setParentElement($this);
+
         return $this;
     }
 
@@ -173,6 +140,7 @@ class MessageBindings extends AsyncApiObject
     public function setAnypointmq(?MessageBinding $anypointmq): self
     {
         $this->anypointmq = $anypointmq?->setParentElement($this);
+
         return $this;
     }
 
@@ -190,6 +158,7 @@ class MessageBindings extends AsyncApiObject
     public function setAmqp(?MessageBinding $amqp): self
     {
         $this->amqp = $amqp?->setParentElement($this);
+
         return $this;
     }
 
@@ -207,6 +176,7 @@ class MessageBindings extends AsyncApiObject
     public function setAmqp1(?MessageBinding $amqp1): self
     {
         $this->amqp1 = $amqp1?->setParentElement($this);
+
         return $this;
     }
 
@@ -224,6 +194,7 @@ class MessageBindings extends AsyncApiObject
     public function setMqtt(?MessageBinding $mqtt): self
     {
         $this->mqtt = $mqtt?->setParentElement($this);
+
         return $this;
     }
 
@@ -241,6 +212,7 @@ class MessageBindings extends AsyncApiObject
     public function setMqtt5(?MessageBinding $mqtt5): self
     {
         $this->mqtt5 = $mqtt5?->setParentElement($this);
+
         return $this;
     }
 
@@ -258,6 +230,7 @@ class MessageBindings extends AsyncApiObject
     public function setNats(?MessageBinding $nats): self
     {
         $this->nats = $nats?->setParentElement($this);
+
         return $this;
     }
 
@@ -275,6 +248,7 @@ class MessageBindings extends AsyncApiObject
     public function setJms(?MessageBinding $jms): self
     {
         $this->jms = $jms?->setParentElement($this);
+
         return $this;
     }
 
@@ -292,6 +266,7 @@ class MessageBindings extends AsyncApiObject
     public function setSns(?MessageBinding $sns): self
     {
         $this->sns = $sns?->setParentElement($this);
+
         return $this;
     }
 
@@ -309,6 +284,7 @@ class MessageBindings extends AsyncApiObject
     public function setSolace(?MessageBinding $solace): self
     {
         $this->solace = $solace?->setParentElement($this);
+
         return $this;
     }
 
@@ -326,6 +302,7 @@ class MessageBindings extends AsyncApiObject
     public function setSqs(?MessageBinding $sqs): self
     {
         $this->sqs = $sqs?->setParentElement($this);
+
         return $this;
     }
 
@@ -343,6 +320,7 @@ class MessageBindings extends AsyncApiObject
     public function setStomp(?MessageBinding $stomp): self
     {
         $this->stomp = $stomp?->setParentElement($this);
+
         return $this;
     }
 
@@ -360,6 +338,7 @@ class MessageBindings extends AsyncApiObject
     public function setRedis(?MessageBinding $redis): self
     {
         $this->redis = $redis?->setParentElement($this);
+
         return $this;
     }
 
@@ -377,6 +356,7 @@ class MessageBindings extends AsyncApiObject
     public function setMercure(?MessageBinding $mercure): self
     {
         $this->mercure = $mercure?->setParentElement($this);
+
         return $this;
     }
 
@@ -394,6 +374,7 @@ class MessageBindings extends AsyncApiObject
     public function setIbmmq(?MessageBinding $ibmmq): self
     {
         $this->ibmmq = $ibmmq?->setParentElement($this);
+
         return $this;
     }
 
@@ -411,6 +392,7 @@ class MessageBindings extends AsyncApiObject
     public function setGooglepubsub(?MessageBinding $googlepubsub): self
     {
         $this->googlepubsub = $googlepubsub?->setParentElement($this);
+
         return $this;
     }
 
@@ -428,6 +410,7 @@ class MessageBindings extends AsyncApiObject
     public function setPulsar(?MessageBinding $pulsar): self
     {
         $this->pulsar = $pulsar?->setParentElement($this);
+
         return $this;
     }
 }

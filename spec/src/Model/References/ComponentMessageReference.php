@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model\References;
 
 use Siemendev\AsyncapiPhp\Spec\Model\Message;
@@ -14,7 +16,7 @@ class ComponentMessageReference extends Reference
     {
         parent::__construct(sprintf(
             '#/components/messages/%s',
-            $messageName
+            $messageName,
         ));
     }
 }

@@ -1,43 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
 /**
  * Provides metadata about the API.
- * 
+ *
  * The Info object provides metadata about the API. The metadata can be used by the
  * clients if needed, and can be presented in editing or documentation generation tools.
  */
 class Info extends AsyncApiObject
 {
-    /**
-     * The title of the application.
-     */
+    /** The title of the application. */
     protected string $title;
 
-    /**
-     * The version of the application API (not to be confused with the specification version).
-     */
+    /** The version of the application API (not to be confused with the specification version). */
     protected string $version;
 
-    /**
-     * A short description of the application.
-     */
+    /** A short description of the application. */
     protected ?string $description = null;
 
-    /**
-     * A URL to the Terms of Service for the API.
-     */
+    /** A URL to the Terms of Service for the API. */
     protected ?string $termsOfService = null;
 
-    /**
-     * The contact information for the exposed API.
-     */
+    /** The contact information for the exposed API. */
     protected ?Contact $contact = null;
 
-    /**
-     * The license information for the exposed API.
-     */
+    /** The license information for the exposed API. */
     protected ?License $license = null;
 
     /**
@@ -82,6 +72,7 @@ class Info extends AsyncApiObject
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -99,6 +90,7 @@ class Info extends AsyncApiObject
     public function setTermsOfService(string $termsOfService): self
     {
         $this->termsOfService = $termsOfService;
+
         return $this;
     }
 
@@ -116,6 +108,7 @@ class Info extends AsyncApiObject
     public function setContact(Contact $contact): self
     {
         $this->contact = $contact->setParentElement($this);
+
         return $this;
     }
 
@@ -133,6 +126,7 @@ class Info extends AsyncApiObject
     public function setLicense(License $license): self
     {
         $this->license = $license->setParentElement($this);
+
         return $this;
     }
 }

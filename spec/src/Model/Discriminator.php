@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
 /**
@@ -8,9 +10,7 @@ namespace Siemendev\AsyncapiPhp\Spec\Model;
  */
 class Discriminator extends AsyncApiObject
 {
-    /**
-     * The name of the property in the payload that will hold the discriminator value.
-     */
+    /** The name of the property in the payload that will hold the discriminator value. */
     protected string $propertyName;
 
     /**
@@ -57,6 +57,7 @@ class Discriminator extends AsyncApiObject
     public function setMapping(array $mapping): self
     {
         $this->mapping = $mapping;
+
         return $this;
     }
 
@@ -66,6 +67,7 @@ class Discriminator extends AsyncApiObject
     public function addMapping(string $value, string $schema): self
     {
         $this->mapping[$value] = $schema;
+
         return $this;
     }
 }

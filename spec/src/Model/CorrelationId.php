@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
 /**
@@ -7,14 +9,10 @@ namespace Siemendev\AsyncapiPhp\Spec\Model;
  */
 class CorrelationId extends AsyncApiObject
 {
-    /**
-     * A runtime expression that specifies the location of the correlation ID.
-     */
+    /** A runtime expression that specifies the location of the correlation ID. */
     protected string $location;
 
-    /**
-     * A short description of the correlation ID.
-     */
+    /** A short description of the correlation ID. */
     protected ?string $description = null;
 
     /**
@@ -49,6 +47,7 @@ class CorrelationId extends AsyncApiObject
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 }

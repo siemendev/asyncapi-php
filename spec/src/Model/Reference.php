@@ -1,6 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model;
+
+use ArrayAccess;
+use LogicException;
 
 /**
  * A simple object to allow referencing other components in the specification.
@@ -8,19 +13,13 @@ namespace Siemendev\AsyncapiPhp\Spec\Model;
  */
 class Reference extends AsyncApiObject
 {
-    /**
-     * The reference string.
-     */
+    /** The reference string. */
     protected string $ref;
 
-    /**
-     * A short summary which by default SHOULD override that of the referenced component.
-     */
+    /** A short summary which by default SHOULD override that of the referenced component. */
     protected ?string $summary = null;
 
-    /**
-     * A description which by default SHOULD override that of the referenced component.
-     */
+    /** A description which by default SHOULD override that of the referenced component. */
     protected ?string $description = null;
 
     /**
@@ -57,6 +56,7 @@ class Reference extends AsyncApiObject
     public function setSummary(string $summary): self
     {
         $this->summary = $summary;
+
         return $this;
     }
 
@@ -76,6 +76,7 @@ class Reference extends AsyncApiObject
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -115,9 +116,9 @@ class Reference extends AsyncApiObject
                 if ($value instanceof Reference) {
                     $value = $value->resolve();
                 }
-                if ($value instanceof \ArrayAccess) {
+                if ($value instanceof ArrayAccess) {
                     if (!$value->offsetExists($part)) {
-                        throw new \LogicException(sprintf('Reference "%s" not found in spec', $this->getRef()));
+                        throw new LogicException(sprintf('Reference "%s" not found in spec', $this->getRef()));
                     }
                     $value = $value[$part];
                     continue;
@@ -130,12 +131,12 @@ class Reference extends AsyncApiObject
                     $value = $value->{$part};
                     continue;
                 }
-                throw new \LogicException(sprintf('Reference "%s" not found in spec', $this->getRef()));
+                throw new LogicException(sprintf('Reference "%s" not found in spec', $this->getRef()));
             }
 
             if (is_array($value)) {
                 if (!array_key_exists($part, $value)) {
-                    throw new \LogicException(sprintf('Reference "%s" not found in spec', $this->getRef()));
+                    throw new LogicException(sprintf('Reference "%s" not found in spec', $this->getRef()));
                 }
                 $value = $value[$part];
                 continue;

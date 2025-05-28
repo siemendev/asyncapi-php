@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
 /**
@@ -7,19 +9,13 @@ namespace Siemendev\AsyncapiPhp\Spec\Model;
  */
 class OAuthFlow extends AsyncApiObject
 {
-    /**
-     * The authorization URL to be used for this flow.
-     */
+    /** The authorization URL to be used for this flow. */
     protected ?string $authorizationUrl = null;
 
-    /**
-     * The token URL to be used for this flow.
-     */
+    /** The token URL to be used for this flow. */
     protected ?string $tokenUrl = null;
 
-    /**
-     * The URL to be used for obtaining refresh tokens.
-     */
+    /** The URL to be used for obtaining refresh tokens. */
     protected ?string $refreshUrl = null;
 
     /**
@@ -43,6 +39,7 @@ class OAuthFlow extends AsyncApiObject
     public function setAuthorizationUrl(string $authorizationUrl): self
     {
         $this->authorizationUrl = $authorizationUrl;
+
         return $this;
     }
 
@@ -60,6 +57,7 @@ class OAuthFlow extends AsyncApiObject
     public function setTokenUrl(string $tokenUrl): self
     {
         $this->tokenUrl = $tokenUrl;
+
         return $this;
     }
 
@@ -77,6 +75,7 @@ class OAuthFlow extends AsyncApiObject
     public function setRefreshUrl(string $refreshUrl): self
     {
         $this->refreshUrl = $refreshUrl;
+
         return $this;
     }
 
@@ -98,6 +97,7 @@ class OAuthFlow extends AsyncApiObject
     public function setScopes(array $scopes): self
     {
         $this->scopes = $scopes;
+
         return $this;
     }
 
@@ -107,6 +107,7 @@ class OAuthFlow extends AsyncApiObject
     public function addScope(string $name, string $description): self
     {
         $this->scopes[$name] = $description;
+
         return $this;
     }
 }
