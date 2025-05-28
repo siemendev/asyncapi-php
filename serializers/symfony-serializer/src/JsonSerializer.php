@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Serializer\Symfony;
 
 use Siemendev\AsyncapiPhp\Message\MessageInterface;
@@ -21,7 +23,7 @@ class JsonSerializer implements SerializerInterface
     }
 
     public function __construct(
-        SymfonySerializerInterface $serializer = null,
+        ?SymfonySerializerInterface $serializer = null,
     ) {
         $this->serializer = $serializer ?? new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
     }
