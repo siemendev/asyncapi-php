@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\MessageHandler;
 
 use Siemendev\AsyncapiPhp\Message\MessageInterface;
@@ -12,8 +14,7 @@ class MessageHandlerResolver
      */
     public function __construct(
         private array $messageHandlers = [],
-    ) {
-    }
+    ) {}
 
     /**
      * @param MessageHandlerInterface<MessageInterface> $messageHandler

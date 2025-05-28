@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Provision;
 
 use Siemendev\AsyncapiPhp\Adapter\AdapterResolver;
@@ -10,7 +12,7 @@ interface AsyncApiProvisionerInterface
     public function provisionOperation(
         Configuration $configuration,
         string $operationName,
-        ?string $serverName = null
+        ?string $serverName = null,
     ): void;
 
     public function setAdapterResolver(AdapterResolver $adapterResolver): self;

@@ -1,12 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Message;
 
 trait MessageHeadersTrait
 {
-    /**
-     * @var array<string|int, mixed>
-     */
+    /** @var array<string|int, mixed> */
     private array $headers = [];
 
     public function setHeader(string|int $key, mixed $value): self

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Receive;
 
 use Siemendev\AsyncapiPhp\Adapter\AdapterResolver;
@@ -9,7 +11,9 @@ use Siemendev\AsyncapiPhp\Serializer\SerializationHandler;
 abstract class AbstractAsyncApiReceiver implements AsyncApiReceiverInterface
 {
     protected AdapterResolver $adapterResolver;
+
     protected MessageHandlerResolver $messageHandlerResolver;
+
     protected SerializationHandler $serializer;
 
     public function __construct(

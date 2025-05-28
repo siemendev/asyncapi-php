@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\MessageHandler\Exception;
 
-class MessageHandlerNotFoundException extends \LogicException
+use LogicException;
+
+class MessageHandlerNotFoundException extends LogicException
 {
     public function __construct(string $messageClass)
     {

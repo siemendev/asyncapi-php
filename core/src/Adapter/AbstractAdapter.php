@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Adapter;
 
 use Siemendev\AsyncapiPhp\Configuration\Credentials\CredentialsInterface;
@@ -8,12 +10,14 @@ use Siemendev\AsyncapiPhp\Spec\Model\Server;
 abstract class AbstractAdapter implements AdapterInterface
 {
     private Server $serverSpec;
+
     private CredentialsInterface $credentials;
 
     public function getServerSpec(): Server
     {
         return $this->serverSpec;
     }
+
     public function setServerSpec(Server $serverSpec): AdapterInterface
     {
         $this->serverSpec = $serverSpec;
@@ -25,6 +29,7 @@ abstract class AbstractAdapter implements AdapterInterface
     {
         return $this->credentials;
     }
+
     public function setCredentials(CredentialsInterface $credentials): AdapterInterface
     {
         $this->credentials = $credentials;

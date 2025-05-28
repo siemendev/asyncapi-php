@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Spec;
 
 use LogicException;
@@ -13,8 +15,9 @@ class SpecRepository
         if (empty($channel->getServers())) {
             $name = array_key_first($channel->getRootElement()->resolveServers());
             if (!$name) {
-                throw new LogicException('No servers defined'); # todo change this to be more helpful
+                throw new LogicException('No servers defined'); // todo change this to be more helpful
             }
+
             return $name;
         }
 
@@ -41,6 +44,6 @@ class SpecRepository
             return $serverSpec;
         }
 
-        throw new LogicException(sprintf('Server "%s" not found for channel "%s"', $serverName, $channel->getTitle() ?? '<no title>')); # todo change this to be more helpful
+        throw new LogicException(sprintf('Server "%s" not found for channel "%s"', $serverName, $channel->getTitle() ?? '<no title>')); // todo change this to be more helpful
     }
 }

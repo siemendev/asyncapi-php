@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp;
 
 use Siemendev\AsyncapiPhp\Adapter\AdapterResolver;
@@ -17,11 +19,17 @@ use Siemendev\AsyncapiPhp\Serializer\SerializationHandler;
 abstract class AbstractAsyncApiManager implements AsyncApiManagerInterface
 {
     protected AsyncApiPublisherInterface $publisher;
+
     protected AsyncApiReceiverInterface $receiver;
+
     protected AsyncApiProvisionerInterface $provisioner;
+
     protected AdapterResolver $adapterResolver;
+
     protected MessageHandlerResolver $messageHandlerResolver;
+
     protected SerializationHandler $serializer;
+
     protected Generator $generator;
 
     public function __construct(

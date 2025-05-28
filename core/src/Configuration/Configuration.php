@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Configuration;
 
 use Siemendev\AsyncapiPhp\Configuration\Credentials\CredentialsInterface;
@@ -15,8 +17,7 @@ class Configuration
         private readonly AsyncApi $spec,
         private readonly StubConfiguration $stub,
         private array $credentials = [],
-    ) {
-    }
+    ) {}
 
     public function getSpec(): AsyncApi
     {

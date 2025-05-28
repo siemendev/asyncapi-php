@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp;
 
 use Siemendev\AsyncapiPhp\Adapter\AdapterInterface;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Publish;
 
 use Siemendev\AsyncapiPhp\Adapter\AdapterResolver;
@@ -9,7 +11,9 @@ use Siemendev\AsyncapiPhp\Spec\SpecRepository;
 abstract class AbstractAsyncApiPublisher implements AsyncApiPublisherInterface
 {
     protected AdapterResolver $adapterResolver;
+
     protected SpecRepository $specRepo;
+
     protected SerializationHandler $serializer;
 
     public function __construct(

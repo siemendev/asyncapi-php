@@ -1,17 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Adapter;
 
 use Siemendev\AsyncapiPhp\Adapter\Exception\NoMatchingAdapterFoundException;
 use Siemendev\AsyncapiPhp\Configuration\Credentials\CredentialsInterface;
-use Siemendev\AsyncapiPhp\Spec\Model\AsyncApi;
 use Siemendev\AsyncapiPhp\Spec\Model\Server;
 
 class AdapterResolver
 {
-    /**
-     * @var AdapterInterface[]
-     */
+    /** @var AdapterInterface[] */
     private array $adapters = [];
 
     public function addAdapter(AdapterInterface $adapter): self

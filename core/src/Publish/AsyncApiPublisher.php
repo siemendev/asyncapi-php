@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Publish;
 
 use LogicException;
@@ -31,14 +33,14 @@ class AsyncApiPublisher extends AbstractAsyncApiPublisher
     ): void {
         $operation = $configuration->getSpec()->getOperations()[$operationName] ?? null;
         if (!$operation instanceof Operation) {
-            throw new LogicException('Operation not found: ' . $operationName); # todo change this to be more helpful
+            throw new LogicException('Operation not found: ' . $operationName); // todo change this to be more helpful
         }
         if (!$operation->getChannel()) {
-            throw new InvalidSpecificationException('Operation does not have a channel defined'); # todo change this to be more helpful
+            throw new InvalidSpecificationException('Operation does not have a channel defined'); // todo change this to be more helpful
         }
         $channel = $operation->resolveChannel();
         if (!$channel) {
-            throw new InvalidSpecificationException('Channel not found'); # todo change this to be more helpful
+            throw new InvalidSpecificationException('Channel not found'); // todo change this to be more helpful
         }
 
         $serverName ??= $this->specRepo->getDefaultServerNameForChannel($channel);
@@ -50,17 +52,13 @@ class AsyncApiPublisher extends AbstractAsyncApiPublisher
             }
         }
         if (!isset($messageSpec)) {
-            throw new LogicException(sprintf(
-                'Message "%s" not found in operation "%s"',
-                $message::getMessageName(),
-                $operationName,
-            )); # todo change this to be more helpful
+            throw new LogicException(sprintf('Message "%s" not found in operation "%s"', $message::getMessageName(), $operationName)); // todo change this to be more helpful
         }
 
         $contentType = $messageSpec->getContentType() ?? $configuration->getSpec()->getDefaultContentType();
 
         if (!$contentType) {
-            throw new InvalidSpecificationException('No content type defined for message'); # todo change this to be more helpful
+            throw new InvalidSpecificationException('No content type defined for message'); // todo change this to be more helpful
         }
 
         $this->adapterResolver

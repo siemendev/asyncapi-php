@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Provision;
 
 use Siemendev\AsyncapiPhp\Adapter\AdapterResolver;

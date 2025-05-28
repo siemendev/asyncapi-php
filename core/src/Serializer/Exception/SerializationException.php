@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Serializer\Exception;
 
-class SerializationException extends \Exception
-{
-}
+use Exception;
+
+class SerializationException extends Exception {}

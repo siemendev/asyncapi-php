@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp;
 
 use LogicException;
@@ -13,7 +15,7 @@ class AsyncApiManager extends AbstractAsyncApiManager
     public function generateStub(): void
     {
         if (!isset($this->generator)) {
-            throw new LogicException('Generator not initialized'); # todo change this to be more helpful
+            throw new LogicException('Generator not initialized'); // todo change this to be more helpful
         }
         $this->generator->generateStub($this->configuration->getSpec(), $this->configuration->getStub());
     }
