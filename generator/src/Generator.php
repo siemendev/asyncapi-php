@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Siemendev\AsyncapiPhp\Generator;
 
-use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\Printer;
 use Siemendev\AsyncapiPhp\Configuration\StubConfiguration;
@@ -10,6 +11,7 @@ use Siemendev\AsyncapiPhp\Message\AbstractMessage;
 use Siemendev\AsyncapiPhp\Spec\Model\AsyncApi;
 use Siemendev\AsyncapiPhp\Spec\Model\Message;
 use Siemendev\AsyncapiPhp\Spec\Model\Schema;
+use RuntimeException;
 
 class Generator
 {
@@ -35,18 +37,18 @@ class Generator
     private function ensureStubDirectory(string $outputPath): void
     {
         if (!is_dir($outputPath) && !mkdir($outputPath, 0777, true) && !is_dir($outputPath)) {
-            throw new \RuntimeException(sprintf('Directory "%s" was not created', $outputPath));
+            throw new RuntimeException(sprintf('Directory "%s" was not created', $outputPath));
         }
     }
 
     private function clearStubDirectory(string $outputPath): void
     {
         if (!is_dir($outputPath)) {
-            throw new \RuntimeException(sprintf('Directory "%s" does not exist', $outputPath));
+            throw new RuntimeException(sprintf('Directory "%s" does not exist', $outputPath));
         }
         $files = array_merge(
             glob($outputPath . DIRECTORY_SEPARATOR . '*.php') ?: [],
-            glob($outputPath . DIRECTORY_SEPARATOR . '*' .DIRECTORY_SEPARATOR . '*.php') ?: []
+            glob($outputPath . DIRECTORY_SEPARATOR . '*' . DIRECTORY_SEPARATOR . '*.php') ?: [],
         );
         foreach ($files as $file) {
             if (is_file($file)
@@ -103,7 +105,7 @@ class Generator
 
             $setter = $class->addMethod('set' . ucfirst($name))
                 ->setReturnType('self')
-                ->setBody('$this->' . $name . ' = $' . $name . ';' . PHP_EOL . PHP_EOL .'return $this;')
+                ->setBody('$this->' . $name . ' = $' . $name . ';' . PHP_EOL . PHP_EOL . 'return $this;')
                 ->setPublic()
             ;
             $setterParameter = $setter->addParameter($name);
@@ -132,7 +134,7 @@ class Generator
                 ->setNullable(false)
             ;
             $constructor->setBody(
-                $constructor->getBody() . '$this->' . $property->getName() . ' = $' . $property->getName() . ';' . PHP_EOL
+                $constructor->getBody() . '$this->' . $property->getName() . ' = $' . $property->getName() . ';' . PHP_EOL,
             );
         }
         foreach ($optionalProperties as $property) {
@@ -142,7 +144,7 @@ class Generator
                 ->setDefaultValue(null)
             ;
             $constructor->setBody(
-                $constructor->getBody() . '$this->' . $property->getName() . ' = $' . $property->getName() . ';' . PHP_EOL
+                $constructor->getBody() . '$this->' . $property->getName() . ' = $' . $property->getName() . ';' . PHP_EOL,
             );
         }
 
