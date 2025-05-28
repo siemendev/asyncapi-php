@@ -19,7 +19,8 @@
     },
     "require-dev": {
         "siemendev/asyncapi-php-generator": "*",
-        "phpstan/phpstan": "^2.1"
+        "phpstan/phpstan": "^2.1",
+        "friendsofphp/php-cs-fixer": "^3.75"
     },
     "repositories": [
         {

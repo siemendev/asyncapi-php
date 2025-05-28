@@ -30,3 +30,27 @@ jobs:
           composer require --dev phpstan/phpstan
         fi
         vendor/bin/phpstan analyse
+
+  cs-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        coverage: none
+        tools: composer:v2
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress --working-dir=serializers/symfony-serializer
+
+    - name: Run PHP CS Fixer
+      run: |
+        cd serializers/symfony-serializer
+        if [ ! -f vendor/bin/php-cs-fixer ]; then
+          composer require --dev friendsofphp/php-cs-fixer
+        fi
+        PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --config=../.php-cs-fixer.php --dry-run --diff --no-interaction --ansi
