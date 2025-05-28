@@ -35,5 +35,9 @@ return (new PhpCsFixer\Config())
                 'property' => 'single',
                 'method' => 'multi',
             ],
+            'phpdoc_to_comment' => [
+                'ignored_tags' => ['var', 'template'],
+            ],
+            'yoda_style' => false,
         ]
     );
