@@ -13,28 +13,16 @@ use Siemendev\AsyncapiPhp\Spec\Exception\InvalidSpecificationException;
 use Siemendev\AsyncapiPhp\Spec\Exception\ReferenceNotFoundException;
 use Siemendev\AsyncapiPhp\Spec\Model\Message;
 use Siemendev\AsyncapiPhp\Spec\Model\Operation;
-use Siemendev\AsyncapiPhp\Spec\SpecRepository;
 use Siemendev\AsyncapiPhp\Spec\ReferenceResolver;
 
 class MessageMapper
 {
-    private SpecRepository $specRepository;
-
     private SerializationHandler $serializer;
 
     public function __construct(
-        ?SpecRepository $specRepository = null,
         ?SerializationHandler $serializer = null,
     ) {
-        $this->specRepository = $specRepository ?? new SpecRepository();
         $this->serializer = $serializer ?? new SerializationHandler();
-    }
-
-    public function setSpecRepository(SpecRepository $specRepository): self
-    {
-        $this->specRepository = $specRepository;
-
-        return $this;
     }
 
     public function setSerializationHandler(SerializationHandler $serializer): self
@@ -66,7 +54,7 @@ class MessageMapper
 
         $messages = $operation->resolveMessages();
         if (count($messages) === 0) {
-            $channel = $this->specRepository->getOperationChannel($operation);
+            $channel = $operation->resolveChannel();
             $messages = $channel->resolveMessages();
         }
         foreach ($messages as $message) {
@@ -88,7 +76,7 @@ class MessageMapper
     {
         $messages = $operation->resolveMessages();
         if (count($messages) === 0) {
-            $channel = $this->specRepository->getOperationChannel($operation);
+            $channel = $operation->resolveChannel();
             $messages = $channel->resolveMessages();
         }
         if (count($messages) === 0) {

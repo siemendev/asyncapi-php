@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
+use Siemendev\AsyncapiPhp\Spec\Exception\InvalidSpecificationException;
 use Siemendev\AsyncapiPhp\Spec\Model\Bindings\OperationBindings;
 
 /**
@@ -351,10 +352,16 @@ class Operation extends AsyncApiObject
 
     /**
      * Resolves the reference to the channel and returns a Channel object.
+     * @throws InvalidSpecificationException
      */
-    public function resolveChannel(): ?Channel
+    public function resolveChannel(): Channel
     {
-        return $this->channel?->resolve();
+        $channel = $this->channel?->resolve();
+        if ($channel instanceof Channel) {
+            return $channel;
+        }
+
+        throw new InvalidSpecificationException(sprintf('Operation "%s" has no channel set', $this->getTitle())); // todo change this to be more helpful
     }
 
     /**

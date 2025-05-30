@@ -45,9 +45,6 @@ class AmqpAdapter extends AbstractAdapter
         array $headers = [],
     ): void {
         $channel = $operation->resolveChannel();
-        if (!$channel instanceof Channel) {
-            throw new InvalidSpecificationException('Channel not found'); // todo change this to be more helpful
-        }
         $this->publisher->publishMessage(
             $this->getConnection($channel),
             $channel,
@@ -76,8 +73,5 @@ class AmqpAdapter extends AbstractAdapter
         );
     }
 
-    public function provision(Server $server, array $channels): void
-    {
-        throw new AdapterFeatureNotImplementedException('provision');
-    }
+    public function provisionOperation(Operation $operation): void {}
 }

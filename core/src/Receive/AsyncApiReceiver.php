@@ -9,6 +9,7 @@ use Siemendev\AsyncapiPhp\Configuration\Configuration;
 use Siemendev\AsyncapiPhp\Configuration\Exception\CredentialsNotFoundException;
 use Siemendev\AsyncapiPhp\Serializer\Exception\SerializationException;
 use Siemendev\AsyncapiPhp\Spec\Exception\InvalidSpecificationException;
+use Siemendev\AsyncapiPhp\Spec\Exception\ReferenceNotFoundException;
 use Siemendev\AsyncapiPhp\Spec\Model\Operation;
 
 class AsyncApiReceiver extends AbstractAsyncApiReceiver
@@ -18,22 +19,20 @@ class AsyncApiReceiver extends AbstractAsyncApiReceiver
      * @throws NoMatchingAdapterFoundException
      * @throws CredentialsNotFoundException
      * @throws SerializationException
+     * @throws ReferenceNotFoundException
      */
     public function receiveMessages(
         Configuration $configuration,
         string $operationName,
         ?string $serverName = null,
     ): void {
-        $operation = $configuration->getSpec()->getOperations()[$operationName] ?? null;
-        if (!$operation instanceof Operation) {
-            throw new InvalidSpecificationException('Operation not found: ' . $operationName); // todo change this to be more helpful
-        }
-        $channel = $this->specRepo->getOperationChannel($operation);
-        $serverName ??= $this->specRepo->getDefaultServerNameForChannel($channel);
+        $operation = $configuration->getSpec()->getOperation($operationName);
+        $channel = $operation->resolveChannel();
+        $serverName ??= $channel->getDefaultServerName();
 
         $this->adapterResolver
             ->resolveAdapter(
-                $this->specRepo->getServerForChannel($channel, $serverName),
+                $channel->resolveServer($serverName),
                 $configuration->getCredentials($serverName),
             )
             ->consume(

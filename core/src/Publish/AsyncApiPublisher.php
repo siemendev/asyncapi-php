@@ -35,9 +35,9 @@ class AsyncApiPublisher extends AbstractAsyncApiPublisher
         if (!$operation instanceof Operation) {
             throw new InvalidSpecificationException('Operation not found: ' . $operationName); // todo change this to be more helpful
         }
-        $channel = $this->specRepo->getOperationChannel($operation);
+        $channel = $operation->resolveChannel();
 
-        $serverName ??= $this->specRepo->getDefaultServerNameForChannel($channel);
+        $serverName ??= $channel->getDefaultServerName();
 
         foreach ($operation->resolveMessages() as $operationMessage) {
             if ($operationMessage->getName() === $message::getMessageName()) {
@@ -57,7 +57,7 @@ class AsyncApiPublisher extends AbstractAsyncApiPublisher
 
         $this->adapterResolver
             ->resolveAdapter(
-                $this->specRepo->getServerForChannel($channel, $serverName),
+                $channel->resolveServer($serverName),
                 $configuration->getCredentials($serverName),
             )
             ->publish(

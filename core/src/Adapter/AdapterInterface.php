@@ -9,7 +9,6 @@ use Siemendev\AsyncapiPhp\Adapter\Exception\InvalidAdapterConfigurationException
 use Siemendev\AsyncapiPhp\Adapter\Exception\MessagePublishFailedException;
 use Siemendev\AsyncapiPhp\Configuration\Credentials\CredentialsInterface;
 use Siemendev\AsyncapiPhp\Spec\Exception\InvalidSpecificationException;
-use Siemendev\AsyncapiPhp\Spec\Model\Channel;
 use Siemendev\AsyncapiPhp\Spec\Model\Message;
 use Siemendev\AsyncapiPhp\Spec\Model\Operation;
 use Siemendev\AsyncapiPhp\Spec\Model\Server;
@@ -40,10 +39,9 @@ interface AdapterInterface
     public function consume(Operation $operation, callable $callback): void;
 
     /**
-     * @param Channel[] $channels
      * @throws AdapterFeatureNotImplementedException
      */
-    public function provision(Server $server, array $channels): void;
+    public function provisionOperation(Operation $operation): void;
 
     public function setServerSpec(Server $serverSpec): self;
 

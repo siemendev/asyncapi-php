@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
+use Siemendev\AsyncapiPhp\Spec\Exception\InvalidSpecificationException;
+
 /**
  * Represents the root AsyncAPI document.
  *
@@ -243,6 +245,14 @@ class AsyncApi extends AsyncApiObject
     public function getOperations(): array
     {
         return $this->operations;
+    }
+
+    /**
+     * @throws InvalidSpecificationException
+     */
+    public function getOperation(string $operationName): Operation
+    {
+        return $this->operations[$operationName] ?? throw new InvalidSpecificationException('Operation not found: ' . $operationName);
     }
 
     /**

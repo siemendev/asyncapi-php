@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
+use Siemendev\AsyncapiPhp\Spec\Exception\InvalidSpecificationException;
+use Siemendev\AsyncapiPhp\Spec\Exception\ReferenceNotFoundException;
 use Siemendev\AsyncapiPhp\Spec\Model\Bindings\ChannelBindings;
 
 /**
@@ -330,5 +332,48 @@ class Channel extends AsyncApiObject
         $this->servers[] = $server->setParentElement($this);
 
         return $this;
+    }
+
+    /**
+     * @throws InvalidSpecificationException
+     * @throws ReferenceNotFoundException
+     */
+    public function resolveServer(?string $name = null): Server
+    {
+        foreach ($this->getServers() as $serverRef) {
+            $parts = explode('/', $serverRef->getRef());
+            $serverSpecs[end($parts)] = $serverRef->resolve();
+        }
+        if (empty($serverSpecs)) {
+            $serverSpecs = $this->getRootElement()->resolveServers();
+        }
+
+        $serverSpec = $serverSpecs[$name] ?? null;
+        if ($serverSpec instanceof Server) {
+            return $serverSpec;
+        }
+
+        throw new InvalidSpecificationException(sprintf('Server "%s" not found for channel "%s"', $name, $this->getTitle() ?? '<no title>')); // todo change this to be more helpful
+    }
+
+    /**
+     * @throws InvalidSpecificationException
+     */
+    public function getDefaultServerName(): string
+    {
+        if (empty($this->getServers())) {
+            $name = array_key_first($this->getRootElement()->resolveServers());
+            if (!$name) {
+                throw new InvalidSpecificationException('No servers defined'); // todo change this to be more helpful
+            }
+
+            return $name;
+        }
+
+        $serverRefs = $this->getServers();
+        $serverRef = $serverRefs[array_rand(array_keys($serverRefs))];
+        $parts = explode('/', $serverRef->getRef());
+
+        return end($parts);
     }
 }
