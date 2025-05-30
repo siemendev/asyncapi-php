@@ -1,4 +1,4 @@
-name: Adapters AMQP
+name: "Adapters: AMQP"
 
 on:
   push:

@@ -1,4 +1,4 @@
-name: Serializers Symfony
+name: "Serializers: Symfony"
 
 on:
   push:
