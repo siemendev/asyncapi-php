@@ -38,6 +38,8 @@ interface AdapterInterface
      */
     public function consume(Operation $operation, callable $callback): void;
 
+    public function stopConsuming(): void;
+
     /**
      * @throws AdapterFeatureNotImplementedException
      */

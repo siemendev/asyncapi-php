@@ -56,9 +56,14 @@ class AsyncApiManager extends AbstractAsyncApiManager
      * @throws SerializationException
      * @throws CredentialsNotFoundException
      */
-    public function receiveMessages(string $operationName, ?string $serverName = null): void
+    public function startReceivingMessages(string $operationName, ?string $serverName = null): void
     {
-        $this->receiver->receiveMessages($this->configuration, $operationName, $serverName);
+        $this->receiver->startReceivingMessages($this->configuration, $operationName, $serverName);
+    }
+
+    public function stopReceivingMessages(): void
+    {
+        $this->receiver->stopReceivingMessages();
     }
 
     public function addMessageHandler(MessageHandlerInterface $messageHandler): self

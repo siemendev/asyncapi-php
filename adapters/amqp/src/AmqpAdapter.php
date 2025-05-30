@@ -80,6 +80,11 @@ class AmqpAdapter extends AbstractAdapter
         );
     }
 
+    public function stopConsuming(): void
+    {
+        AmqpConsumer::stopAllConsumers();
+    }
+
     private function getConnection(Channel $channel): AMQPStreamConnection
     {
         return $this->connectionFactory->getConnection(

@@ -7,6 +7,8 @@ namespace Siemendev\AsyncapiPhp\Receive;
 use Siemendev\AsyncapiPhp\Adapter\Exception\NoMatchingAdapterFoundException;
 use Siemendev\AsyncapiPhp\Configuration\Configuration;
 use Siemendev\AsyncapiPhp\Configuration\Exception\CredentialsNotFoundException;
+use Siemendev\AsyncapiPhp\MessageHandler\Exception\MessageHandlerErrorException;
+use Siemendev\AsyncapiPhp\MessageHandler\Exception\MessageHandlerFailedException;
 use Siemendev\AsyncapiPhp\Serializer\Exception\SerializationException;
 use Siemendev\AsyncapiPhp\Spec\Exception\InvalidSpecificationException;
 use Siemendev\AsyncapiPhp\Spec\Exception\ReferenceNotFoundException;
@@ -21,7 +23,7 @@ class AsyncApiReceiver extends AbstractAsyncApiReceiver
      * @throws SerializationException
      * @throws ReferenceNotFoundException
      */
-    public function receiveMessages(
+    public function startReceivingMessages(
         Configuration $configuration,
         string $operationName,
         ?string $serverName = null,
@@ -47,10 +49,19 @@ class AsyncApiReceiver extends AbstractAsyncApiReceiver
         ;
     }
 
+    public function stopReceivingMessages(): void
+    {
+        foreach ($this->adapterResolver->getAdapters() as $adapter) {
+            $adapter->stopConsuming();
+        }
+    }
+
     /**
      * @param array<string, scalar|null> $headers
      * @throws InvalidSpecificationException
+     * @throws MessageHandlerFailedException
      * @throws SerializationException
+     * @throws MessageHandlerErrorException
      */
     private function handleMessage(
         Configuration $configuration,
@@ -58,17 +69,16 @@ class AsyncApiReceiver extends AbstractAsyncApiReceiver
         string $payload,
         array $headers,
     ): void {
-        $message = $this->messageMapper->mapMessage(
-            $configuration,
-            $operation,
-            $payload,
-            array_key_exists('type', $headers) ? (string) $headers['type'] : null,
-        );
+        $typeHint = array_key_exists('type', $headers) ? (string) $headers['type'] : null;
+        $typeHint ??= array_key_exists('messageType', $headers) ? (string) $headers['messageType'] : null;
+        $typeHint ??= array_key_exists('message-type', $headers) ? (string) $headers['message-type'] : null;
+        $typeHint ??= array_key_exists('message_type', $headers) ? (string) $headers['message_type'] : null;
+
+        $message = $this->messageMapper->mapMessage($configuration, $operation, $payload, $typeHint);
         foreach ($headers as $key => $value) {
             $message->setHeader($key, $value);
         }
 
-        // todo handle exception, manage acknowledgement
         $this->messageHandlerResolver->resolveMessageHandler($message::class)->handle($message);
     }
 }

@@ -36,4 +36,12 @@ class AdapterResolver
 
         throw new NoMatchingAdapterFoundException($serverSpec);
     }
+
+    /**
+     * @return AdapterInterface[]
+     */
+    public function getAdapters(): array
+    {
+        return $this->adapters;
+    }
 }

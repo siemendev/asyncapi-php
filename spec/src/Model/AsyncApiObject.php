@@ -96,6 +96,7 @@ abstract class AsyncApiObject implements JsonSerializable
      * Add a specification extension.
      *
      * @param scalar|AsyncApiObject|null $value
+     * @return $this
      *
      * @throws InvalidArgumentException If the extension name doesn't start with 'x-'
      */
@@ -114,6 +115,7 @@ abstract class AsyncApiObject implements JsonSerializable
      * Set all extensions.
      *
      * @param array<string, scalar|AsyncApiObject|null> $extensions
+     * @return $this
      */
     public function setExtensions(array $extensions): self
     {
@@ -122,6 +124,9 @@ abstract class AsyncApiObject implements JsonSerializable
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function removeExtension(string $name): self
     {
         unset($this->extensions[$name]);

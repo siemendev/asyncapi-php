@@ -4,15 +4,21 @@ declare(strict_types=1);
 
 namespace Siemendev\AsyncapiPhp\Adapter\Amqp;
 
+use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 use Siemendev\AsyncapiPhp\Adapter\Amqp\Bindings\AmqpChannelBinding;
 use Siemendev\AsyncapiPhp\Adapter\Amqp\Bindings\AmqpOperationBinding;
+use Siemendev\AsyncapiPhp\MessageHandler\Exception\MessageHandlerErrorException;
+use Siemendev\AsyncapiPhp\MessageHandler\Exception\MessageHandlerFailedException;
 use Siemendev\AsyncapiPhp\Spec\Exception\InvalidSpecificationException;
 use Siemendev\AsyncapiPhp\Spec\Model\Operation;
 
 class AmqpConsumer
 {
+    /** @var AMQPChannel[] */
+    private static array $openChannels = [];
+
     /**
      * @param callable(string $payload, array<string, scalar|null> $headers): void $callback
      * @throws InvalidSpecificationException
@@ -33,6 +39,7 @@ class AmqpConsumer
             throw new InvalidSpecificationException('Queue name is not defined in channel binding');
         }
         $amqpChannel = $connection->channel();
+        self::$openChannels[] = $amqpChannel;
         $amqpChannel->basic_consume(
             $queueName,
             '',
@@ -40,8 +47,34 @@ class AmqpConsumer
             $operationBinding->getAck() ?? false,
             false,
             false,
-            fn(AMQPMessage $message) => $callback($message->getBody(), $message->get_properties()), // @phpstan-ignore-line
+            fn(AMQPMessage $message) => $this->handleMessage($operationBinding, $message, $callback),
         );
         $amqpChannel->consume();
+        unset(self::$openChannels[array_search($amqpChannel, self::$openChannels, true)]);
+    }
+
+    public static function stopAllConsumers(): void
+    {
+        foreach (self::$openChannels as $channel) {
+            $channel->stopConsume();
+        }
+    }
+
+    /**
+     * @param callable(string $payload, array<string, scalar|null> $headers): void $callback
+     * @throws MessageHandlerFailedException
+     * @throws MessageHandlerErrorException
+     */
+    private function handleMessage(
+        AmqpOperationBinding $operationBinding,
+        AMQPMessage $message,
+        callable $callback,
+    ): void {
+        $callback($message->getBody(), $message->get_properties()); // @phpstan-ignore-line
+
+        // ack when auto ack is disabled
+        if (!($operationBinding->getAck() ?? false)) {
+            $message->ack();
+        }
     }
 }

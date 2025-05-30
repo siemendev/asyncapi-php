@@ -11,7 +11,9 @@ use Siemendev\AsyncapiPhp\Serializer\SerializationHandler;
 
 interface AsyncApiReceiverInterface
 {
-    public function receiveMessages(Configuration $configuration, string $operationName, ?string $serverName = null): void;
+    public function startReceivingMessages(Configuration $configuration, string $operationName, ?string $serverName = null): void;
+
+    public function stopReceivingMessages(): void;
 
     public function setAdapterResolver(AdapterResolver $adapterResolver): self;
 
