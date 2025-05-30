@@ -48,7 +48,7 @@ return (new AsyncApi(
                             ->setExchange(
                                 (new AmqpChannelBindingExchange())
                                     ->setName('test_exchange')
-                                    ->setType('classic')
+                                    ->setType('direct')
                             )
                     )
             )
@@ -62,6 +62,8 @@ return (new AsyncApi(
                 'test',
                 new ComponentMessageReference('test')
             )
+            ->addExtension('x-bind-to-exchange', 'test_exchange')
+            ->addExtension('x-bind-to-routing-key', 'test')
             ->setBindings(
                 (new ChannelBindings())
                     ->setAmqp(

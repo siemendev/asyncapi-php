@@ -1,0 +1,47 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Siemendev\AsyncapiPhp\Adapter\Amqp;
+
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;
+use Siemendev\AsyncapiPhp\Adapter\Amqp\Bindings\AmqpChannelBinding;
+use Siemendev\AsyncapiPhp\Adapter\Amqp\Bindings\AmqpOperationBinding;
+use Siemendev\AsyncapiPhp\Spec\Exception\InvalidSpecificationException;
+use Siemendev\AsyncapiPhp\Spec\Model\Operation;
+
+class AmqpConsumer
+{
+    /**
+     * @param callable(string $payload, array<string, scalar|null> $headers): void $callback
+     * @throws InvalidSpecificationException
+     */
+    public function consume(AMQPStreamConnection $connection, Operation $operation, callable $callback): void
+    {
+        $operationBinding = $operation->resolveBindings()->getAmqp();
+        if (!$operationBinding instanceof AmqpOperationBinding) {
+            throw new InvalidSpecificationException('Operation binding is not of type AmqpOperationBinding');
+        }
+        $channel = $operation->resolveChannel();
+        $channelBinding = $channel->resolveBindings()->getAmqp();
+        if (!$channelBinding instanceof AmqpChannelBinding) {
+            throw new InvalidSpecificationException('Channel binding is not of type AmqpChannelBinding');
+        }
+        $queueName = $channelBinding->getQueue()?->getName() ?? '';
+        if (!$queueName) {
+            throw new InvalidSpecificationException('Queue name is not defined in channel binding');
+        }
+        $amqpChannel = $connection->channel();
+        $amqpChannel->basic_consume(
+            $queueName,
+            '',
+            false,
+            $operationBinding->getAck() ?? false,
+            false,
+            false,
+            fn(AMQPMessage $message) => $callback($message->getBody(), $message->get_properties()), // @phpstan-ignore-line
+        );
+        $amqpChannel->consume();
+    }
+}

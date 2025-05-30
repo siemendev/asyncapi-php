@@ -55,6 +55,8 @@ class AsyncApiPublisher extends AbstractAsyncApiPublisher
             throw new InvalidSpecificationException('No content type defined for message'); // todo change this to be more helpful
         }
 
+        $message->setHeader('type', $messageSpec->getName());
+
         $this->adapterResolver
             ->resolveAdapter(
                 $channel->resolveServer($serverName),

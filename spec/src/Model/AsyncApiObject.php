@@ -122,6 +122,26 @@ abstract class AsyncApiObject implements JsonSerializable
         return $this;
     }
 
+    public function removeExtension(string $name): self
+    {
+        unset($this->extensions[$name]);
+
+        return $this;
+    }
+
+    public function hasExtension(string $name): bool
+    {
+        return isset($this->extensions[$name]);
+    }
+
+    /**
+     * @return scalar|AsyncApiObject|null
+     */
+    public function getExtension(string $name): mixed
+    {
+        return $this->extensions[$name] ?? null;
+    }
+
     /**
      * Get all extensions.
      *

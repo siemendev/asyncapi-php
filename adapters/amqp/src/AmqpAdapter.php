@@ -6,7 +6,8 @@ namespace Siemendev\AsyncapiPhp\Adapter\Amqp;
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use Siemendev\AsyncapiPhp\Adapter\AbstractAdapter;
-use Siemendev\AsyncapiPhp\Adapter\Exception\AdapterFeatureNotImplementedException;
+use Siemendev\AsyncapiPhp\Adapter\Exception\InvalidAdapterConfigurationException;
+use Siemendev\AsyncapiPhp\Adapter\Exception\MessagePublishFailedException;
 use Siemendev\AsyncapiPhp\Configuration\Credentials\CredentialsInterface;
 use Siemendev\AsyncapiPhp\Spec\Exception\InvalidSpecificationException;
 use Siemendev\AsyncapiPhp\Spec\Model\Channel;
@@ -20,12 +21,20 @@ class AmqpAdapter extends AbstractAdapter
 
     private AmqpPublisher $publisher;
 
+    private AmqpConsumer $consumer;
+
+    private AmqpProvisioner $provisioner;
+
     public function __construct(
         ?AmqpConnectionBuilder $connectionFactory = null,
         ?AmqpPublisher $publisher = null,
+        ?AmqpConsumer $consumer = null,
+        ?AmqpProvisioner $provisioner = null,
     ) {
         $this->connectionFactory = $connectionFactory ?? new AmqpConnectionBuilder();
         $this->publisher = $publisher ?? new AmqpPublisher();
+        $this->consumer = $consumer ?? new AmqpConsumer();
+        $this->provisioner = $provisioner ?? new AmqpProvisioner();
     }
 
     public function supports(Server $serverSpec, CredentialsInterface $credentials): bool
@@ -36,6 +45,8 @@ class AmqpAdapter extends AbstractAdapter
     /**
      * @param array<string, string> $headers
      * @throws InvalidSpecificationException
+     * @throws InvalidAdapterConfigurationException
+     * @throws MessagePublishFailedException
      */
     public function publish(
         Operation $operation,
@@ -58,10 +69,15 @@ class AmqpAdapter extends AbstractAdapter
 
     /**
      * @param callable(string $payload, array<string, scalar|null> $headers): void $callback
+     * @throws InvalidSpecificationException
      */
     public function consume(Operation $operation, callable $callback): void
     {
-        throw new AdapterFeatureNotImplementedException('consume');
+        $this->consumer->consume(
+            $this->getConnection($operation->resolveChannel()),
+            $operation,
+            $callback,
+        );
     }
 
     private function getConnection(Channel $channel): AMQPStreamConnection
@@ -73,5 +89,11 @@ class AmqpAdapter extends AbstractAdapter
         );
     }
 
-    public function provisionOperation(Operation $operation): void {}
+    public function provisionOperation(Operation $operation): void
+    {
+        $this->provisioner->provisionOperation(
+            $this->getConnection($operation->resolveChannel()),
+            $operation,
+        );
+    }
 }

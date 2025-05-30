@@ -6,3 +6,4 @@ use Siemendev\AsyncapiPhp\AsyncApiManager;
 $manager = include __DIR__ . '/includes/setup.php';
 
 $manager->provisionOperation('test_publish');
+$manager->provisionOperation('test_receive');

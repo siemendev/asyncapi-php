@@ -68,6 +68,7 @@ class AsyncApiReceiver extends AbstractAsyncApiReceiver
             $message->setHeader($key, $value);
         }
 
+        // todo handle exception, manage acknowledgement
         $this->messageHandlerResolver->resolveMessageHandler($message::class)->handle($message);
     }
 }

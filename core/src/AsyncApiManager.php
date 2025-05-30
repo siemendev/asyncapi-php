@@ -6,9 +6,14 @@ namespace Siemendev\AsyncapiPhp;
 
 use LogicException;
 use Siemendev\AsyncapiPhp\Adapter\AdapterInterface;
+use Siemendev\AsyncapiPhp\Adapter\Exception\NoMatchingAdapterFoundException;
+use Siemendev\AsyncapiPhp\Configuration\Exception\CredentialsNotFoundException;
 use Siemendev\AsyncapiPhp\Message\MessageInterface;
 use Siemendev\AsyncapiPhp\MessageHandler\MessageHandlerInterface;
+use Siemendev\AsyncapiPhp\Serializer\Exception\SerializationException;
 use Siemendev\AsyncapiPhp\Serializer\SerializerInterface;
+use Siemendev\AsyncapiPhp\Spec\Exception\InvalidSpecificationException;
+use Siemendev\AsyncapiPhp\Spec\Exception\ReferenceNotFoundException;
 
 class AsyncApiManager extends AbstractAsyncApiManager
 {
@@ -33,11 +38,24 @@ class AsyncApiManager extends AbstractAsyncApiManager
         );
     }
 
+    /**
+     * @throws InvalidSpecificationException
+     * @throws ReferenceNotFoundException
+     * @throws CredentialsNotFoundException
+     * @throws NoMatchingAdapterFoundException
+     */
     public function provisionOperation(string $operation, ?string $serverName = null): void
     {
         $this->provisioner->provisionOperation($this->configuration, $operation, $serverName);
     }
 
+    /**
+     * @throws InvalidSpecificationException
+     * @throws ReferenceNotFoundException
+     * @throws NoMatchingAdapterFoundException
+     * @throws SerializationException
+     * @throws CredentialsNotFoundException
+     */
     public function receiveMessages(string $operationName, ?string $serverName = null): void
     {
         $this->receiver->receiveMessages($this->configuration, $operationName, $serverName);
