@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
+use Siemendev\AsyncapiPhp\Spec\Exception\InvalidSpecificationException;
 use Siemendev\AsyncapiPhp\Spec\Model\Bindings\MessageBindings;
 
 /**
@@ -320,6 +321,23 @@ class Message extends AsyncApiObject
     public function getContentType(): ?string
     {
         return $this->contentType;
+    }
+
+    /**
+     * @throws InvalidSpecificationException
+     */
+    public function resolveContentType(): string
+    {
+        if ($this->contentType) {
+            return $this->contentType;
+        }
+
+        $contentType = $this->getRootElement()->getDefaultContentType();
+        if (!$contentType) {
+            throw new InvalidSpecificationException('No content type defined for message nor default content type defined in spec');
+        }
+
+        return $contentType;
     }
 
     /**

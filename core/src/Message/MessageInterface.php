@@ -12,4 +12,9 @@ interface MessageInterface
      * @return array<string, scalar|null>
      */
     public function getHeaders(): array;
+
+    /**
+     * @param scalar|null $value
+     */
+    public function setHeader(string $key, mixed $value): self;
 }

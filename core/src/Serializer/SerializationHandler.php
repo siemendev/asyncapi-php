@@ -35,4 +35,18 @@ class SerializationHandler
 
         return $this->serializers[$format]->serialize($message);
     }
+
+    /**
+     * @template T of MessageInterface
+     * @param class-string<T> $messageClass
+     * @throws SerializationException
+     */
+    public function deserialize(string $format, string $messageData, string $messageClass): MessageInterface
+    {
+        if (!isset($this->serializers[$format])) {
+            throw new LogicException('No serializer found for format "' . $format . '"');
+        }
+
+        return $this->serializers[$format]->deserialize($messageClass, $messageData);
+    }
 }

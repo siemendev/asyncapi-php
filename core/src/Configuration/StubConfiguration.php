@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace Siemendev\AsyncapiPhp\Configuration;
 
+use Siemendev\AsyncapiPhp\Message\MessageInterface;
+use Siemendev\AsyncapiPhp\Spec\Model\Message;
+
 class StubConfiguration
 {
+    public const MESSAGE_CLASS_SUFFIX = 'Message';
+
     private string $path;
 
     private string $namespace;
@@ -32,5 +37,18 @@ class StubConfiguration
         $this->namespace = $namespace;
 
         return $this;
+    }
+
+    /**
+     * @return class-string<MessageInterface>
+     */
+    public function getMessageClass(Message $message): string
+    {
+        return $this->getNamespace() . '\\' . $this->getClassName($message); // @phpstan-ignore-line
+    }
+
+    public function getClassName(Message $message): string
+    {
+        return ucfirst($message->getName() ?: '') . self::MESSAGE_CLASS_SUFFIX;
     }
 }

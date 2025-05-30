@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Siemendev\AsyncapiPhp\Spec\Model;
 
-use ArrayAccess;
-use LogicException;
+use Siemendev\AsyncapiPhp\Spec\Exception\ReferenceNotFoundException;
+use Siemendev\AsyncapiPhp\Spec\ReferenceResolver;
 
 /**
  * A simple object to allow referencing other components in the specification.
@@ -104,52 +104,11 @@ class Reference extends AsyncApiObject
 
     /**
      * @return T
+     * @throws ReferenceNotFoundException
      */
     public function resolve(): AsyncApiObject
     {
-        $ref = trim($this->getRef(), '#/');
-        $parts = explode('/', $ref);
-
-        $value = $this->getRootElement();
-        foreach ($parts as $part) {
-            if (is_object($value)) {
-                if ($value instanceof Reference) {
-                    $value = $value->resolve();
-                }
-                if ($value instanceof ArrayAccess) {
-                    if (!$value->offsetExists($part)) {
-                        throw new LogicException(sprintf('Reference "%s" not found in spec', $this->getRef()));
-                    }
-                    $value = $value[$part];
-                    continue;
-                }
-                if (method_exists($value, 'get' . ucfirst($part))) {
-                    $value = $value->{'get' . ucfirst($part)}();
-                    continue;
-                }
-                if (property_exists($value, $part)) {
-                    $value = $value->{$part};
-                    continue;
-                }
-                throw new LogicException(sprintf('Reference "%s" not found in spec', $this->getRef()));
-            }
-
-            if (is_array($value)) {
-                if (!array_key_exists($part, $value)) {
-                    throw new LogicException(sprintf('Reference "%s" not found in spec', $this->getRef()));
-                }
-                $value = $value[$part];
-                continue;
-            }
-        }
-
-        if ($value instanceof Reference) {
-            $value = $value->resolve();
-        }
-
-        /** @var T $value */
-
-        return $value;
+        return ReferenceResolver::resolveReference($this->getRootElement(), $this->getRef());  // @phpstan-ignore-line
     }
 
     /**

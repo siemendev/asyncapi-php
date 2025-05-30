@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Siemendev\AsyncapiPhp\Adapter;
 
+use Siemendev\AsyncapiPhp\Adapter\Exception\AdapterFeatureNotImplementedException;
 use Siemendev\AsyncapiPhp\Adapter\Exception\InvalidAdapterConfigurationException;
 use Siemendev\AsyncapiPhp\Adapter\Exception\MessagePublishFailedException;
 use Siemendev\AsyncapiPhp\Configuration\Credentials\CredentialsInterface;
 use Siemendev\AsyncapiPhp\Spec\Exception\InvalidSpecificationException;
+use Siemendev\AsyncapiPhp\Spec\Model\Channel;
 use Siemendev\AsyncapiPhp\Spec\Model\Message;
 use Siemendev\AsyncapiPhp\Spec\Model\Operation;
 use Siemendev\AsyncapiPhp\Spec\Model\Server;
@@ -21,8 +23,9 @@ interface AdapterInterface
      * @throws InvalidAdapterConfigurationException
      * @throws InvalidSpecificationException
      * @throws MessagePublishFailedException
+     * @throws AdapterFeatureNotImplementedException
      */
-    public function publishMessage(
+    public function publish(
         Operation $operation,
         Message $message,
         string $content,
@@ -31,9 +34,16 @@ interface AdapterInterface
     ): void;
 
     /**
-     * @param callable(string $messageData): void $callback
+     * @param callable(string $payload, array<string, scalar|null> $headers): void $callback
+     * @throws AdapterFeatureNotImplementedException
      */
     public function consume(Operation $operation, callable $callback): void;
+
+    /**
+     * @param Channel[] $channels
+     * @throws AdapterFeatureNotImplementedException
+     */
+    public function provision(Server $server, array $channels): void;
 
     public function setServerSpec(Server $serverSpec): self;
 

@@ -6,6 +6,7 @@ namespace Siemendev\AsyncapiPhp\Adapter\Amqp;
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use Siemendev\AsyncapiPhp\Adapter\AbstractAdapter;
+use Siemendev\AsyncapiPhp\Adapter\Exception\AdapterFeatureNotImplementedException;
 use Siemendev\AsyncapiPhp\Configuration\Credentials\CredentialsInterface;
 use Siemendev\AsyncapiPhp\Spec\Exception\InvalidSpecificationException;
 use Siemendev\AsyncapiPhp\Spec\Model\Channel;
@@ -36,7 +37,7 @@ class AmqpAdapter extends AbstractAdapter
      * @param array<string, string> $headers
      * @throws InvalidSpecificationException
      */
-    public function publishMessage(
+    public function publish(
         Operation $operation,
         Message $message,
         string $content,
@@ -59,11 +60,11 @@ class AmqpAdapter extends AbstractAdapter
     }
 
     /**
-     * @param callable(string $messageData): void $callback
+     * @param callable(string $payload, array<string, scalar|null> $headers): void $callback
      */
     public function consume(Operation $operation, callable $callback): void
     {
-        // TODO: Implement consume() method.
+        throw new AdapterFeatureNotImplementedException('consume');
     }
 
     private function getConnection(Channel $channel): AMQPStreamConnection
@@ -73,5 +74,10 @@ class AmqpAdapter extends AbstractAdapter
             $this->getServerSpec(),
             $channel,
         );
+    }
+
+    public function provision(Server $server, array $channels): void
+    {
+        throw new AdapterFeatureNotImplementedException('provision');
     }
 }

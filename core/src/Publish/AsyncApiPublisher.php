@@ -33,15 +33,9 @@ class AsyncApiPublisher extends AbstractAsyncApiPublisher
     ): void {
         $operation = $configuration->getSpec()->getOperations()[$operationName] ?? null;
         if (!$operation instanceof Operation) {
-            throw new LogicException('Operation not found: ' . $operationName); // todo change this to be more helpful
+            throw new InvalidSpecificationException('Operation not found: ' . $operationName); // todo change this to be more helpful
         }
-        if (!$operation->getChannel()) {
-            throw new InvalidSpecificationException('Operation does not have a channel defined'); // todo change this to be more helpful
-        }
-        $channel = $operation->resolveChannel();
-        if (!$channel) {
-            throw new InvalidSpecificationException('Channel not found'); // todo change this to be more helpful
-        }
+        $channel = $this->specRepo->getOperationChannel($operation);
 
         $serverName ??= $this->specRepo->getDefaultServerNameForChannel($channel);
 
@@ -66,7 +60,7 @@ class AsyncApiPublisher extends AbstractAsyncApiPublisher
                 $this->specRepo->getServerForChannel($channel, $serverName),
                 $configuration->getCredentials($serverName),
             )
-            ->publishMessage(
+            ->publish(
                 $operation,
                 $messageSpec,
                 $this->serializer->serialize($contentType, $message),
