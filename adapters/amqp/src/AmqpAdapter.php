@@ -8,7 +8,6 @@ use PhpAmqpLib\Connection\AMQPStreamConnection;
 use Siemendev\AsyncapiPhp\Adapter\AbstractAdapter;
 use Siemendev\AsyncapiPhp\Adapter\Exception\InvalidAdapterConfigurationException;
 use Siemendev\AsyncapiPhp\Adapter\Exception\MessagePublishFailedException;
-use Siemendev\AsyncapiPhp\Configuration\Credentials\CredentialsInterface;
 use Siemendev\AsyncapiPhp\Spec\Exception\InvalidSpecificationException;
 use Siemendev\AsyncapiPhp\Spec\Model\Channel;
 use Siemendev\AsyncapiPhp\Spec\Model\Message;
@@ -37,7 +36,7 @@ class AmqpAdapter extends AbstractAdapter
         $this->provisioner = $provisioner ?? new AmqpProvisioner();
     }
 
-    public function supports(Server $serverSpec, CredentialsInterface $credentials): bool
+    public function supports(Server $serverSpec): bool
     {
         return strtolower($serverSpec->getProtocol()) === 'amqp';
     }
@@ -70,6 +69,7 @@ class AmqpAdapter extends AbstractAdapter
     /**
      * @param callable(string $payload, array<string, scalar|null> $headers): void $callback
      * @throws InvalidSpecificationException
+     * @throws AdapterConsumptionException
      */
     public function consume(Operation $operation, callable $callback): void
     {

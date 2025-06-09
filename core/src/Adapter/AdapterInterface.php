@@ -15,7 +15,7 @@ use Siemendev\AsyncapiPhp\Spec\Model\Server;
 
 interface AdapterInterface
 {
-    public function supports(Server $serverSpec, CredentialsInterface $credentials): bool;
+    public function supports(Server $serverSpec): bool;
 
     /**
      * @param array<string, scalar|null> $headers

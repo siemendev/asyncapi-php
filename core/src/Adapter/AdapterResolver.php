@@ -26,7 +26,7 @@ class AdapterResolver
     public function resolveAdapter(Server $serverSpec, CredentialsInterface $credentials): AdapterInterface
     {
         foreach ($this->adapters as $adapter) {
-            if ($adapter->supports($serverSpec, $credentials)) {
+            if ($adapter->supports($serverSpec)) {
                 return (clone $adapter)
                     ->setServerSpec($serverSpec)
                     ->setCredentials($credentials)
