@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Siemendev\AsyncapiPhp\Adapter\Amqp;
 
+use ErrorException;
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 use Siemendev\AsyncapiPhp\Adapter\Amqp\Bindings\AmqpChannelBinding;
 use Siemendev\AsyncapiPhp\Adapter\Amqp\Bindings\AmqpOperationBinding;
+use Siemendev\AsyncapiPhp\Adapter\Exception\AdapterConsumptionException;
 use Siemendev\AsyncapiPhp\MessageHandler\Exception\MessageHandlerErrorException;
 use Siemendev\AsyncapiPhp\MessageHandler\Exception\MessageHandlerFailedException;
 use Siemendev\AsyncapiPhp\Spec\Exception\InvalidSpecificationException;
@@ -22,22 +24,26 @@ class AmqpConsumer
     /**
      * @param callable(string $payload, array<string, scalar|null> $headers): void $callback
      * @throws InvalidSpecificationException
+     * @throws AdapterConsumptionException
      */
     public function consume(AMQPStreamConnection $connection, Operation $operation, callable $callback): void
     {
         $operationBinding = $operation->resolveBindings()->getAmqp();
         if (!$operationBinding instanceof AmqpOperationBinding) {
-            throw new InvalidSpecificationException('Operation binding is not of type AmqpOperationBinding');
+            throw new InvalidSpecificationException('Operation binding is not of type ' . AmqpOperationBinding::class);
         }
+
         $channel = $operation->resolveChannel();
         $channelBinding = $channel->resolveBindings()->getAmqp();
         if (!$channelBinding instanceof AmqpChannelBinding) {
-            throw new InvalidSpecificationException('Channel binding is not of type AmqpChannelBinding');
+            throw new InvalidSpecificationException('Channel binding is not of type ' . AmqpChannelBinding::class);
         }
+
         $queueName = $channelBinding->getQueue()?->getName() ?? '';
         if (!$queueName) {
             throw new InvalidSpecificationException('Queue name is not defined in channel binding');
         }
+
         $amqpChannel = $connection->channel();
         self::$openChannels[] = $amqpChannel;
         $amqpChannel->basic_consume(
@@ -49,8 +55,14 @@ class AmqpConsumer
             false,
             fn(AMQPMessage $message) => $this->handleMessage($operationBinding, $message, $callback),
         );
-        $amqpChannel->consume();
-        unset(self::$openChannels[array_search($amqpChannel, self::$openChannels, true)]);
+
+        try {
+            $amqpChannel->consume();
+        } catch (ErrorException $e) {
+            throw new AdapterConsumptionException($e->getMessage(), $e->getCode(), $e);
+        } finally {
+            unset(self::$openChannels[array_search($amqpChannel, self::$openChannels, true)]);
+        }
     }
 
     public static function stopAllConsumers(): void

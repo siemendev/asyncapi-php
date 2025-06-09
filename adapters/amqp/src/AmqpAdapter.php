@@ -6,6 +6,7 @@ namespace Siemendev\AsyncapiPhp\Adapter\Amqp;
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use Siemendev\AsyncapiPhp\Adapter\AbstractAdapter;
+use Siemendev\AsyncapiPhp\Adapter\Exception\AdapterConsumptionException;
 use Siemendev\AsyncapiPhp\Adapter\Exception\InvalidAdapterConfigurationException;
 use Siemendev\AsyncapiPhp\Adapter\Exception\MessagePublishFailedException;
 use Siemendev\AsyncapiPhp\Spec\Exception\InvalidSpecificationException;

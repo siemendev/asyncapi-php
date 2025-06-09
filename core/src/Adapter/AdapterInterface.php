@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Siemendev\AsyncapiPhp\Adapter;
 
+use Siemendev\AsyncapiPhp\Adapter\Exception\AdapterConsumptionException;
 use Siemendev\AsyncapiPhp\Adapter\Exception\AdapterFeatureNotImplementedException;
 use Siemendev\AsyncapiPhp\Adapter\Exception\InvalidAdapterConfigurationException;
 use Siemendev\AsyncapiPhp\Adapter\Exception\MessagePublishFailedException;
@@ -35,6 +36,9 @@ interface AdapterInterface
     /**
      * @param callable(string $payload, array<string, scalar|null> $headers): void $callback
      * @throws AdapterFeatureNotImplementedException
+     * @throws InvalidSpecificationException
+     * @throws InvalidAdapterConfigurationException
+     * @throws AdapterConsumptionException
      */
     public function consume(Operation $operation, callable $callback): void;
 
@@ -42,6 +46,8 @@ interface AdapterInterface
 
     /**
      * @throws AdapterFeatureNotImplementedException
+     * @throws InvalidSpecificationException
+     * @throws InvalidAdapterConfigurationException
      */
     public function provisionOperation(Operation $operation): void;
 
