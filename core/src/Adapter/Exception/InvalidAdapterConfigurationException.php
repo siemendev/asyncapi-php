@@ -6,4 +6,4 @@ namespace Siemendev\AsyncapiPhp\Adapter\Exception;
 
 use Exception;
 
-class InvalidAdapterConfigurationException extends Exception {}
+class InvalidAdapterConfigurationException extends Exception implements AsyncApiPhpAdapterException {}

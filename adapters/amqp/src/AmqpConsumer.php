@@ -11,8 +11,8 @@ use PhpAmqpLib\Message\AMQPMessage;
 use Siemendev\AsyncapiPhp\Adapter\Amqp\Bindings\AmqpChannelBinding;
 use Siemendev\AsyncapiPhp\Adapter\Amqp\Bindings\AmqpOperationBinding;
 use Siemendev\AsyncapiPhp\Adapter\Exception\AdapterConsumptionException;
-use Siemendev\AsyncapiPhp\MessageHandler\Exception\MessageHandlerErrorException;
-use Siemendev\AsyncapiPhp\MessageHandler\Exception\MessageHandlerFailedException;
+use Siemendev\AsyncapiPhp\Receive\MessageHandler\Exception\MessageHandlerErrorException;
+use Siemendev\AsyncapiPhp\Receive\MessageHandler\Exception\MessageHandlerFailedException;
 use Siemendev\AsyncapiPhp\Spec\Exception\InvalidSpecificationException;
 use Siemendev\AsyncapiPhp\Spec\Model\Operation;
 

@@ -6,4 +6,4 @@ namespace Siemendev\AsyncapiPhp\Serializer\Exception;
 
 use Exception;
 
-class SerializationException extends Exception {}
+class SerializationException extends Exception implements AsyncapiPhpSerializationException {}

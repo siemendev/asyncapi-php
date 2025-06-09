@@ -9,7 +9,7 @@ use Siemendev\AsyncapiPhp\Adapter\AdapterInterface;
 use Siemendev\AsyncapiPhp\Adapter\Exception\NoMatchingAdapterFoundException;
 use Siemendev\AsyncapiPhp\Configuration\Exception\CredentialsNotFoundException;
 use Siemendev\AsyncapiPhp\Message\MessageInterface;
-use Siemendev\AsyncapiPhp\MessageHandler\MessageHandlerInterface;
+use Siemendev\AsyncapiPhp\Receive\MessageHandler\MessageHandlerInterface;
 use Siemendev\AsyncapiPhp\Serializer\Exception\SerializationException;
 use Siemendev\AsyncapiPhp\Serializer\SerializerInterface;
 use Siemendev\AsyncapiPhp\Spec\Exception\InvalidSpecificationException;

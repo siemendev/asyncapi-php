@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Siemendev\AsyncapiPhp\Receive;
 
 use Siemendev\AsyncapiPhp\Adapter\AdapterResolver;
-use Siemendev\AsyncapiPhp\MessageHandler\MessageHandlerResolver;
+use Siemendev\AsyncapiPhp\Receive\MessageHandler\MessageHandlerResolver;
 use Siemendev\AsyncapiPhp\Serializer\SerializationHandler;
 
 abstract class AbstractAsyncApiReceiver implements AsyncApiReceiverInterface

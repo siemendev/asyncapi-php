@@ -6,7 +6,7 @@ namespace Siemendev\AsyncapiPhp\Receive;
 
 use Siemendev\AsyncapiPhp\Adapter\AdapterResolver;
 use Siemendev\AsyncapiPhp\Configuration\Configuration;
-use Siemendev\AsyncapiPhp\MessageHandler\MessageHandlerResolver;
+use Siemendev\AsyncapiPhp\Receive\MessageHandler\MessageHandlerResolver;
 use Siemendev\AsyncapiPhp\Serializer\SerializationHandler;
 
 interface AsyncApiReceiverInterface

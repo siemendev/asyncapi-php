@@ -6,7 +6,7 @@ namespace Siemendev\AsyncapiPhp\Adapter\Exception;
 
 use LogicException;
 
-class AdapterFeatureNotImplementedException extends LogicException
+class AdapterFeatureNotImplementedException extends LogicException implements AsyncApiPhpAdapterException
 {
     public function __construct(string $feature)
     {

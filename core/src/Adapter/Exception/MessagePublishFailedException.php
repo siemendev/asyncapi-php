@@ -6,4 +6,4 @@ namespace Siemendev\AsyncapiPhp\Adapter\Exception;
 
 use Exception;
 
-class MessagePublishFailedException extends Exception {}
+class MessagePublishFailedException extends Exception implements AsyncApiPhpAdapterException {}

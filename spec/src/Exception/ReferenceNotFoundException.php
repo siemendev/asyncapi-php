@@ -6,7 +6,7 @@ namespace Siemendev\AsyncapiPhp\Spec\Exception;
 
 use Exception;
 
-class ReferenceNotFoundException extends Exception
+class ReferenceNotFoundException extends Exception implements AsyncApiPhpSpecException
 {
     public function __construct(string $ref)
     {

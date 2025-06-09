@@ -4,7 +4,7 @@ namespace Siemendev\AsyncapiPhp\Demo;
 
 use Siemendev\AsyncapiPhp\Demo\Stub\TestMessage;
 use Siemendev\AsyncapiPhp\Message\MessageInterface;
-use Siemendev\AsyncapiPhp\MessageHandler\MessageHandlerInterface;
+use Siemendev\AsyncapiPhp\Receive\MessageHandler\MessageHandlerInterface;
 
 /** @implements MessageHandlerInterface<TestMessage> */
 class TestMessageHandler implements MessageHandlerInterface

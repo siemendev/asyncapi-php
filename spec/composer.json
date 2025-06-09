@@ -15,10 +15,17 @@
         }
     ],
     "require": {
-        "php": "^8.2"
+        "php": "^8.2",
+        "siemendev/asyncapi-php": "*"
     },
     "require-dev": {
         "phpstan/phpstan": "^2.1",
         "friendsofphp/php-cs-fixer": "^3.75"
-    }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../core"
+        }
+    ]
 }

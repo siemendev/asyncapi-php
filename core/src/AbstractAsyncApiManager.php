@@ -7,7 +7,7 @@ namespace Siemendev\AsyncapiPhp;
 use Siemendev\AsyncapiPhp\Adapter\AdapterResolver;
 use Siemendev\AsyncapiPhp\Configuration\Configuration;
 use Siemendev\AsyncapiPhp\Generator\Generator;
-use Siemendev\AsyncapiPhp\MessageHandler\MessageHandlerResolver;
+use Siemendev\AsyncapiPhp\Receive\MessageHandler\MessageHandlerResolver;
 use Siemendev\AsyncapiPhp\Provision\AsyncApiProvisioner;
 use Siemendev\AsyncapiPhp\Provision\AsyncApiProvisionerInterface;
 use Siemendev\AsyncapiPhp\Publish\AsyncApiPublisher;

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Siemendev\AsyncapiPhp\MessageHandler;
+namespace Siemendev\AsyncapiPhp\Receive\MessageHandler;
 
 use Siemendev\AsyncapiPhp\Message\MessageInterface;
-use Siemendev\AsyncapiPhp\MessageHandler\Exception\MessageHandlerNotFoundException;
+use Siemendev\AsyncapiPhp\Receive\MessageHandler\Exception\MessageHandlerNotFoundException;
 
 class MessageHandlerResolver
 {
