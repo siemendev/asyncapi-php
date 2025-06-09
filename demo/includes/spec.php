@@ -28,7 +28,7 @@ return (new AsyncApi(
 ))
     ->addServer(
         'rabbitmq',
-        (new Server('localhost:15672', 'amqp'))
+        (new Server(getenv('ASYNCAPI_RABBITMQ_HOST') . ':' . getenv('ASYNCAPI_RABBITMQ_PORT'), 'amqp'))
             ->addSecurity(new SecurityScheme('basicAuth'))
     )
     ->addChannel(

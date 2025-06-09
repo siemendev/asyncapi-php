@@ -16,7 +16,7 @@ $config = new Configuration(
         ->setPath(__DIR__ . '/../stub')
         ->setNamespace('Siemendev\AsyncapiPhp\Demo\Stub'),
     [
-        'rabbitmq' => new UsernamePasswordCredentials('guest', 'guest'),
+        'rabbitmq' => new UsernamePasswordCredentials(getenv('ASYNCAPI_RABBITMQ_USER'), getenv('ASYNCAPI_RABBITMQ_PASS')),
     ],
 );
 
