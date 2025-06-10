@@ -1,5 +1,5 @@
 .PHONY: test
-test: phpstan cs
+test: test-functional phpstan cs
 
 .PHONY: test-functional
 test-functional:

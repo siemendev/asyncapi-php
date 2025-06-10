@@ -7,6 +7,9 @@ namespace Siemendev\AsyncapiPhp\Spec\Model;
 use InvalidArgumentException;
 use JsonSerializable;
 use LogicException;
+use ReflectionMethod;
+use ReflectionNamedType;
+use ReflectionException;
 
 /**
  * Base class for all AsyncAPI specification objects.
@@ -26,7 +29,84 @@ abstract class AsyncApiObject implements JsonSerializable
     protected array $extensions = [];
 
     /**
+     * Populate the object from an array representation.
+     *
+     * @param array<mixed> $data The array containing the object data
+     * @return $this
+     */
+    public function populateFromArray(array $data): self
+    {
+        // Process extensions (keys starting with 'x-')
+        foreach ($data as $key => $value) {
+            $key = (string) $key;
+            if (str_starts_with($key, 'x-') && (is_scalar($value) || $value instanceof self || is_null($value))) {
+                $this->addExtension($key, $value);
+                unset($data[$key]);
+            }
+        }
+
+        // Process regular properties
+        foreach ($data as $key => $value) {
+            $setter = 'set' . ucfirst($key);
+            if (method_exists($this, $setter)) {
+                // Skip properties that are already set by the constructor or other means
+                if ($key === 'info' && $this instanceof AsyncApi) {
+                    continue;
+                }
+
+                // Special handling for known array properties
+                // TODO get rid of these arrays in flavor of collections because of things like this
+                if (is_array($value) && !empty($value)) {
+                    // Special handling for servers, channels, and operations in AsyncApi
+                    if ($this instanceof AsyncApi) {
+                        if ($key === 'servers') {
+                            $this->processServers($value);
+                            continue;
+                        }
+                        if ($key === 'channels') {
+                            $this->processChannels($value);
+                            continue;
+                        }
+                        if ($key === 'operations') {
+                            $this->processOperations($value);
+                            continue;
+                        }
+                    }
+
+                    // Try to get the property type using reflection
+                    try {
+                        $reflectionMethod = new ReflectionMethod($this, $setter);
+                        $parameters = $reflectionMethod->getParameters();
+                        if (count($parameters) > 0) {
+                            $paramType = $parameters[0]->getType();
+                            if ($paramType instanceof ReflectionNamedType && !$paramType->isBuiltin()) {
+                                $className = $paramType->getName();
+                                if (class_exists($className) && is_subclass_of($className, AsyncApiObject::class)) {
+                                    // Create a new instance of the class and populate it
+                                    $object = new $className();
+                                    $object->populateFromArray($value);
+                                    $this->{$setter}($object);
+                                    continue;
+                                }
+                            }
+                        }
+                    } catch (ReflectionException $e) {
+                        // Ignore reflection errors and fall back to default behavior
+                    }
+                }
+
+                // Default behavior for non-object properties
+                $this->{$setter}($value);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * Convert the object to an array representation.
+     *
+     * TODO add max depth to tackle infinite recursion
      *
      * @return array<string, mixed>
      */

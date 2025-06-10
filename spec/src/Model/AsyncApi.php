@@ -60,6 +60,28 @@ class AsyncApi extends AsyncApiObject
     }
 
     /**
+     * @param array<mixed> $data
+     * @throws InvalidSpecificationException
+     */
+    public static function createFromArray(array $data): AsyncApi
+    {
+        /** @var array<string, mixed> $data */
+        if (!isset($data['info']) || !is_array($data['info'])) {
+            throw new InvalidSpecificationException('Missing or malformed required "info" field in AsyncAPI specification');
+        }
+
+        if (!isset($data['info']['title']) || !is_scalar($data['info']['title'])) {
+            throw new InvalidSpecificationException('Missing required "title" field in AsyncAPI info');
+        }
+
+        if (!isset($data['info']['version']) || !is_scalar($data['info']['version'])) {
+            throw new InvalidSpecificationException('Missing required "version" field in AsyncAPI info');
+        }
+
+        return (new self(new Info((string) $data['info']['title'], (string) $data['info']['version'])))->populateFromArray($data);
+    }
+
+    /**
      * Set the AsyncAPI specification version.
      */
     public function setAsyncapi(string $asyncapi): self
@@ -281,5 +303,63 @@ class AsyncApi extends AsyncApiObject
         $this->components = $components->setParentElement($this);
 
         return $this;
+    }
+
+    /**
+     * Process servers data.
+     *
+     * @param array<mixed> $serversData
+     */
+    public function processServers(array $serversData): void
+    {
+        foreach ($serversData as $name => $serverData) {
+            if (!is_array($serverData)) {
+                continue;
+            }
+            if (!isset($serverData['host']) || !is_scalar($serverData['host'])) {
+                continue;
+            }
+            if (!isset($serverData['protocol']) || !is_scalar($serverData['protocol'])) {
+                continue;
+            }
+
+            $server = new Server((string) $serverData['host'], (string) $serverData['protocol']);
+            $server->populateFromArray($serverData);
+            $this->addServer((string) $name, $server);
+        }
+    }
+
+    /**
+     * Process channels data.
+     *
+     * @param array<mixed> $channelsData
+     */
+    public function processChannels(array $channelsData): void
+    {
+        foreach ($channelsData as $name => $channelData) {
+            if (!is_array($channelData)) {
+                continue;
+            }
+            $channel = new Channel();
+            $channel->populateFromArray($channelData);
+            $this->addChannel($name, $channel);
+        }
+    }
+
+    /**
+     * Process operations data.
+     *
+     * @param array<mixed> $operationsData
+     */
+    public function processOperations(array $operationsData): void
+    {
+        foreach ($operationsData as $name => $operationData) {
+            if (!is_array($operationData)) {
+                continue;
+            }
+            $operation = new Operation();
+            $operation->populateFromArray($operationData);
+            $this->addOperation($name, $operation);
+        }
     }
 }
