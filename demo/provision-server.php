@@ -10,7 +10,8 @@ try {
     $manager->provisionOperation('test_publish');
     $manager->provisionOperation('test_receive');
 } catch (AsyncApiPhpException $e) {
-    echo "Error: " . $e->getMessage() . "\n";
+    echo 'Error: ' . $e->getMessage() . '(' . $e::class . ')' . PHP_EOL;
     print_r($e);
+    echo $e->getTraceAsString() . PHP_EOL;
     exit(1);
 }
