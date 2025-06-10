@@ -8,6 +8,11 @@
             "Siemendev\\AsyncapiPhp\\Adapter\\Amqp\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Siemendev\\AsyncapiPhp\\Adapter\\Amqp\\Tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "Patrick Siemen",
@@ -21,7 +26,10 @@
     },
     "require-dev": {
         "phpstan/phpstan": "^2.1",
-        "friendsofphp/php-cs-fixer": "^3.75"
+        "friendsofphp/php-cs-fixer": "^3.75",
+        "siemendev/asyncapi-php-generator": "*",
+        "siemendev/asyncapi-php-serializer-symfony": "*",
+        "phpunit/phpunit": "^12.3"
     },
     "repositories": [
         {
@@ -31,6 +39,14 @@
         {
             "type": "path",
             "url": "../../spec"
+        },
+        {
+            "type": "path",
+            "url": "../../generator"
+        },
+        {
+            "type": "path",
+            "url": "../../serializers/symfony-serializer"
         }
     ]
 }

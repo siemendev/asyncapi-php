@@ -15,11 +15,15 @@ use Siemendev\AsyncapiPhp\Receive\MessageHandler\Exception\MessageHandlerErrorEx
 use Siemendev\AsyncapiPhp\Receive\MessageHandler\Exception\MessageHandlerFailedException;
 use Siemendev\AsyncapiPhp\Spec\Exception\InvalidSpecificationException;
 use Siemendev\AsyncapiPhp\Spec\Model\Operation;
+use Fiber;
 
 class AmqpConsumer
 {
     /** @var AMQPChannel[] */
     private static array $openChannels = [];
+
+    /** Flag to control consumption */
+    private static bool $shouldContinueConsuming = true;
 
     /**
      * @param callable(string $payload, array<string, scalar|null> $headers): void $callback
@@ -57,7 +61,19 @@ class AmqpConsumer
         );
 
         try {
-            $amqpChannel->consume();
+            // Reset the consumption flag
+            self::$shouldContinueConsuming = true;
+
+            // Use non-blocking wait with timeout instead of blocking consume @phpstan-ignore booleanAnd.leftAlwaysTrue
+            while (self::$shouldContinueConsuming && count($amqpChannel->callbacks)) {
+                // Process messages for a short time (0.1 seconds) then return control
+                $amqpChannel->wait(null, false, 0.1);
+
+                // Allow the fiber to suspend and resume if needed
+                if (Fiber::getCurrent() && Fiber::getCurrent()->isSuspended() === false) {
+                    Fiber::suspend();
+                }
+            }
         } catch (ErrorException $e) {
             throw new AdapterConsumptionException($e->getMessage(), $e->getCode(), $e);
         } finally {
@@ -67,6 +83,10 @@ class AmqpConsumer
 
     public static function stopAllConsumers(): void
     {
+        // Set the flag to stop the consumption loop
+        self::$shouldContinueConsuming = false;
+
+        // Also call stopConsume on all channels to ensure they stop immediately
         foreach (self::$openChannels as $channel) {
             $channel->stopConsume();
         }

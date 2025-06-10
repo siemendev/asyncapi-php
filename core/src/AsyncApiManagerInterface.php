@@ -38,7 +38,6 @@ interface AsyncApiManagerInterface
     public function provisionOperation(string $operation, ?string $serverName = null): void;
 
     /**
-     * @param MessageHandlerInterface<MessageInterface> $messageHandler
      * @return $this
      */
     public function addMessageHandler(MessageHandlerInterface $messageHandler): self;

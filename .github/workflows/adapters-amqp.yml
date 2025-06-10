@@ -16,7 +16,7 @@ jobs:
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.2'
+        php-version: '8.3'
         coverage: none
         tools: composer:v2
 
@@ -31,6 +31,37 @@ jobs:
         fi
         vendor/bin/phpstan analyse
 
+  functional-tests:
+    runs-on: ubuntu-latest
+
+    services:
+      rabbitmq:
+        image: rabbitmq:4-alpine
+        ports:
+          - 5672:5672
+        options: >-
+          --health-cmd "rabbitmq-diagnostics -q ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+        coverage: none
+        tools: composer:v2
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress --working-dir=adapters/amqp
+
+    - name: Run functional tests
+      run: |
+        cd adapters/amqp
+        php vendor/bin/phpunit --configuration phpunit.xml --colors=always
   cs-lint:
     runs-on: ubuntu-latest
 
@@ -40,7 +71,7 @@ jobs:
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.2'
+        php-version: '8.3'
         coverage: none
         tools: composer:v2
 

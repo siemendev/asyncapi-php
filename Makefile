@@ -1,6 +1,11 @@
 .PHONY: test
 test: phpstan cs
 
+.PHONY: test-functional
+test-functional:
+	@echo "Running PHPUnit tests in all sub-projects..."
+	@cd adapters/amqp && make test-functional
+
 .PHONY: phpstan
 phpstan:
 	@echo "Running PHPStan in all sub-projects..."
