@@ -66,6 +66,11 @@ class AsyncApiManager extends AbstractAsyncApiManager
         $this->receiver->stopReceivingMessages();
     }
 
+    /**
+     * @template T of \Siemendev\AsyncapiPhp\Message\MessageInterface
+     * @param MessageHandlerInterface<T> $messageHandler
+     * @return $this
+     */
     public function addMessageHandler(MessageHandlerInterface $messageHandler): self
     {
         $this->messageHandlerResolver->addMessageHandler($messageHandler);

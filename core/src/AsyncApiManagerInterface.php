@@ -38,6 +38,8 @@ interface AsyncApiManagerInterface
     public function provisionOperation(string $operation, ?string $serverName = null): void;
 
     /**
+     * @template T of \Siemendev\AsyncapiPhp\Message\MessageInterface
+     * @param MessageHandlerInterface<T> $messageHandler
      * @return $this
      */
     public function addMessageHandler(MessageHandlerInterface $messageHandler): self;
