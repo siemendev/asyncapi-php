@@ -6,7 +6,6 @@ use Siemendev\AsyncapiPhp\AsyncApiManager;
 use Siemendev\AsyncapiPhp\Configuration\Configuration;
 use Siemendev\AsyncapiPhp\Configuration\Credentials\UsernamePasswordCredentials;
 use Siemendev\AsyncapiPhp\Configuration\StubConfiguration;
-use Siemendev\AsyncapiPhp\Demo\TestMessageHandler;
 use Siemendev\AsyncapiPhp\Generator\Generator;
 use Siemendev\AsyncapiPhp\Serializer\Symfony\JsonSerializer;
 

@@ -5,7 +5,6 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "Siemendev\\AsyncapiPhp\\Demo\\": "src/",
             "Siemendev\\AsyncapiPhp\\Demo\\Stub\\": "stub/"
         }
     },

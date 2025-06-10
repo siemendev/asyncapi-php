@@ -3,13 +3,28 @@
 /** @var AsyncApiManager $manager */
 
 use Siemendev\AsyncapiPhp\AsyncApiManager;
-use Siemendev\AsyncapiPhp\Demo\TestMessageHandler;
+use Siemendev\AsyncapiPhp\Demo\Stub\TestMessage;
 use Siemendev\AsyncapiPhp\Exception\AsyncApiPhpException;
+use Siemendev\AsyncapiPhp\Message\MessageInterface;
+use Siemendev\AsyncapiPhp\Receive\MessageHandler\MessageHandlerInterface;
 
 /** @var AsyncApiManager $manager */
 $manager = include __DIR__ . '/includes/setup.php';
 
-$manager->addMessageHandler(new TestMessageHandler());
+$manager->addMessageHandler(
+    /** @implements MessageHandlerInterface<TestMessage> */
+    new class implements MessageHandlerInterface {
+        public function getMessageClass(): string
+        {
+            return TestMessage::class;
+        }
+
+        public function handle(MessageInterface $message): void
+        {
+            echo 'Received message: ' . $message->getContent() . PHP_EOL;
+        }
+    }
+);
 
 try {
     $manager->startReceivingMessages('test_receive');
