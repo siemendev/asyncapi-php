@@ -23,6 +23,5 @@ $config = new Configuration(
 return (new AsyncApiManager($config))
     ->setGenerator(new Generator())
     ->addAdapter(new AmqpAdapter())
-    ->addMessageHandler(new TestMessageHandler())
     ->addSerializer(new JsonSerializer())
 ;

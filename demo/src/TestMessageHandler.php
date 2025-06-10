@@ -16,6 +16,7 @@ class TestMessageHandler implements MessageHandlerInterface
 
     public function handle(MessageInterface $message): void
     {
+        echo 'TestMessageHandler received new message:' . PHP_EOL;
         print_r($message);
         echo PHP_EOL;
     }
